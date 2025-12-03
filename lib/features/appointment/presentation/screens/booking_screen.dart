@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../payment/presentation/providers/payment_provider.dart';
 import '../../domain/entities/appointment_entity.dart';
 import '../providers/appointment_provider.dart';
+import '../../../pets/presentation/providers/pets_provider.dart';
 
 class BookingScreen extends ConsumerStatefulWidget {
   final String vetId;
@@ -29,6 +32,9 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
   DateTime _selectedDate = DateTime.now().add(const Duration(days: 1));
   TimeOfDay _selectedTime = const TimeOfDay(hour: 9, minute: 0);
   AppointmentType _selectedType = AppointmentType.consultation;
+  bool _isProcessingPayment = false;
+  String? _selectedPetId;
+  String? _selectedPetName;
 
   @override
   void dispose() {
@@ -63,8 +69,39 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
     }
   }
 
-  void _submitBooking() {
-    if (_formKey.currentState!.validate()) {
+  Future<void> _processPaymentAndBooking() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() => _isProcessingPayment = true);
+
+    try {
+      // 1. Criar PaymentIntent no backend
+      await ref.read(paymentControllerProvider.notifier).createPaymentIntent(
+        amount: widget.basePrice,
+        description: 'Consulta - ${widget.vetName}',
+      );
+
+      final paymentState = ref.read(paymentControllerProvider);
+      
+      if (!paymentState.hasValue || paymentState.value == null) {
+        throw Exception('Falha ao criar PaymentIntent');
+      }
+
+      final clientSecret = paymentState.value!;
+
+      // 2. Inicializar PaymentSheet
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentIntentClientSecret: clientSecret,
+          merchantDisplayName: 'VetField',
+          style: ThemeMode.system,
+        ),
+      );
+
+      // 3. Apresentar PaymentSheet
+      await Stripe.instance.presentPaymentSheet();
+
+      // 4. Se o pagamento foi bem-sucedido, criar o agendamento
       final dateTime = DateTime(
         _selectedDate.year,
         _selectedDate.month,
@@ -73,43 +110,51 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
         _selectedTime.minute,
       );
 
-      ref.read(appointmentControllerProvider.notifier).createAppointment(
+      final petName = _selectedPetName ?? _petNameController.text;
+      await ref.read(appointmentControllerProvider.notifier).createAppointment(
         vetId: widget.vetId,
-        petName: _petNameController.text,
+        petId: _selectedPetId,
+        petName: petName,
         dateTime: dateTime,
         type: _selectedType,
         notes: _notesController.text.isNotEmpty ? _notesController.text : null,
       );
+
+      if (!mounted) return;
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Pagamento realizado e agendamento confirmado!'),
+          backgroundColor: AppColors.success,
+        ),
+      );
+      context.pop();
+
+    } on StripeException catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erro no pagamento: ${e.error.localizedMessage}'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erro: $e'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => _isProcessingPayment = false);
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(appointmentControllerProvider, (previous, next) {
-      next.when(
-        data: (_) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Agendamento realizado com sucesso!'),
-              backgroundColor: AppColors.success,
-            ),
-          );
-          context.pop(); // Voltar para a tela anterior
-        },
-        error: (error, stack) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Erro: $error'),
-              backgroundColor: AppColors.error,
-            ),
-          );
-        },
-        loading: () {},
-      );
-    });
-
-    final isLoading = ref.watch(appointmentControllerProvider).isLoading;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Agendar Consulta'),
@@ -147,7 +192,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
                           ),
                         ),
                         Text(
-                          'Preço base: R\$ ${widget.basePrice.toStringAsFixed(2)}',
+                          'Preço: R\$ ${widget.basePrice.toStringAsFixed(2)}',
                           style: const TextStyle(
                             color: AppColors.textSecondary,
                           ),
@@ -160,23 +205,58 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
               
               const SizedBox(height: 32),
               
-              // Pet Name
-              TextFormField(
-                controller: _petNameController,
-                decoration: InputDecoration(
-                  labelText: 'Nome do Pet',
-                  prefixIcon: const Icon(Icons.pets),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor, informe o nome do pet';
-                  }
-                  return null;
-                },
-              ),
+              // Pet Selection
+              Consumer(builder: (context, ref, _) {
+                final petsAsync = ref.watch(myPetsControllerProvider);
+                return petsAsync.when(
+                  loading: () => const Center(child: CircularProgressIndicator()),
+                  error: (e, _) => Text('Erro ao carregar pets: $e'),
+                  data: (pets) {
+                    if (pets.isEmpty) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Você não possui pets cadastrados.',
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          const SizedBox(height: 8),
+                          OutlinedButton.icon(
+                            onPressed: () => context.push('/pet'),
+                            icon: const Icon(Icons.add),
+                            label: const Text('Cadastrar Pet'),
+                          ),
+                        ],
+                      );
+                    }
+                    _selectedPetId ??= pets.first.id;
+                    _selectedPetName ??= pets.first.name;
+                    return DropdownButtonFormField<String>(
+                      initialValue: _selectedPetId,
+                      items: pets
+                          .map((p) => DropdownMenuItem(
+                                value: p.id,
+                                child: Text(p.name),
+                              ))
+                          .toList(),
+                      onChanged: (v) {
+                        setState(() {
+                          _selectedPetId = v;
+                          final pet = pets.firstWhere((p) => p.id == v);
+                          _selectedPetName = pet.name;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Selecione o Pet',
+                        prefixIcon: const Icon(Icons.pets),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }),
               
               const SizedBox(height: 24),
               
@@ -263,7 +343,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
                   labelText: 'Observações (Sintomas, etc)',
                   alignLabelWithHint: true,
                   prefixIcon: const Padding(
-                    padding: EdgeInsets.only(bottom: 40), // Ajuste visual para multiline
+                    padding: EdgeInsets.only(bottom: 40),
                     child: Icon(Icons.note),
                   ),
                   border: OutlineInputBorder(
@@ -274,11 +354,11 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
               
               const SizedBox(height: 40),
               
-              // Submit Button
+              // Payment Button
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: isLoading ? null : _submitBooking,
+                child: ElevatedButton.icon(
+                  onPressed: _isProcessingPayment ? null : _processPaymentAndBooking,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -286,20 +366,24 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: isLoading
+                  icon: _isProcessingPayment
                       ? const SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: CircularProgressIndicator(color: Colors.white),
-                        )
-                      : const Text(
-                          'Confirmar Agendamento',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
                             color: Colors.white,
+                            strokeWidth: 2,
                           ),
-                        ),
+                        )
+                      : const Icon(Icons.payment, color: Colors.white),
+                  label: Text(
+                    _isProcessingPayment ? 'Processando...' : 'Pagar e Confirmar',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
             ],

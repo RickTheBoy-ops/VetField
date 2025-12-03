@@ -12,6 +12,9 @@ import '../../features/vet/presentation/screens/prescription_screen.dart';
 import '../../screens/home/home_screen.dart'; // Importando temporariamente da pasta antiga
 import '../../screens/onboarding/onboarding_screen.dart'; // Importando temporariamente da pasta antiga
 import '../../screens/appointments/appointments_screen.dart';
+import '../../features/pets/presentation/screens/my_pets_screen.dart';
+import '../../features/pets/presentation/screens/add_edit_pet_screen.dart';
+import '../../features/pets/domain/entities/pet_entity.dart';
 
 part 'app_router.g.dart';
 
@@ -62,6 +65,17 @@ GoRouter goRouter(Ref ref) {
       GoRoute(
         path: '/appointments',
         builder: (context, state) => const AppointmentsScreen(),
+      ),
+      GoRoute(
+        path: '/my-pets',
+        builder: (context, state) => const MyPetsScreen(),
+      ),
+      GoRoute(
+        path: '/pet',
+        builder: (context, state) {
+          final pet = state.extra as PetEntity?;
+          return AddEditPetScreen(pet: pet);
+        },
       ),
       GoRoute(
         path: '/book/:vetId',

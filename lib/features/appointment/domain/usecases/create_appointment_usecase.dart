@@ -14,6 +14,7 @@ class CreateAppointmentUseCase implements UseCase<AppointmentEntity, CreateAppoi
   Future<Either<Failure, AppointmentEntity>> call(CreateAppointmentParams params) {
     return repository.createAppointment(
       vetId: params.vetId,
+      petId: params.petId,
       petName: params.petName,
       dateTime: params.dateTime,
       type: params.type,
@@ -24,6 +25,7 @@ class CreateAppointmentUseCase implements UseCase<AppointmentEntity, CreateAppoi
 
 class CreateAppointmentParams extends Equatable {
   final String vetId;
+  final String? petId;
   final String petName;
   final DateTime dateTime;
   final AppointmentType type;
@@ -31,6 +33,7 @@ class CreateAppointmentParams extends Equatable {
 
   const CreateAppointmentParams({
     required this.vetId,
+    this.petId,
     required this.petName,
     required this.dateTime,
     required this.type,
@@ -38,5 +41,5 @@ class CreateAppointmentParams extends Equatable {
   });
 
   @override
-  List<Object?> get props => [vetId, petName, dateTime, type, notes];
+  List<Object?> get props => [vetId, petId, petName, dateTime, type, notes];
 }

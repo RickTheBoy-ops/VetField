@@ -5,6 +5,7 @@ import '../entities/appointment_entity.dart';
 abstract class AppointmentRepository {
   Future<Either<Failure, AppointmentEntity>> createAppointment({
     required String vetId,
+    String? petId,
     required String petName,
     required DateTime dateTime,
     required AppointmentType type,

@@ -7,6 +7,7 @@ class AppointmentEntity extends Equatable {
   final String id;
   final String ownerId;
   final String vetId;
+  final String? petId;
   final String petName;
   final DateTime dateTime;
   final AppointmentStatus status;
@@ -22,6 +23,7 @@ class AppointmentEntity extends Equatable {
     required this.id,
     required this.ownerId,
     required this.vetId,
+    this.petId,
     required this.petName,
     required this.dateTime,
     required this.status,
@@ -34,6 +36,6 @@ class AppointmentEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-    id, ownerId, vetId, petName, dateTime, status, type, notes, price, vetName, ownerName
+    id, ownerId, vetId, petId, petName, dateTime, status, type, notes, price, vetName, ownerName
   ];
 }

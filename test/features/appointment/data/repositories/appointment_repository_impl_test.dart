@@ -4,18 +4,27 @@ import 'package:mocktail/mocktail.dart';
 import 'package:vetfield_flutter/core/error/failures.dart';
 import 'package:vetfield_flutter/features/appointment/data/datasources/appointment_remote_datasource.dart';
 import 'package:vetfield_flutter/features/appointment/data/repositories/appointment_repository_impl.dart';
+import 'package:vetfield_flutter/features/appointment/data/datasources/appointment_local_datasource.dart';
 import 'package:vetfield_flutter/features/appointment/domain/entities/appointment_entity.dart';
 
 class MockAppointmentRemoteDataSource extends Mock
     implements AppointmentRemoteDataSource {}
 
+class MockAppointmentLocalDataSource extends Mock
+    implements AppointmentLocalDataSource {}
+
 void main() {
   late AppointmentRepositoryImpl repository;
   late MockAppointmentRemoteDataSource mockRemote;
+  late MockAppointmentLocalDataSource mockLocal;
 
   setUp(() {
     mockRemote = MockAppointmentRemoteDataSource();
-    repository = AppointmentRepositoryImpl(remoteDataSource: mockRemote);
+    mockLocal = MockAppointmentLocalDataSource();
+    repository = AppointmentRepositoryImpl(
+      remoteDataSource: mockRemote,
+      localDataSource: mockLocal,
+    );
   });
 
   const tAppointmentId = 'apt_123';

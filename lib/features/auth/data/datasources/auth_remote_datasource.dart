@@ -23,6 +23,7 @@ abstract class AuthRemoteDataSource {
     String? crmv,
     String? cpf,
   });
+  Future<void> saveFcmToken(String token);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -212,5 +213,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   UserType _parseUserType(String? type) {
     if (type == 'vet') return UserType.vet;
     return UserType.owner;
+  }
+
+  @override
+  Future<void> saveFcmToken(String token) async {
+    final user = supabaseClient.auth.currentUser;
+    if (user == null) throw Exception('Usuário não autenticado');
+    
+    await supabaseClient.from('profiles').update({
+      'fcm_token': token,
+    }).eq('id', user.id);
   }
 }

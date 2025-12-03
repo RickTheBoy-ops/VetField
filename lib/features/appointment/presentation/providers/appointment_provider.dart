@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/providers/supabase_provider.dart';
 import '../../data/datasources/appointment_remote_datasource.dart';
+import '../../data/datasources/appointment_local_datasource.dart';
 import '../../data/repositories/appointment_repository_impl.dart';
 import '../../domain/entities/appointment_entity.dart';
 import '../../domain/repositories/appointment_repository.dart';
@@ -19,9 +20,18 @@ AppointmentRemoteDataSource appointmentRemoteDataSource(Ref ref) {
 }
 
 @riverpod
+AppointmentLocalDataSource appointmentLocalDataSource(Ref ref) {
+  return AppointmentLocalDataSourceImpl();
+}
+
+@riverpod
 AppointmentRepository appointmentRepository(Ref ref) {
   final remoteDataSource = ref.watch(appointmentRemoteDataSourceProvider);
-  return AppointmentRepositoryImpl(remoteDataSource: remoteDataSource);
+  final localDataSource = ref.watch(appointmentLocalDataSourceProvider);
+  return AppointmentRepositoryImpl(
+    remoteDataSource: remoteDataSource,
+    localDataSource: localDataSource,
+  );
 }
 
 @riverpod
@@ -45,6 +55,7 @@ class AppointmentController extends _$AppointmentController {
 
   Future<void> createAppointment({
     required String vetId,
+    String? petId,
     required String petName,
     required DateTime dateTime,
     required AppointmentType type,
@@ -55,6 +66,7 @@ class AppointmentController extends _$AppointmentController {
     final useCase = ref.read(createAppointmentUseCaseProvider);
     final result = await useCase(CreateAppointmentParams(
       vetId: vetId,
+      petId: petId,
       petName: petName,
       dateTime: dateTime,
       type: type,

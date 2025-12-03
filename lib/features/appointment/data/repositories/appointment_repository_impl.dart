@@ -3,15 +3,21 @@ import '../../../../core/error/failures.dart';
 import '../../domain/entities/appointment_entity.dart';
 import '../../domain/repositories/appointment_repository.dart';
 import '../datasources/appointment_remote_datasource.dart';
+import '../datasources/appointment_local_datasource.dart';
 
 class AppointmentRepositoryImpl implements AppointmentRepository {
   final AppointmentRemoteDataSource remoteDataSource;
+  final AppointmentLocalDataSource localDataSource;
 
-  AppointmentRepositoryImpl({required this.remoteDataSource});
+  AppointmentRepositoryImpl({
+    required this.remoteDataSource,
+    required this.localDataSource,
+  });
 
   @override
   Future<Either<Failure, AppointmentEntity>> createAppointment({
     required String vetId,
+    String? petId,
     required String petName,
     required DateTime dateTime,
     required AppointmentType type,
@@ -20,6 +26,7 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
     try {
       final appointment = await remoteDataSource.createAppointment(
         vetId: vetId,
+        petId: petId,
         petName: petName,
         dateTime: dateTime,
         type: type,
@@ -35,18 +42,36 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
   Future<Either<Failure, List<AppointmentEntity>>> getVetAppointments(String vetId) async {
     try {
       final appointments = await remoteDataSource.getVetAppointments(vetId);
+      // Atualizar cache
+      await localDataSource.cacheAppointments(vetId, appointments);
       return Right(appointments);
     } catch (e) {
+      // Se falhar, tentar buscar do cache
+      try {
+        final cachedAppointments = await localDataSource.getCachedAppointments(vetId);
+        if (cachedAppointments.isNotEmpty) {
+          return Right(cachedAppointments);
+        }
+      } catch (_) {}
       return Left(ServerFailure(e.toString()));
     }
   }
 
   @override
   Future<Either<Failure, List<AppointmentEntity>>> getOwnerAppointments(String ownerId) async {
-     try {
+    try {
       final appointments = await remoteDataSource.getOwnerAppointments(ownerId);
+      // Atualizar cache
+      await localDataSource.cacheAppointments(ownerId, appointments);
       return Right(appointments);
     } catch (e) {
+      // Se falhar, tentar buscar do cache
+      try {
+        final cachedAppointments = await localDataSource.getCachedAppointments(ownerId);
+        if (cachedAppointments.isNotEmpty) {
+          return Right(cachedAppointments);
+        }
+      } catch (_) {}
       return Left(ServerFailure(e.toString()));
     }
   }
@@ -56,7 +81,7 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
     required String appointmentId,
     required AppointmentStatus status,
   }) async {
-     try {
+    try {
       await remoteDataSource.updateAppointmentStatus(appointmentId, status);
       return const Right(null);
     } catch (e) {
