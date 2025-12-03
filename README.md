@@ -1,89 +1,89 @@
 # VetField 🐾
 
-**VetField** is a modern Flutter application designed to connect pet owners with veterinary professionals. It simplifies the process of finding vets, booking appointments, and managing pet health records.
+**VetField** é um aplicativo moderno em Flutter desenvolvido para conectar tutores de pets a profissionais veterinários. Ele simplifica o processo de encontrar veterinários, agendar consultas e gerenciar o histórico de saúde dos seus animais de estimação.
 
-## 📱 Features
+## 📱 Funcionalidades
 
-### 👤 For Pet Owners
-- **Find Vets:** Search for veterinarians by location, specialty, price, and rating.
-- **Interactive Map:** View nearby clinics and vets on a Google Map with custom markers.
-- **Book Appointments:** Schedule appointments easily with real-time availability.
-- **Health Timeline:** Track your pet's vaccines, exams, and medical history in a visual timeline.
-- **SOS Mode:** Quickly find the nearest available vet in emergencies.
-- **VetRide:** Integration with Uber to request a ride to the clinic.
+### 👤 Para Tutores (Donos de Pets)
+- **Encontrar Veterinários:** Busque veterinários por localização, especialidade, preço e avaliação.
+- **Mapa Interativo:** Visualize clínicas e veterinários próximos em um mapa do Google com marcadores personalizados.
+- **Agendamento de Consultas:** Marque consultas facilmente com disponibilidade em tempo real.
+- **Linha do Tempo de Saúde:** Acompanhe vacinas, exames e histórico médico do seu pet em uma linha do tempo visual.
+- **Modo SOS:** Encontre rapidamente o veterinário disponível mais próximo em casos de emergência.
+- **VetRide:** Integração com Uber para solicitar transporte até a clínica.
 
-### 👨‍⚕️ For Veterinarians
-- **Dashboard:** Manage appointments and view daily schedules.
-- **Patient Records:** Access pet health histories and owner details.
-- **Availability:** Set working hours and manage consultation types.
+### 👨‍⚕️ Para Veterinários
+- **Painel de Controle:** Gerencie consultas e visualize sua agenda diária.
+- **Prontuários:** Acesse o histórico de saúde dos pets e detalhes dos tutores.
+- **Disponibilidade:** Defina horários de atendimento e gerencie tipos de consulta.
 
-## 🛠️ Tech Stack
+## 🛠️ Tecnologias Utilizadas
 
 - **Framework:** [Flutter](https://flutter.dev/) (Dart)
-- **State Management:** [Riverpod](https://riverpod.dev/) (Code Generation & AsyncNotifier)
-- **Backend & Auth:** [Supabase](https://supabase.com/) (PostgreSQL, Auth, Realtime, Edge Functions)
-- **Navigation:** [GoRouter](https://pub.dev/packages/go_router)
-- **Maps:** [Google Maps Flutter](https://pub.dev/packages/google_maps_flutter)
-- **Code Generation:** `build_runner`, `freezed`, `json_serializable`, `riverpod_generator`
+- **Gerenciamento de Estado:** [Riverpod](https://riverpod.dev/) (Code Generation & AsyncNotifier)
+- **Backend & Autenticação:** [Supabase](https://supabase.com/) (PostgreSQL, Auth, Realtime, Edge Functions)
+- **Navegação:** [GoRouter](https://pub.dev/packages/go_router)
+- **Mapas:** [Google Maps Flutter](https://pub.dev/packages/google_maps_flutter)
+- **Geração de Código:** `build_runner`, `freezed`, `json_serializable`, `riverpod_generator`
 
-## 🚀 Getting Started
+## 🚀 Como Iniciar
 
-### Prerequisites
-- Flutter SDK (Latest Stable)
+### Pré-requisitos
+- Flutter SDK (Última versão estável)
 - Dart SDK
-- Supabase Account & Project
+- Conta e Projeto no Supabase
 
-### Installation
+### Instalação
 
-1. **Clone the repository**
+1. **Clone o repositório**
    ```bash
    git clone https://github.com/RickTheBoy-ops/VetField.git
    cd VetField/vetfield_flutter
    ```
 
-2. **Install Dependencies**
+2. **Instale as Dependências**
    ```bash
    flutter pub get
    ```
 
-3. **Environment Setup**
-   Create a `.env` file in the root directory and add your Supabase credentials:
+3. **Configuração de Ambiente**
+   Crie um arquivo `.env` na raiz do projeto e adicione suas credenciais do Supabase:
    ```env
-   SUPABASE_URL=your_supabase_url
-   SUPABASE_ANON_KEY=your_supabase_anon_key
-   GOOGLE_MAPS_API_KEY=your_google_maps_key
+   SUPABASE_URL=sua_url_supabase
+   SUPABASE_ANON_KEY=sua_chave_anonima_supabase
+   GOOGLE_MAPS_API_KEY=sua_chave_google_maps
    ```
 
-4. **Code Generation**
-   Run the build runner to generate required files:
+4. **Geração de Código**
+   Execute o build runner para gerar os arquivos necessários:
    ```bash
    dart run build_runner build --delete-conflicting-outputs
    ```
 
-5. **Run the App**
+5. **Executar o App**
    ```bash
    flutter run
    ```
 
-## 📂 Project Structure
+## 📂 Estrutura do Projeto
 
 ```
 lib/
-├── core/            # Core utilities, theme, router, and shared providers
-├── features/        # Feature-based architecture (Auth, Appointment, Owner, Health, Vet)
-│   ├── data/        # Repositories, Data Sources, Models
-│   ├── domain/      # Entities, Use Cases, Repository Interfaces
-│   └── presentation/# Screens, Widgets, Providers (Controllers)
-├── screens/         # General screens (Splash, Onboarding, Navigation)
-└── widgets/         # Shared UI components
+├── core/            # Utilitários, temas, rotas e providers compartilhados
+├── features/        # Arquitetura baseada em features (Auth, Appointment, Owner, Health, Vet)
+│   ├── data/        # Repositórios, Data Sources, Models
+│   ├── domain/      # Entidades, Casos de Uso, Interfaces de Repositório
+│   └── presentation/# Telas, Widgets, Providers (Controllers)
+├── screens/         # Telas gerais (Splash, Onboarding, Navegação)
+└── widgets/         # Componentes de UI compartilhados
 ```
 
-## 🤝 Contributing
+## 🤝 Contribuição
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contribuições são bem-vindas! Sinta-se à vontade para enviar um Pull Request.
 
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. Faça um Fork do projeto
+2. Crie sua branch de feature (`git checkout -b feature/MinhaFeatureIncrivel`)
+3. Comite suas mudanças (`git commit -m 'Adiciona alguma feature incrível'`)
+4. Dê um Push para a branch (`git push origin feature/MinhaFeatureIncrivel`)
+5. Abra um Pull Request
