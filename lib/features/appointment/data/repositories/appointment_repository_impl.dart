@@ -63,4 +63,17 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> updateAppointmentDateTime({
+    required String appointmentId,
+    required DateTime newDateTime,
+  }) async {
+    try {
+      await remoteDataSource.updateAppointmentDateTime(appointmentId, newDateTime);
+      return const Right(null);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

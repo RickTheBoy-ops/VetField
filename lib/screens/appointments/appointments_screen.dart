@@ -300,8 +300,42 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> with Si
                     ),
                   ),
                   TextButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (appointment == null) return;
+                      final pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: appointment.dateTime,
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime.now().add(const Duration(days: 365)),
+                      );
+                      if (pickedDate == null) return;
+                      if (!mounted) return;
+                      final pickedTime = await showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay(
+                          hour: appointment.dateTime.hour,
+                          minute: appointment.dateTime.minute,
+                        ),
+                      );
+                      if (pickedTime == null) return;
+                      final newDateTime = DateTime(
+                        pickedDate.year,
+                        pickedDate.month,
+                        pickedDate.day,
+                        pickedTime.hour,
+                        pickedTime.minute,
+                      );
+                      await ref
+                          .read(appointmentControllerProvider.notifier)
+                          .reschedule(id: appointment.id, newDateTime: newDateTime);
+                      final user = ref.read(supabaseClientProvider).auth.currentUser;
+                      if (user != null) {
+                        ref.invalidate(ownerAppointmentsProvider(user.id));
+                      }
+                      if (!mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Agendamento remarcado')),
+                      );
                     },
                     child: const Text(
                       'Remarcar',
@@ -311,6 +345,49 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> with Si
                   TextButton(
                     onPressed: () {
                       if (appointment == null) return;
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: Colors.white,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                        ),
+                        builder: (c) {
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text(
+                                      'Detalhes do Agendamento',
+                                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                    ),
+                                    IconButton(
+                                      onPressed: () => Navigator.of(c).pop(),
+                                      icon: const Icon(Icons.close),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                Text('Serviço: ${_formatType(appointment.type)}'),
+                                Text('Veterinário: ${appointment.vetName ?? 'Veterinário'}'),
+                                Text('Data: ${_formatDateOnly(appointment.dateTime)}'),
+                                Text('Hora: ${_formatTime(appointment.dateTime)}'),
+                                Text('Status: ${appointment.status.name}'),
+                                if (appointment.notes != null && appointment.notes!.isNotEmpty)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Text('Observações: ${appointment.notes!}'),
+                                  ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
                     },
                     child: const Text(
                       'Detalhes',

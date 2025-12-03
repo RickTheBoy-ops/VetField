@@ -7,6 +7,7 @@ import '../../domain/entities/appointment_entity.dart';
 import '../../domain/repositories/appointment_repository.dart';
 import '../../domain/usecases/create_appointment_usecase.dart';
 import '../../domain/usecases/update_appointment_status_usecase.dart';
+import '../../domain/usecases/update_appointment_datetime_usecase.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'appointment_provider.g.dart';
@@ -70,6 +71,20 @@ class AppointmentController extends _$AppointmentController {
     state = const AsyncValue.loading();
     final useCase = ref.read(updateAppointmentStatusUseCaseProvider);
     final result = await useCase(UpdateAppointmentStatusParams(appointmentId: id, status: status));
+    result.fold(
+      (failure) => state = AsyncValue.error(failure.message, StackTrace.current),
+      (_) => state = const AsyncValue.data(null),
+    );
+  }
+
+  Future<void> reschedule({required String id, required DateTime newDateTime}) async {
+    state = const AsyncValue.loading();
+    final repository = ref.read(appointmentRepositoryProvider);
+    final useCase = UpdateAppointmentDateTimeUseCase(repository);
+    final result = await useCase(UpdateAppointmentDateTimeParams(
+      appointmentId: id,
+      newDateTime: newDateTime,
+    ));
     result.fold(
       (failure) => state = AsyncValue.error(failure.message, StackTrace.current),
       (_) => state = const AsyncValue.data(null),

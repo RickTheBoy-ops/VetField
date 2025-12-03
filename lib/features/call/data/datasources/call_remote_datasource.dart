@@ -6,6 +6,9 @@ abstract class CallRemoteDataSource {
     required String ownerId,
     required String vetId,
   });
+  Future<void> completeCall({
+    required String appointmentId,
+  });
 }
 
 class CallRemoteDataSourceImpl implements CallRemoteDataSource {
@@ -41,5 +44,15 @@ class CallRemoteDataSourceImpl implements CallRemoteDataSource {
         .single();
     final name = inserted['room_name'] as String;
     return 'https://meet.jit.si/$name';
+  }
+
+  @override
+  Future<void> completeCall({
+    required String appointmentId,
+  }) async {
+    await client
+        .from('video_calls')
+        .update({'status': 'completed'})
+        .eq('appointment_id', appointmentId);
   }
 }

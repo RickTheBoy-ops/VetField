@@ -509,13 +509,41 @@ class _VetDashboardScreenState extends ConsumerState<VetDashboardScreen> {
                           const SizedBox(width: 12),
                           TextButton(
                             onPressed: () async {
+                              final confirmed = await showDialog<bool>(
+                                context: context,
+                                builder: (c) => AlertDialog(
+                                  title: const Text('Recusar agendamento?'),
+                                  content: const Text(
+                                    'Esta ação não pode ser desfeita.',
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(c).pop(false),
+                                      child: const Text('Cancelar'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(c).pop(true),
+                                      child: const Text('Confirmar'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                              if (confirmed != true) return;
                               await ref
                                   .read(appointmentControllerProvider.notifier)
                                   .updateStatus(
                                     id: apt.id,
                                     status: AppointmentStatus.cancelled,
                                   );
+                              if (!context.mounted) return;
                               ref.invalidate(vetAppointmentsProvider);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Agendamento recusado'),
+                                ),
+                              );
                             },
                             child: const Text('Recusar'),
                           ),
@@ -526,13 +554,44 @@ class _VetDashboardScreenState extends ConsumerState<VetDashboardScreen> {
                         children: [
                           TextButton(
                             onPressed: () async {
+                              final ok = await showDialog<bool>(
+                                context: context,
+                                builder: (c) => AlertDialog(
+                                  title: const Text('Concluir atendimento?'),
+                                  content: const Text(
+                                    'Isso marcará o agendamento como concluído.',
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(c).pop(false),
+                                      child: const Text('Cancelar'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(c).pop(true),
+                                      child: const Text('Concluir'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                              if (ok != true) return;
                               await ref
                                   .read(appointmentControllerProvider.notifier)
                                   .updateStatus(
                                     id: apt.id,
                                     status: AppointmentStatus.completed,
                                   );
+                              await ref
+                                  .read(callControllerProvider.notifier)
+                                  .complete(appointmentId: apt.id);
+                              if (!context.mounted) return;
                               ref.invalidate(vetAppointmentsProvider);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Atendimento concluído'),
+                                ),
+                              );
                             },
                             child: const Text('Concluir'),
                           ),
@@ -555,6 +614,123 @@ class _VetDashboardScreenState extends ConsumerState<VetDashboardScreen> {
                               }
                             },
                             child: const Text('Teleconsulta'),
+                          ),
+                          const SizedBox(width: 12),
+                          TextButton(
+                            onPressed: () async {
+                              final pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: apt.dateTime,
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime.now().add(
+                                  const Duration(days: 365),
+                                ),
+                              );
+                              if (pickedDate == null) return;
+                              if (!context.mounted) return;
+                              final pickedTime = await showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay(
+                                  hour: apt.dateTime.hour,
+                                  minute: apt.dateTime.minute,
+                                ),
+                              );
+                              if (pickedTime == null) return;
+                              final newDateTime = DateTime(
+                                pickedDate.year,
+                                pickedDate.month,
+                                pickedDate.day,
+                                pickedTime.hour,
+                                pickedTime.minute,
+                              );
+                              await ref
+                                  .read(appointmentControllerProvider.notifier)
+                                  .reschedule(
+                                    id: apt.id,
+                                    newDateTime: newDateTime,
+                                  );
+                              if (!context.mounted) return;
+                              ref.invalidate(vetAppointmentsProvider);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Agendamento remarcado'),
+                                ),
+                              );
+                            },
+                            child: const Text('Remarcar'),
+                          ),
+                          const SizedBox(width: 12),
+                          TextButton(
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.white,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(16),
+                                  ),
+                                ),
+                                builder: (c) {
+                                  return Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                      16,
+                                      16,
+                                      16,
+                                      24,
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            const Text(
+                                              'Detalhes do Agendamento',
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            IconButton(
+                                              onPressed: () =>
+                                                  Navigator.of(c).pop(),
+                                              icon: const Icon(Icons.close),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text('Paciente: ${apt.petName}'),
+                                        Text('Tipo: ${_formatType(apt.type)}'),
+                                        Text(
+                                          'Tutor: ${apt.ownerName ?? 'N/A'}',
+                                        ),
+                                        Text(
+                                          'Data: ${_formatDate(apt.dateTime)}',
+                                        ),
+                                        Text(
+                                          'Status: ${_formatStatus(apt.status)}',
+                                        ),
+                                        if (apt.notes != null &&
+                                            apt.notes!.isNotEmpty)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 8.0,
+                                            ),
+                                            child: Text(
+                                              'Observações: ${apt.notes!}',
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: const Text('Detalhes'),
                           ),
                         ],
                       ),

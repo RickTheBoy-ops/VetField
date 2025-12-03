@@ -7,4 +7,7 @@ abstract class CallRepository {
     required String ownerId,
     required String vetId,
   });
+  Future<Either<Failure, void>> completeCall({
+    required String appointmentId,
+  });
 }

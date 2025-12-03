@@ -18,4 +18,9 @@ abstract class AppointmentRepository {
     required String appointmentId,
     required AppointmentStatus status,
   });
+
+  Future<Either<Failure, void>> updateAppointmentDateTime({
+    required String appointmentId,
+    required DateTime newDateTime,
+  });
 }

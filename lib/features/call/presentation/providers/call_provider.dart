@@ -37,4 +37,12 @@ class CallController extends _$CallController {
     );
     return result.fold((l) => throw Exception(l.message), (url) => url);
   }
+
+  Future<void> complete({
+    required String appointmentId,
+  }) async {
+    final repo = ref.read(callRepositoryProvider);
+    final result = await repo.completeCall(appointmentId: appointmentId);
+    result.fold((l) => throw Exception(l.message), (_) => null);
+  }
 }

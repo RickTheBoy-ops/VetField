@@ -24,4 +24,16 @@ class CallRepositoryImpl implements CallRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> completeCall({
+    required String appointmentId,
+  }) async {
+    try {
+      await remote.completeCall(appointmentId: appointmentId);
+      return const Right(null);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

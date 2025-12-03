@@ -15,6 +15,7 @@ abstract class AppointmentRemoteDataSource {
   Future<List<AppointmentModel>> getOwnerAppointments(String ownerId);
   
   Future<void> updateAppointmentStatus(String id, AppointmentStatus status);
+  Future<void> updateAppointmentDateTime(String id, DateTime newDateTime);
 }
 
 class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
@@ -99,6 +100,14 @@ class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
     await supabaseClient
         .from('appointments')
         .update({'status': status.name})
+        .eq('id', id);
+  }
+
+  @override
+  Future<void> updateAppointmentDateTime(String id, DateTime newDateTime) async {
+    await supabaseClient
+        .from('appointments')
+        .update({'date_time': newDateTime.toIso8601String()})
         .eq('id', id);
   }
 }
