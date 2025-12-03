@@ -2,20 +2,39 @@
 
 **VetField** é um aplicativo moderno em Flutter desenvolvido para conectar tutores de pets a profissionais veterinários. Ele simplifica o processo de encontrar veterinários, agendar consultas e gerenciar o histórico de saúde dos seus animais de estimação.
 
-## 📱 Funcionalidades
+## 📱 Funcionalidades Completas
 
-### 👤 Para Tutores (Donos de Pets)
-- **Encontrar Veterinários:** Busque veterinários por localização, especialidade, preço e avaliação.
-- **Mapa Interativo:** Visualize clínicas e veterinários próximos em um mapa do Google com marcadores personalizados.
-- **Agendamento de Consultas:** Marque consultas facilmente com disponibilidade em tempo real.
-- **Linha do Tempo de Saúde:** Acompanhe vacinas, exames e histórico médico do seu pet em uma linha do tempo visual.
-- **Modo SOS:** Encontre rapidamente o veterinário disponível mais próximo em casos de emergência.
-- **VetRide:** Integração com Uber para solicitar transporte até a clínica.
+### 🔍 Busca e Exploração
+- **Busca Avançada:** Encontre veterinários e clínicas por nome, especialidade, localização, faixa de preço e avaliação mínima.
+- **Filtros Inteligentes:** Refine sua busca com filtros de raio de distância (km), disponibilidade e tipo de atendimento.
+- **Mapa Interativo:** Visualize profissionais próximos no Google Maps com marcadores personalizados e agrupamento.
+- **Tela Explorar:** Descubra artigos, dicas de saúde e novidades do mundo pet.
 
-### 👨‍⚕️ Para Veterinários
-- **Painel de Controle:** Gerencie consultas e visualize sua agenda diária.
-- **Prontuários:** Acesse o histórico de saúde dos pets e detalhes dos tutores.
-- **Disponibilidade:** Defina horários de atendimento e gerencie tipos de consulta.
+### 🏥 Clínicas e Veterinários
+- **Perfil Detalhado:** Visualize informações completas do veterinário ou clínica, incluindo biografia, especialidades e fotos.
+- **Detalhes da Clínica:** Página dedicada com informações sobre a infraestrutura, serviços oferecidos e equipe.
+- **Avaliações:** Sistema de rating e comentários para ajudar na escolha do melhor profissional.
+- **VetRide:** Integração direta com Uber para solicitar transporte até a clínica ou consultório.
+
+### 📅 Agendamento e Consultas
+- **Reserva Fácil:** Selecione datas e horários disponíveis em tempo real.
+- **Meus Agendamentos:** Acompanhe consultas futuras, passadas e canceladas.
+- **Status da Consulta:** Atualizações em tempo real sobre o status do agendamento (confirmado, pendente, concluído).
+
+### 🐾 Saúde do Pet
+- **Linha do Tempo de Saúde:** Histórico visual completo de vacinas, exames, cirurgias e consultas do seu pet.
+- **Prontuário Digital:** Acesso fácil aos dados médicos do animal.
+
+### 👨‍⚕️ Área do Veterinário
+- **Dashboard Profissional:** Visão geral dos agendamentos do dia e solicitações pendentes.
+- **Gestão de Agenda:** Calendário interativo para visualizar e gerenciar horários.
+- **Prescrições:** Emissão e visualização de receitas médicas digitais.
+- **Perfil Profissional:** Edição de dados, especialidades e preços.
+
+### 🔐 Autenticação e Perfil
+- **Login Seguro:** Autenticação via E-mail/Senha e Biometria.
+- **Gestão de Perfil:** Edição de dados pessoais, foto de perfil e preferências.
+- **Onboarding:** Telas introdutórias para novos usuários.
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -24,6 +43,7 @@
 - **Backend & Autenticação:** [Supabase](https://supabase.com/) (PostgreSQL, Auth, Realtime, Edge Functions)
 - **Navegação:** [GoRouter](https://pub.dev/packages/go_router)
 - **Mapas:** [Google Maps Flutter](https://pub.dev/packages/google_maps_flutter)
+- **Localização:** `geolocator` para serviços de GPS.
 - **Geração de Código:** `build_runner`, `freezed`, `json_serializable`, `riverpod_generator`
 
 ## 🚀 Como Iniciar
@@ -70,11 +90,19 @@
 ```
 lib/
 ├── core/            # Utilitários, temas, rotas e providers compartilhados
-├── features/        # Arquitetura baseada em features (Auth, Appointment, Owner, Health, Vet)
-│   ├── data/        # Repositórios, Data Sources, Models
-│   ├── domain/      # Entidades, Casos de Uso, Interfaces de Repositório
-│   └── presentation/# Telas, Widgets, Providers (Controllers)
-├── screens/         # Telas gerais (Splash, Onboarding, Navegação)
+├── features/        # Arquitetura baseada em features
+│   ├── appointment/ # Agendamento, Booking
+│   ├── auth/        # Login, Registro, Perfil
+│   ├── call/        # Funcionalidades de chamada (em desenvolvimento)
+│   ├── health/      # Linha do tempo de saúde
+│   ├── owner/       # Mapa, Busca de Vets
+│   └── vet/         # Dashboard, Calendário, Prescrição
+├── screens/         # Telas gerais e de navegação
+│   ├── clinic_details/ # Detalhes da clínica
+│   ├── doctor/         # Detalhes do médico
+│   ├── explore/        # Tela de exploração
+│   ├── search/         # Tela de busca
+│   └── ...
 └── widgets/         # Componentes de UI compartilhados
 ```
 
