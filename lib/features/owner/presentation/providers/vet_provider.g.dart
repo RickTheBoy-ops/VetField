@@ -13,17 +13,15 @@ String _$vetRemoteDataSourceHash() =>
 @ProviderFor(vetRemoteDataSource)
 final vetRemoteDataSourceProvider =
     AutoDisposeProvider<VetRemoteDataSource>.internal(
-      vetRemoteDataSource,
-      name: r'vetRemoteDataSourceProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$vetRemoteDataSourceHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  vetRemoteDataSource,
+  name: r'vetRemoteDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$vetRemoteDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef VetRemoteDataSourceRef = AutoDisposeProviderRef<VetRemoteDataSource>;
 String _$vetRepositoryHash() => r'b7ad31edd3ffb70012be5a4cba79fce51bef70c5';
 
@@ -39,8 +37,6 @@ final vetRepositoryProvider = AutoDisposeProvider<VetRepository>.internal(
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef VetRepositoryRef = AutoDisposeProviderRef<VetRepository>;
 String _$getNearbyVetsUseCaseHash() =>
     r'8f8a2019e9984ffb06bb3c9076fe1eb2497f0ca7';
@@ -49,17 +45,15 @@ String _$getNearbyVetsUseCaseHash() =>
 @ProviderFor(getNearbyVetsUseCase)
 final getNearbyVetsUseCaseProvider =
     AutoDisposeProvider<GetNearbyVetsUseCase>.internal(
-      getNearbyVetsUseCase,
-      name: r'getNearbyVetsUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$getNearbyVetsUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  getNearbyVetsUseCase,
+  name: r'getNearbyVetsUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$getNearbyVetsUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef GetNearbyVetsUseCaseRef = AutoDisposeProviderRef<GetNearbyVetsUseCase>;
 String _$getSosNearestVetUseCaseHash() =>
     r'f25690213d97265701288f3eb3c82285c5c0adb5';
@@ -68,37 +62,32 @@ String _$getSosNearestVetUseCaseHash() =>
 @ProviderFor(getSosNearestVetUseCase)
 final getSosNearestVetUseCaseProvider =
     AutoDisposeProvider<GetSosNearestVetUseCase>.internal(
-      getSosNearestVetUseCase,
-      name: r'getSosNearestVetUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$getSosNearestVetUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  getSosNearestVetUseCase,
+  name: r'getSosNearestVetUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$getSosNearestVetUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef GetSosNearestVetUseCaseRef =
-    AutoDisposeProviderRef<GetSosNearestVetUseCase>;
+typedef GetSosNearestVetUseCaseRef
+    = AutoDisposeProviderRef<GetSosNearestVetUseCase>;
 String _$nearbyVetsControllerHash() =>
     r'7e643b76cd58a471fca3b2c3401d2500ac4f59c3';
 
 /// See also [NearbyVetsController].
 @ProviderFor(NearbyVetsController)
-final nearbyVetsControllerProvider =
-    AutoDisposeAsyncNotifierProvider<
-      NearbyVetsController,
-      List<VetEntity>
-    >.internal(
-      NearbyVetsController.new,
-      name: r'nearbyVetsControllerProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$nearbyVetsControllerHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+final nearbyVetsControllerProvider = AutoDisposeAsyncNotifierProvider<
+    NearbyVetsController, List<VetEntity>>.internal(
+  NearbyVetsController.new,
+  name: r'nearbyVetsControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$nearbyVetsControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$NearbyVetsController = AutoDisposeAsyncNotifier<List<VetEntity>>;
 String _$searchVetsControllerHash() =>
@@ -106,19 +95,16 @@ String _$searchVetsControllerHash() =>
 
 /// See also [SearchVetsController].
 @ProviderFor(SearchVetsController)
-final searchVetsControllerProvider =
-    AutoDisposeAsyncNotifierProvider<
-      SearchVetsController,
-      List<VetEntity>
-    >.internal(
-      SearchVetsController.new,
-      name: r'searchVetsControllerProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$searchVetsControllerHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+final searchVetsControllerProvider = AutoDisposeAsyncNotifierProvider<
+    SearchVetsController, List<VetEntity>>.internal(
+  SearchVetsController.new,
+  name: r'searchVetsControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$searchVetsControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$SearchVetsController = AutoDisposeAsyncNotifier<List<VetEntity>>;
 String _$sosNearestVetControllerHash() =>
@@ -126,20 +112,17 @@ String _$sosNearestVetControllerHash() =>
 
 /// See also [SosNearestVetController].
 @ProviderFor(SosNearestVetController)
-final sosNearestVetControllerProvider =
-    AutoDisposeAsyncNotifierProvider<
-      SosNearestVetController,
-      VetEntity?
-    >.internal(
-      SosNearestVetController.new,
-      name: r'sosNearestVetControllerProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$sosNearestVetControllerHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+final sosNearestVetControllerProvider = AutoDisposeAsyncNotifierProvider<
+    SosNearestVetController, VetEntity?>.internal(
+  SosNearestVetController.new,
+  name: r'sosNearestVetControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$sosNearestVetControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$SosNearestVetController = AutoDisposeAsyncNotifier<VetEntity?>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

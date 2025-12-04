@@ -9,24 +9,9 @@ void main() {
   });
 
   group('GamificationLocalDataSource', () {
-    test('should have proper structure for caching points', () {
-      expect(dataSource.cachePoints, isA<Function>());
-      expect(dataSource.getCachedPoints, isA<Function>());
-    });
-
-    test('should have proper structure for caching level', () {
-      expect(dataSource.cacheLevel, isA<Function>());
-      expect(dataSource.getCachedLevel, isA<Function>());
-    });
-
-    test('should have proper structure for caching badges', () {
-      expect(dataSource.cacheBadges, isA<Function>());
-      expect(dataSource.getCachedBadges, isA<Function>());
-    });
-
-    test('should have proper structure for caching achievements', () {
-      expect(dataSource.cacheAchievements, isA<Function>());
-      expect(dataSource.getCachedAchievements, isA<Function>());
+    test('should have proper structure for caching profile', () {
+      expect(dataSource.cacheProfile, isA<Function>());
+      expect(dataSource.getCachedProfile, isA<Function>());
     });
 
     test('should have clearCache method', () {

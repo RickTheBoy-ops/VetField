@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../../../core/providers/supabase_provider.dart';
 import '../../data/datasources/social_remote_datasource.dart';
+import '../../data/datasources/social_local_datasource.dart';
 import '../../data/repositories/social_repository_impl.dart';
 import '../../domain/repositories/social_repository.dart';
 import '../../domain/entities/social_pet_entity.dart';
@@ -17,11 +18,20 @@ SocialRemoteDataSource socialRemoteDataSource(Ref ref) {
   return SocialRemoteDataSourceImpl(supabaseClient);
 }
 
+@riverpod
+SocialLocalDataSource socialLocalDataSource(Ref ref) {
+  return SocialLocalDataSourceImpl();
+}
+
 // Repositories
 @riverpod
 SocialRepository socialRepository(Ref ref) {
   final remoteDataSource = ref.watch(socialRemoteDataSourceProvider);
-  return SocialRepositoryImpl(remoteDataSource: remoteDataSource);
+  final localDataSource = ref.watch(socialLocalDataSourceProvider);
+  return SocialRepositoryImpl(
+    remoteDataSource: remoteDataSource,
+    localDataSource: localDataSource,
+  );
 }
 
 // Social Controller

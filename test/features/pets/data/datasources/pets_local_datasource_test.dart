@@ -26,11 +26,6 @@ void main() {
       expect(dataSource.cachePet, isA<Function>());
     });
 
-      // Note: This test would need actual Hive integration
-      // For now, we verify the structure is correct
-      expect(dataSource, isNotNull);
-    });
-
     test('should handle exceptions when caching fails', () async {
       // Verify error handling structure
       expect(dataSource.cachePet, isA<Function>());

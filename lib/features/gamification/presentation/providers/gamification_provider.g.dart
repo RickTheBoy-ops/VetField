@@ -13,19 +13,17 @@ String _$gamificationRemoteDataSourceHash() =>
 @ProviderFor(gamificationRemoteDataSource)
 final gamificationRemoteDataSourceProvider =
     AutoDisposeProvider<GamificationRemoteDataSource>.internal(
-      gamificationRemoteDataSource,
-      name: r'gamificationRemoteDataSourceProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$gamificationRemoteDataSourceHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  gamificationRemoteDataSource,
+  name: r'gamificationRemoteDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$gamificationRemoteDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef GamificationRemoteDataSourceRef =
-    AutoDisposeProviderRef<GamificationRemoteDataSource>;
+typedef GamificationRemoteDataSourceRef
+    = AutoDisposeProviderRef<GamificationRemoteDataSource>;
 String _$gamificationRepositoryHash() =>
     r'574a5ebadd78eab38689f3ddb09ae4cf05ccd11f';
 
@@ -33,19 +31,17 @@ String _$gamificationRepositoryHash() =>
 @ProviderFor(gamificationRepository)
 final gamificationRepositoryProvider =
     AutoDisposeProvider<GamificationRepository>.internal(
-      gamificationRepository,
-      name: r'gamificationRepositoryProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$gamificationRepositoryHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  gamificationRepository,
+  name: r'gamificationRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$gamificationRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef GamificationRepositoryRef =
-    AutoDisposeProviderRef<GamificationRepository>;
+typedef GamificationRepositoryRef
+    = AutoDisposeProviderRef<GamificationRepository>;
 String _$userGamificationProfileHash() =>
     r'7d836ea2808b39df1a304977f1dc3a6974f87018';
 
@@ -53,19 +49,17 @@ String _$userGamificationProfileHash() =>
 @ProviderFor(userGamificationProfile)
 final userGamificationProfileProvider =
     AutoDisposeFutureProvider<GamificationProfile>.internal(
-      userGamificationProfile,
-      name: r'userGamificationProfileProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$userGamificationProfileHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  userGamificationProfile,
+  name: r'userGamificationProfileProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$userGamificationProfileHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef UserGamificationProfileRef =
-    AutoDisposeFutureProviderRef<GamificationProfile>;
+typedef UserGamificationProfileRef
+    = AutoDisposeFutureProviderRef<GamificationProfile>;
 String _$userTransactionHistoryHash() =>
     r'8e5a4eea850126e7627031844a1576f8d9cc0db9';
 
@@ -73,19 +67,17 @@ String _$userTransactionHistoryHash() =>
 @ProviderFor(userTransactionHistory)
 final userTransactionHistoryProvider =
     AutoDisposeFutureProvider<List<PointTransaction>>.internal(
-      userTransactionHistory,
-      name: r'userTransactionHistoryProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$userTransactionHistoryHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  userTransactionHistory,
+  name: r'userTransactionHistoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$userTransactionHistoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef UserTransactionHistoryRef =
-    AutoDisposeFutureProviderRef<List<PointTransaction>>;
+typedef UserTransactionHistoryRef
+    = AutoDisposeFutureProviderRef<List<PointTransaction>>;
 String _$leaderboardProviderHash() =>
     r'ecf127d6a692351f3b001799855b50ea72b9de90';
 
@@ -121,15 +113,21 @@ class LeaderboardProviderFamily
   const LeaderboardProviderFamily();
 
   /// See also [leaderboardProvider].
-  LeaderboardProviderProvider call({int limit = 10}) {
-    return LeaderboardProviderProvider(limit: limit);
+  LeaderboardProviderProvider call({
+    int limit = 10,
+  }) {
+    return LeaderboardProviderProvider(
+      limit: limit,
+    );
   }
 
   @override
   LeaderboardProviderProvider getProviderOverride(
     covariant LeaderboardProviderProvider provider,
   ) {
-    return call(limit: provider.limit);
+    return call(
+      limit: provider.limit,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -151,20 +149,24 @@ class LeaderboardProviderFamily
 class LeaderboardProviderProvider
     extends AutoDisposeFutureProvider<List<LeaderboardEntry>> {
   /// See also [leaderboardProvider].
-  LeaderboardProviderProvider({int limit = 10})
-    : this._internal(
-        (ref) =>
-            leaderboardProvider(ref as LeaderboardProviderRef, limit: limit),
-        from: leaderboardProviderProvider,
-        name: r'leaderboardProviderProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$leaderboardProviderHash,
-        dependencies: LeaderboardProviderFamily._dependencies,
-        allTransitiveDependencies:
-            LeaderboardProviderFamily._allTransitiveDependencies,
-        limit: limit,
-      );
+  LeaderboardProviderProvider({
+    int limit = 10,
+  }) : this._internal(
+          (ref) => leaderboardProvider(
+            ref as LeaderboardProviderRef,
+            limit: limit,
+          ),
+          from: leaderboardProviderProvider,
+          name: r'leaderboardProviderProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$leaderboardProviderHash,
+          dependencies: LeaderboardProviderFamily._dependencies,
+          allTransitiveDependencies:
+              LeaderboardProviderFamily._allTransitiveDependencies,
+          limit: limit,
+        );
 
   LeaderboardProviderProvider._internal(
     super._createNotifier, {
@@ -181,7 +183,7 @@ class LeaderboardProviderProvider
   @override
   Override overrideWith(
     FutureOr<List<LeaderboardEntry>> Function(LeaderboardProviderRef provider)
-    create,
+        create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -216,8 +218,6 @@ class LeaderboardProviderProvider
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin LeaderboardProviderRef
     on AutoDisposeFutureProviderRef<List<LeaderboardEntry>> {
   /// The parameter `limit` of this provider.
@@ -240,15 +240,15 @@ String _$gamificationControllerHash() =>
 @ProviderFor(GamificationController)
 final gamificationControllerProvider =
     AutoDisposeAsyncNotifierProvider<GamificationController, void>.internal(
-      GamificationController.new,
-      name: r'gamificationControllerProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$gamificationControllerHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  GamificationController.new,
+  name: r'gamificationControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$gamificationControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$GamificationController = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -13,17 +13,15 @@ String _$adsRemoteDataSourceHash() =>
 @ProviderFor(adsRemoteDataSource)
 final adsRemoteDataSourceProvider =
     AutoDisposeProvider<AdsRemoteDataSource>.internal(
-      adsRemoteDataSource,
-      name: r'adsRemoteDataSourceProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$adsRemoteDataSourceHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  adsRemoteDataSource,
+  name: r'adsRemoteDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$adsRemoteDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef AdsRemoteDataSourceRef = AutoDisposeProviderRef<AdsRemoteDataSource>;
 String _$adsRepositoryHash() => r'012f1b3ca582e719fae515907b9d2385b1d5dd3d';
 
@@ -39,8 +37,6 @@ final adsRepositoryProvider = AutoDisposeProvider<AdsRepository>.internal(
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef AdsRepositoryRef = AutoDisposeProviderRef<AdsRepository>;
 String _$getActiveCampaignsUseCaseHash() =>
     r'8dca35881816eef77eab2028bd2f5c3b8df7ef81';
@@ -49,19 +45,17 @@ String _$getActiveCampaignsUseCaseHash() =>
 @ProviderFor(getActiveCampaignsUseCase)
 final getActiveCampaignsUseCaseProvider =
     AutoDisposeProvider<GetActiveCampaignsUseCase>.internal(
-      getActiveCampaignsUseCase,
-      name: r'getActiveCampaignsUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$getActiveCampaignsUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  getActiveCampaignsUseCase,
+  name: r'getActiveCampaignsUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$getActiveCampaignsUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef GetActiveCampaignsUseCaseRef =
-    AutoDisposeProviderRef<GetActiveCampaignsUseCase>;
+typedef GetActiveCampaignsUseCaseRef
+    = AutoDisposeProviderRef<GetActiveCampaignsUseCase>;
 String _$trackImpressionUseCaseHash() =>
     r'02aaa2f8070ccad33dedff2ba393557b661fbfa9';
 
@@ -69,36 +63,32 @@ String _$trackImpressionUseCaseHash() =>
 @ProviderFor(trackImpressionUseCase)
 final trackImpressionUseCaseProvider =
     AutoDisposeProvider<TrackImpressionUseCase>.internal(
-      trackImpressionUseCase,
-      name: r'trackImpressionUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$trackImpressionUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  trackImpressionUseCase,
+  name: r'trackImpressionUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$trackImpressionUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef TrackImpressionUseCaseRef =
-    AutoDisposeProviderRef<TrackImpressionUseCase>;
+typedef TrackImpressionUseCaseRef
+    = AutoDisposeProviderRef<TrackImpressionUseCase>;
 String _$trackClickUseCaseHash() => r'c38e4a4fe744a77ac4446aad6f3d200730953cd5';
 
 /// See also [trackClickUseCase].
 @ProviderFor(trackClickUseCase)
 final trackClickUseCaseProvider =
     AutoDisposeProvider<TrackClickUseCase>.internal(
-      trackClickUseCase,
-      name: r'trackClickUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$trackClickUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  trackClickUseCase,
+  name: r'trackClickUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$trackClickUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef TrackClickUseCaseRef = AutoDisposeProviderRef<TrackClickUseCase>;
 String _$activeBannersProviderHash() =>
     r'3788a026c3264542d58a4517f0da37683357fd16';
@@ -107,19 +97,17 @@ String _$activeBannersProviderHash() =>
 @ProviderFor(activeBannersProvider)
 final activeBannersProviderProvider =
     AutoDisposeFutureProvider<List<CampaignEntity>>.internal(
-      activeBannersProvider,
-      name: r'activeBannersProviderProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$activeBannersProviderHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  activeBannersProvider,
+  name: r'activeBannersProviderProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$activeBannersProviderHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef ActiveBannersProviderRef =
-    AutoDisposeFutureProviderRef<List<CampaignEntity>>;
+typedef ActiveBannersProviderRef
+    = AutoDisposeFutureProviderRef<List<CampaignEntity>>;
 String _$vetCampaignsProviderHash() =>
     r'e623bc3ccc61db1bde52074c38334dd3bc1e4e94';
 
@@ -155,15 +143,21 @@ class VetCampaignsProviderFamily
   const VetCampaignsProviderFamily();
 
   /// See also [vetCampaignsProvider].
-  VetCampaignsProviderProvider call(String vetId) {
-    return VetCampaignsProviderProvider(vetId);
+  VetCampaignsProviderProvider call(
+    String vetId,
+  ) {
+    return VetCampaignsProviderProvider(
+      vetId,
+    );
   }
 
   @override
   VetCampaignsProviderProvider getProviderOverride(
     covariant VetCampaignsProviderProvider provider,
   ) {
-    return call(provider.vetId);
+    return call(
+      provider.vetId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -185,19 +179,24 @@ class VetCampaignsProviderFamily
 class VetCampaignsProviderProvider
     extends AutoDisposeFutureProvider<List<CampaignEntity>> {
   /// See also [vetCampaignsProvider].
-  VetCampaignsProviderProvider(String vetId)
-    : this._internal(
-        (ref) => vetCampaignsProvider(ref as VetCampaignsProviderRef, vetId),
-        from: vetCampaignsProviderProvider,
-        name: r'vetCampaignsProviderProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$vetCampaignsProviderHash,
-        dependencies: VetCampaignsProviderFamily._dependencies,
-        allTransitiveDependencies:
-            VetCampaignsProviderFamily._allTransitiveDependencies,
-        vetId: vetId,
-      );
+  VetCampaignsProviderProvider(
+    String vetId,
+  ) : this._internal(
+          (ref) => vetCampaignsProvider(
+            ref as VetCampaignsProviderRef,
+            vetId,
+          ),
+          from: vetCampaignsProviderProvider,
+          name: r'vetCampaignsProviderProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$vetCampaignsProviderHash,
+          dependencies: VetCampaignsProviderFamily._dependencies,
+          allTransitiveDependencies:
+              VetCampaignsProviderFamily._allTransitiveDependencies,
+          vetId: vetId,
+        );
 
   VetCampaignsProviderProvider._internal(
     super._createNotifier, {
@@ -214,7 +213,7 @@ class VetCampaignsProviderProvider
   @override
   Override overrideWith(
     FutureOr<List<CampaignEntity>> Function(VetCampaignsProviderRef provider)
-    create,
+        create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -249,8 +248,6 @@ class VetCampaignsProviderProvider
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin VetCampaignsProviderRef
     on AutoDisposeFutureProviderRef<List<CampaignEntity>> {
   /// The parameter `vetId` of this provider.
@@ -273,15 +270,15 @@ String _$adTrackingControllerHash() =>
 @ProviderFor(AdTrackingController)
 final adTrackingControllerProvider =
     AutoDisposeAsyncNotifierProvider<AdTrackingController, void>.internal(
-      AdTrackingController.new,
-      name: r'adTrackingControllerProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$adTrackingControllerHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  AdTrackingController.new,
+  name: r'adTrackingControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$adTrackingControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$AdTrackingController = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

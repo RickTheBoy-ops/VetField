@@ -13,19 +13,17 @@ String _$appointmentRemoteDataSourceHash() =>
 @ProviderFor(appointmentRemoteDataSource)
 final appointmentRemoteDataSourceProvider =
     AutoDisposeProvider<AppointmentRemoteDataSource>.internal(
-      appointmentRemoteDataSource,
-      name: r'appointmentRemoteDataSourceProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$appointmentRemoteDataSourceHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  appointmentRemoteDataSource,
+  name: r'appointmentRemoteDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$appointmentRemoteDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef AppointmentRemoteDataSourceRef =
-    AutoDisposeProviderRef<AppointmentRemoteDataSource>;
+typedef AppointmentRemoteDataSourceRef
+    = AutoDisposeProviderRef<AppointmentRemoteDataSource>;
 String _$appointmentLocalDataSourceHash() =>
     r'5fcb78a1162e27d70f7983554214a917741943ba';
 
@@ -33,19 +31,17 @@ String _$appointmentLocalDataSourceHash() =>
 @ProviderFor(appointmentLocalDataSource)
 final appointmentLocalDataSourceProvider =
     AutoDisposeProvider<AppointmentLocalDataSource>.internal(
-      appointmentLocalDataSource,
-      name: r'appointmentLocalDataSourceProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$appointmentLocalDataSourceHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  appointmentLocalDataSource,
+  name: r'appointmentLocalDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$appointmentLocalDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef AppointmentLocalDataSourceRef =
-    AutoDisposeProviderRef<AppointmentLocalDataSource>;
+typedef AppointmentLocalDataSourceRef
+    = AutoDisposeProviderRef<AppointmentLocalDataSource>;
 String _$appointmentRepositoryHash() =>
     r'ea784594adbea4863c291b7d2087eacbeb0575a1';
 
@@ -53,19 +49,17 @@ String _$appointmentRepositoryHash() =>
 @ProviderFor(appointmentRepository)
 final appointmentRepositoryProvider =
     AutoDisposeProvider<AppointmentRepository>.internal(
-      appointmentRepository,
-      name: r'appointmentRepositoryProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$appointmentRepositoryHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  appointmentRepository,
+  name: r'appointmentRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$appointmentRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef AppointmentRepositoryRef =
-    AutoDisposeProviderRef<AppointmentRepository>;
+typedef AppointmentRepositoryRef
+    = AutoDisposeProviderRef<AppointmentRepository>;
 String _$createAppointmentUseCaseHash() =>
     r'2b3f65025f71535dc766973483b155f8de4798e7';
 
@@ -73,19 +67,17 @@ String _$createAppointmentUseCaseHash() =>
 @ProviderFor(createAppointmentUseCase)
 final createAppointmentUseCaseProvider =
     AutoDisposeProvider<CreateAppointmentUseCase>.internal(
-      createAppointmentUseCase,
-      name: r'createAppointmentUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$createAppointmentUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  createAppointmentUseCase,
+  name: r'createAppointmentUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$createAppointmentUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef CreateAppointmentUseCaseRef =
-    AutoDisposeProviderRef<CreateAppointmentUseCase>;
+typedef CreateAppointmentUseCaseRef
+    = AutoDisposeProviderRef<CreateAppointmentUseCase>;
 String _$updateAppointmentStatusUseCaseHash() =>
     r'88ee21f548e141c6204e813dc6513cb2de2be546';
 
@@ -93,19 +85,17 @@ String _$updateAppointmentStatusUseCaseHash() =>
 @ProviderFor(updateAppointmentStatusUseCase)
 final updateAppointmentStatusUseCaseProvider =
     AutoDisposeProvider<UpdateAppointmentStatusUseCase>.internal(
-      updateAppointmentStatusUseCase,
-      name: r'updateAppointmentStatusUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$updateAppointmentStatusUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  updateAppointmentStatusUseCase,
+  name: r'updateAppointmentStatusUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$updateAppointmentStatusUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef UpdateAppointmentStatusUseCaseRef =
-    AutoDisposeProviderRef<UpdateAppointmentStatusUseCase>;
+typedef UpdateAppointmentStatusUseCaseRef
+    = AutoDisposeProviderRef<UpdateAppointmentStatusUseCase>;
 String _$vetAppointmentsHash() => r'8a652d44cd9aba086c2767cdce1134874415bdee';
 
 /// Copied from Dart SDK
@@ -140,15 +130,21 @@ class VetAppointmentsFamily
   const VetAppointmentsFamily();
 
   /// See also [vetAppointments].
-  VetAppointmentsProvider call(String vetId) {
-    return VetAppointmentsProvider(vetId);
+  VetAppointmentsProvider call(
+    String vetId,
+  ) {
+    return VetAppointmentsProvider(
+      vetId,
+    );
   }
 
   @override
   VetAppointmentsProvider getProviderOverride(
     covariant VetAppointmentsProvider provider,
   ) {
-    return call(provider.vetId);
+    return call(
+      provider.vetId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -170,19 +166,24 @@ class VetAppointmentsFamily
 class VetAppointmentsProvider
     extends AutoDisposeFutureProvider<List<AppointmentEntity>> {
   /// See also [vetAppointments].
-  VetAppointmentsProvider(String vetId)
-    : this._internal(
-        (ref) => vetAppointments(ref as VetAppointmentsRef, vetId),
-        from: vetAppointmentsProvider,
-        name: r'vetAppointmentsProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$vetAppointmentsHash,
-        dependencies: VetAppointmentsFamily._dependencies,
-        allTransitiveDependencies:
-            VetAppointmentsFamily._allTransitiveDependencies,
-        vetId: vetId,
-      );
+  VetAppointmentsProvider(
+    String vetId,
+  ) : this._internal(
+          (ref) => vetAppointments(
+            ref as VetAppointmentsRef,
+            vetId,
+          ),
+          from: vetAppointmentsProvider,
+          name: r'vetAppointmentsProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$vetAppointmentsHash,
+          dependencies: VetAppointmentsFamily._dependencies,
+          allTransitiveDependencies:
+              VetAppointmentsFamily._allTransitiveDependencies,
+          vetId: vetId,
+        );
 
   VetAppointmentsProvider._internal(
     super._createNotifier, {
@@ -199,7 +200,7 @@ class VetAppointmentsProvider
   @override
   Override overrideWith(
     FutureOr<List<AppointmentEntity>> Function(VetAppointmentsRef provider)
-    create,
+        create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -234,8 +235,6 @@ class VetAppointmentsProvider
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin VetAppointmentsRef
     on AutoDisposeFutureProviderRef<List<AppointmentEntity>> {
   /// The parameter `vetId` of this provider.
@@ -264,15 +263,21 @@ class OwnerAppointmentsFamily
   const OwnerAppointmentsFamily();
 
   /// See also [ownerAppointments].
-  OwnerAppointmentsProvider call(String ownerId) {
-    return OwnerAppointmentsProvider(ownerId);
+  OwnerAppointmentsProvider call(
+    String ownerId,
+  ) {
+    return OwnerAppointmentsProvider(
+      ownerId,
+    );
   }
 
   @override
   OwnerAppointmentsProvider getProviderOverride(
     covariant OwnerAppointmentsProvider provider,
   ) {
-    return call(provider.ownerId);
+    return call(
+      provider.ownerId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -294,19 +299,24 @@ class OwnerAppointmentsFamily
 class OwnerAppointmentsProvider
     extends AutoDisposeFutureProvider<List<AppointmentEntity>> {
   /// See also [ownerAppointments].
-  OwnerAppointmentsProvider(String ownerId)
-    : this._internal(
-        (ref) => ownerAppointments(ref as OwnerAppointmentsRef, ownerId),
-        from: ownerAppointmentsProvider,
-        name: r'ownerAppointmentsProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$ownerAppointmentsHash,
-        dependencies: OwnerAppointmentsFamily._dependencies,
-        allTransitiveDependencies:
-            OwnerAppointmentsFamily._allTransitiveDependencies,
-        ownerId: ownerId,
-      );
+  OwnerAppointmentsProvider(
+    String ownerId,
+  ) : this._internal(
+          (ref) => ownerAppointments(
+            ref as OwnerAppointmentsRef,
+            ownerId,
+          ),
+          from: ownerAppointmentsProvider,
+          name: r'ownerAppointmentsProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$ownerAppointmentsHash,
+          dependencies: OwnerAppointmentsFamily._dependencies,
+          allTransitiveDependencies:
+              OwnerAppointmentsFamily._allTransitiveDependencies,
+          ownerId: ownerId,
+        );
 
   OwnerAppointmentsProvider._internal(
     super._createNotifier, {
@@ -323,7 +333,7 @@ class OwnerAppointmentsProvider
   @override
   Override overrideWith(
     FutureOr<List<AppointmentEntity>> Function(OwnerAppointmentsRef provider)
-    create,
+        create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -358,8 +368,6 @@ class OwnerAppointmentsProvider
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin OwnerAppointmentsRef
     on AutoDisposeFutureProviderRef<List<AppointmentEntity>> {
   /// The parameter `ownerId` of this provider.
@@ -382,14 +390,14 @@ String _$appointmentControllerHash() =>
 @ProviderFor(AppointmentController)
 final appointmentControllerProvider =
     AutoDisposeAsyncNotifierProvider<AppointmentController, void>.internal(
-      AppointmentController.new,
-      name: r'appointmentControllerProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$appointmentControllerHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  AppointmentController.new,
+  name: r'appointmentControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$appointmentControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$AppointmentController = AutoDisposeAsyncNotifier<void>;
 String _$ownerAppointmentsRealtimeHash() =>
@@ -399,14 +407,14 @@ String _$ownerAppointmentsRealtimeHash() =>
 @ProviderFor(OwnerAppointmentsRealtime)
 final ownerAppointmentsRealtimeProvider =
     AutoDisposeAsyncNotifierProvider<OwnerAppointmentsRealtime, void>.internal(
-      OwnerAppointmentsRealtime.new,
-      name: r'ownerAppointmentsRealtimeProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$ownerAppointmentsRealtimeHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  OwnerAppointmentsRealtime.new,
+  name: r'ownerAppointmentsRealtimeProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$ownerAppointmentsRealtimeHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$OwnerAppointmentsRealtime = AutoDisposeAsyncNotifier<void>;
 String _$vetAppointmentsRealtimeHash() =>
@@ -416,15 +424,15 @@ String _$vetAppointmentsRealtimeHash() =>
 @ProviderFor(VetAppointmentsRealtime)
 final vetAppointmentsRealtimeProvider =
     AutoDisposeAsyncNotifierProvider<VetAppointmentsRealtime, void>.internal(
-      VetAppointmentsRealtime.new,
-      name: r'vetAppointmentsRealtimeProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$vetAppointmentsRealtimeHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  VetAppointmentsRealtime.new,
+  name: r'vetAppointmentsRealtimeProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$vetAppointmentsRealtimeHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$VetAppointmentsRealtime = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

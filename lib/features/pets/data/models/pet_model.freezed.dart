@@ -12,8 +12,7 @@ part of 'pet_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 PetModel _$PetModelFromJson(Map<String, dynamic> json) {
   return _PetModel.fromJson(json);
@@ -31,12 +30,8 @@ mixin _$PetModel {
   double? get weight => throw _privateConstructorUsedError;
   String? get photoUrl => throw _privateConstructorUsedError;
 
-  /// Serializes this PetModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of PetModel
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $PetModelCopyWith<PetModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -46,17 +41,16 @@ abstract class $PetModelCopyWith<$Res> {
   factory $PetModelCopyWith(PetModel value, $Res Function(PetModel) then) =
       _$PetModelCopyWithImpl<$Res, PetModel>;
   @useResult
-  $Res call({
-    String id,
-    String ownerId,
-    String name,
-    String? breed,
-    PetSpecies species,
-    PetGender? gender,
-    DateTime? birthDate,
-    double? weight,
-    String? photoUrl,
-  });
+  $Res call(
+      {String id,
+      String ownerId,
+      String name,
+      String? breed,
+      PetSpecies species,
+      PetGender? gender,
+      DateTime? birthDate,
+      double? weight,
+      String? photoUrl});
 }
 
 /// @nodoc
@@ -69,8 +63,6 @@ class _$PetModelCopyWithImpl<$Res, $Val extends PetModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of PetModel
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -84,47 +76,44 @@ class _$PetModelCopyWithImpl<$Res, $Val extends PetModel>
     Object? weight = freezed,
     Object? photoUrl = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            id: null == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as String,
-            ownerId: null == ownerId
-                ? _value.ownerId
-                : ownerId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            name: null == name
-                ? _value.name
-                : name // ignore: cast_nullable_to_non_nullable
-                      as String,
-            breed: freezed == breed
-                ? _value.breed
-                : breed // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            species: null == species
-                ? _value.species
-                : species // ignore: cast_nullable_to_non_nullable
-                      as PetSpecies,
-            gender: freezed == gender
-                ? _value.gender
-                : gender // ignore: cast_nullable_to_non_nullable
-                      as PetGender?,
-            birthDate: freezed == birthDate
-                ? _value.birthDate
-                : birthDate // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
-            weight: freezed == weight
-                ? _value.weight
-                : weight // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            photoUrl: freezed == photoUrl
-                ? _value.photoUrl
-                : photoUrl // ignore: cast_nullable_to_non_nullable
-                      as String?,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      ownerId: null == ownerId
+          ? _value.ownerId
+          : ownerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      breed: freezed == breed
+          ? _value.breed
+          : breed // ignore: cast_nullable_to_non_nullable
+              as String?,
+      species: null == species
+          ? _value.species
+          : species // ignore: cast_nullable_to_non_nullable
+              as PetSpecies,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as PetGender?,
+      birthDate: freezed == birthDate
+          ? _value.birthDate
+          : birthDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      weight: freezed == weight
+          ? _value.weight
+          : weight // ignore: cast_nullable_to_non_nullable
+              as double?,
+      photoUrl: freezed == photoUrl
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
   }
 }
 
@@ -132,22 +121,20 @@ class _$PetModelCopyWithImpl<$Res, $Val extends PetModel>
 abstract class _$$PetModelImplCopyWith<$Res>
     implements $PetModelCopyWith<$Res> {
   factory _$$PetModelImplCopyWith(
-    _$PetModelImpl value,
-    $Res Function(_$PetModelImpl) then,
-  ) = __$$PetModelImplCopyWithImpl<$Res>;
+          _$PetModelImpl value, $Res Function(_$PetModelImpl) then) =
+      __$$PetModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String id,
-    String ownerId,
-    String name,
-    String? breed,
-    PetSpecies species,
-    PetGender? gender,
-    DateTime? birthDate,
-    double? weight,
-    String? photoUrl,
-  });
+  $Res call(
+      {String id,
+      String ownerId,
+      String name,
+      String? breed,
+      PetSpecies species,
+      PetGender? gender,
+      DateTime? birthDate,
+      double? weight,
+      String? photoUrl});
 }
 
 /// @nodoc
@@ -155,12 +142,9 @@ class __$$PetModelImplCopyWithImpl<$Res>
     extends _$PetModelCopyWithImpl<$Res, _$PetModelImpl>
     implements _$$PetModelImplCopyWith<$Res> {
   __$$PetModelImplCopyWithImpl(
-    _$PetModelImpl _value,
-    $Res Function(_$PetModelImpl) _then,
-  ) : super(_value, _then);
+      _$PetModelImpl _value, $Res Function(_$PetModelImpl) _then)
+      : super(_value, _then);
 
-  /// Create a copy of PetModel
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -174,63 +158,61 @@ class __$$PetModelImplCopyWithImpl<$Res>
     Object? weight = freezed,
     Object? photoUrl = freezed,
   }) {
-    return _then(
-      _$PetModelImpl(
-        id: null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as String,
-        ownerId: null == ownerId
-            ? _value.ownerId
-            : ownerId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        name: null == name
-            ? _value.name
-            : name // ignore: cast_nullable_to_non_nullable
-                  as String,
-        breed: freezed == breed
-            ? _value.breed
-            : breed // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        species: null == species
-            ? _value.species
-            : species // ignore: cast_nullable_to_non_nullable
-                  as PetSpecies,
-        gender: freezed == gender
-            ? _value.gender
-            : gender // ignore: cast_nullable_to_non_nullable
-                  as PetGender?,
-        birthDate: freezed == birthDate
-            ? _value.birthDate
-            : birthDate // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
-        weight: freezed == weight
-            ? _value.weight
-            : weight // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        photoUrl: freezed == photoUrl
-            ? _value.photoUrl
-            : photoUrl // ignore: cast_nullable_to_non_nullable
-                  as String?,
-      ),
-    );
+    return _then(_$PetModelImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      ownerId: null == ownerId
+          ? _value.ownerId
+          : ownerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      breed: freezed == breed
+          ? _value.breed
+          : breed // ignore: cast_nullable_to_non_nullable
+              as String?,
+      species: null == species
+          ? _value.species
+          : species // ignore: cast_nullable_to_non_nullable
+              as PetSpecies,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as PetGender?,
+      birthDate: freezed == birthDate
+          ? _value.birthDate
+          : birthDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      weight: freezed == weight
+          ? _value.weight
+          : weight // ignore: cast_nullable_to_non_nullable
+              as double?,
+      photoUrl: freezed == photoUrl
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$PetModelImpl extends _PetModel {
-  const _$PetModelImpl({
-    required this.id,
-    required this.ownerId,
-    required this.name,
-    this.breed,
-    required this.species,
-    this.gender,
-    this.birthDate,
-    this.weight,
-    this.photoUrl,
-  }) : super._();
+  const _$PetModelImpl(
+      {required this.id,
+      required this.ownerId,
+      required this.name,
+      this.breed,
+      required this.species,
+      this.gender,
+      this.birthDate,
+      this.weight,
+      this.photoUrl})
+      : super._();
 
   factory _$PetModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$PetModelImplFromJson(json);
@@ -277,24 +259,12 @@ class _$PetModelImpl extends _PetModel {
                 other.photoUrl == photoUrl));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    ownerId,
-    name,
-    breed,
-    species,
-    gender,
-    birthDate,
-    weight,
-    photoUrl,
-  );
+  int get hashCode => Object.hash(runtimeType, id, ownerId, name, breed,
+      species, gender, birthDate, weight, photoUrl);
 
-  /// Create a copy of PetModel
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$PetModelImplCopyWith<_$PetModelImpl> get copyWith =>
@@ -302,22 +272,23 @@ class _$PetModelImpl extends _PetModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$PetModelImplToJson(this);
+    return _$$PetModelImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _PetModel extends PetModel {
-  const factory _PetModel({
-    required final String id,
-    required final String ownerId,
-    required final String name,
-    final String? breed,
-    required final PetSpecies species,
-    final PetGender? gender,
-    final DateTime? birthDate,
-    final double? weight,
-    final String? photoUrl,
-  }) = _$PetModelImpl;
+  const factory _PetModel(
+      {required final String id,
+      required final String ownerId,
+      required final String name,
+      final String? breed,
+      required final PetSpecies species,
+      final PetGender? gender,
+      final DateTime? birthDate,
+      final double? weight,
+      final String? photoUrl}) = _$PetModelImpl;
   const _PetModel._() : super._();
 
   factory _PetModel.fromJson(Map<String, dynamic> json) =
@@ -341,11 +312,8 @@ abstract class _PetModel extends PetModel {
   double? get weight;
   @override
   String? get photoUrl;
-
-  /// Create a copy of PetModel
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$PetModelImplCopyWith<_$PetModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

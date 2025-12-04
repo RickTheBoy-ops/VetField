@@ -20,8 +20,6 @@ final vetRepositoryProvider = AutoDisposeProvider<VetRepository>.internal(
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef VetRepositoryRef = AutoDisposeProviderRef<VetRepository>;
 String _$getVetStatisticsUseCaseHash() =>
     r'3ddc7b8f381cb739ed7529abf61f03cd00262b27';
@@ -30,19 +28,17 @@ String _$getVetStatisticsUseCaseHash() =>
 @ProviderFor(getVetStatisticsUseCase)
 final getVetStatisticsUseCaseProvider =
     AutoDisposeProvider<GetVetStatisticsUseCase>.internal(
-      getVetStatisticsUseCase,
-      name: r'getVetStatisticsUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$getVetStatisticsUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  getVetStatisticsUseCase,
+  name: r'getVetStatisticsUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$getVetStatisticsUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef GetVetStatisticsUseCaseRef =
-    AutoDisposeProviderRef<GetVetStatisticsUseCase>;
+typedef GetVetStatisticsUseCaseRef
+    = AutoDisposeProviderRef<GetVetStatisticsUseCase>;
 String _$vetStatisticsHash() => r'5e2cacf721a77f925f507ac20b12f2d4957c4a6c';
 
 /// Copied from Dart SDK
@@ -76,15 +72,21 @@ class VetStatisticsFamily extends Family<AsyncValue<VetStatistics>> {
   const VetStatisticsFamily();
 
   /// See also [vetStatistics].
-  VetStatisticsProvider call(String vetId) {
-    return VetStatisticsProvider(vetId);
+  VetStatisticsProvider call(
+    String vetId,
+  ) {
+    return VetStatisticsProvider(
+      vetId,
+    );
   }
 
   @override
   VetStatisticsProvider getProviderOverride(
     covariant VetStatisticsProvider provider,
   ) {
-    return call(provider.vetId);
+    return call(
+      provider.vetId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -105,19 +107,24 @@ class VetStatisticsFamily extends Family<AsyncValue<VetStatistics>> {
 /// See also [vetStatistics].
 class VetStatisticsProvider extends FutureProvider<VetStatistics> {
   /// See also [vetStatistics].
-  VetStatisticsProvider(String vetId)
-    : this._internal(
-        (ref) => vetStatistics(ref as VetStatisticsRef, vetId),
-        from: vetStatisticsProvider,
-        name: r'vetStatisticsProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$vetStatisticsHash,
-        dependencies: VetStatisticsFamily._dependencies,
-        allTransitiveDependencies:
-            VetStatisticsFamily._allTransitiveDependencies,
-        vetId: vetId,
-      );
+  VetStatisticsProvider(
+    String vetId,
+  ) : this._internal(
+          (ref) => vetStatistics(
+            ref as VetStatisticsRef,
+            vetId,
+          ),
+          from: vetStatisticsProvider,
+          name: r'vetStatisticsProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$vetStatisticsHash,
+          dependencies: VetStatisticsFamily._dependencies,
+          allTransitiveDependencies:
+              VetStatisticsFamily._allTransitiveDependencies,
+          vetId: vetId,
+        );
 
   VetStatisticsProvider._internal(
     super._createNotifier, {
@@ -168,8 +175,6 @@ class VetStatisticsProvider extends FutureProvider<VetStatistics> {
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin VetStatisticsRef on FutureProviderRef<VetStatistics> {
   /// The parameter `vetId` of this provider.
   String get vetId;
@@ -182,6 +187,5 @@ class _VetStatisticsProviderElement extends FutureProviderElement<VetStatistics>
   @override
   String get vetId => (origin as VetStatisticsProvider).vetId;
 }
-
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

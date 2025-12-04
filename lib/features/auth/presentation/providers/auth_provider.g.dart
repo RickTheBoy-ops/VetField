@@ -13,17 +13,15 @@ String _$authRemoteDataSourceHash() =>
 @ProviderFor(authRemoteDataSource)
 final authRemoteDataSourceProvider =
     AutoDisposeProvider<AuthRemoteDataSource>.internal(
-      authRemoteDataSource,
-      name: r'authRemoteDataSourceProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$authRemoteDataSourceHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  authRemoteDataSource,
+  name: r'authRemoteDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$authRemoteDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef AuthRemoteDataSourceRef = AutoDisposeProviderRef<AuthRemoteDataSource>;
 String _$authRepositoryHash() => r'05c6159f6976986da64509d15b55d499b8b724b4';
 
@@ -39,8 +37,6 @@ final authRepositoryProvider = AutoDisposeProvider<AuthRepository>.internal(
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef AuthRepositoryRef = AutoDisposeProviderRef<AuthRepository>;
 String _$loginUseCaseHash() => r'cbfd4200f40c132516f20f942ae9d825a31e2515';
 
@@ -49,15 +45,12 @@ String _$loginUseCaseHash() => r'cbfd4200f40c132516f20f942ae9d825a31e2515';
 final loginUseCaseProvider = AutoDisposeProvider<LoginUseCase>.internal(
   loginUseCase,
   name: r'loginUseCaseProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$loginUseCaseHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$loginUseCaseHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef LoginUseCaseRef = AutoDisposeProviderRef<LoginUseCase>;
 String _$registerUseCaseHash() => r'8f0345823563b5c2c5b02cd4625f0a8048d56e88';
 
@@ -73,8 +66,6 @@ final registerUseCaseProvider = AutoDisposeProvider<RegisterUseCase>.internal(
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef RegisterUseCaseRef = AutoDisposeProviderRef<RegisterUseCase>;
 String _$loginByCpfUseCaseHash() => r'eae4513852c182df9a20b777b36a281b7a50a7c4';
 
@@ -82,17 +73,15 @@ String _$loginByCpfUseCaseHash() => r'eae4513852c182df9a20b777b36a281b7a50a7c4';
 @ProviderFor(loginByCpfUseCase)
 final loginByCpfUseCaseProvider =
     AutoDisposeProvider<LoginByCpfUseCase>.internal(
-      loginByCpfUseCase,
-      name: r'loginByCpfUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$loginByCpfUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  loginByCpfUseCase,
+  name: r'loginByCpfUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$loginByCpfUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef LoginByCpfUseCaseRef = AutoDisposeProviderRef<LoginByCpfUseCase>;
 String _$loginByCrmvUseCaseHash() =>
     r'6ab517753af5719bc347e5f8599fdfba84827e94';
@@ -101,17 +90,15 @@ String _$loginByCrmvUseCaseHash() =>
 @ProviderFor(loginByCrmvUseCase)
 final loginByCrmvUseCaseProvider =
     AutoDisposeProvider<LoginByCrmvUseCase>.internal(
-      loginByCrmvUseCase,
-      name: r'loginByCrmvUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$loginByCrmvUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  loginByCrmvUseCase,
+  name: r'loginByCrmvUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$loginByCrmvUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef LoginByCrmvUseCaseRef = AutoDisposeProviderRef<LoginByCrmvUseCase>;
 String _$resetPasswordUseCaseHash() =>
     r'c8b96ba58b80d64897bb34e93d9f9b4ddce2ee00';
@@ -120,17 +107,15 @@ String _$resetPasswordUseCaseHash() =>
 @ProviderFor(resetPasswordUseCase)
 final resetPasswordUseCaseProvider =
     AutoDisposeProvider<ResetPasswordUseCase>.internal(
-      resetPasswordUseCase,
-      name: r'resetPasswordUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$resetPasswordUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  resetPasswordUseCase,
+  name: r'resetPasswordUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$resetPasswordUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef ResetPasswordUseCaseRef = AutoDisposeProviderRef<ResetPasswordUseCase>;
 String _$updateProfileUseCaseHash() =>
     r'8caf1c5d488cb645e1abbf1201659f99c2676f06';
@@ -139,17 +124,15 @@ String _$updateProfileUseCaseHash() =>
 @ProviderFor(updateProfileUseCase)
 final updateProfileUseCaseProvider =
     AutoDisposeProvider<UpdateProfileUseCase>.internal(
-      updateProfileUseCase,
-      name: r'updateProfileUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$updateProfileUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  updateProfileUseCase,
+  name: r'updateProfileUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$updateProfileUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef UpdateProfileUseCaseRef = AutoDisposeProviderRef<UpdateProfileUseCase>;
 String _$currentUserHash() => r'93ede6eba6ce1213dc0b22997842089651acbea4';
 
@@ -158,15 +141,12 @@ String _$currentUserHash() => r'93ede6eba6ce1213dc0b22997842089651acbea4';
 final currentUserProvider = AutoDisposeProvider<UserEntity?>.internal(
   currentUser,
   name: r'currentUserProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$currentUserHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$currentUserHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef CurrentUserRef = AutoDisposeProviderRef<UserEntity?>;
 String _$authControllerHash() => r'8be098bea4ddaf77a2ead7e311facb5e725c7077';
 
@@ -174,15 +154,15 @@ String _$authControllerHash() => r'8be098bea4ddaf77a2ead7e311facb5e725c7077';
 @ProviderFor(AuthController)
 final authControllerProvider =
     AutoDisposeAsyncNotifierProvider<AuthController, UserEntity?>.internal(
-      AuthController.new,
-      name: r'authControllerProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$authControllerHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  AuthController.new,
+  name: r'authControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$authControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$AuthController = AutoDisposeAsyncNotifier<UserEntity?>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

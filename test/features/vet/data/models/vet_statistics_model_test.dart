@@ -44,7 +44,7 @@ void main() {
           status: AppointmentStatus.completed,
           price: 200.0,
         ),
-        Appointment Entity(
+        AppointmentEntity(
           id: '4',
           vetId: 'vet1',
           ownerId: 'owner4',

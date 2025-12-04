@@ -34,6 +34,12 @@ Map<String, dynamic> _$$PetModelImplToJson(_$PetModelImpl instance) =>
       'photoUrl': instance.photoUrl,
     };
 
-const _$PetSpeciesEnumMap = {PetSpecies.dog: 'dog', PetSpecies.cat: 'cat'};
+const _$PetSpeciesEnumMap = {
+  PetSpecies.dog: 'dog',
+  PetSpecies.cat: 'cat',
+};
 
-const _$PetGenderEnumMap = {PetGender.male: 'male', PetGender.female: 'female'};
+const _$PetGenderEnumMap = {
+  PetGender.male: 'male',
+  PetGender.female: 'female',
+};

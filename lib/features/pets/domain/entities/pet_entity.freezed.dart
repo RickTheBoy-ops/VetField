@@ -12,8 +12,7 @@ part of 'pet_entity.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$PetEntity {
@@ -27,9 +26,7 @@ mixin _$PetEntity {
   double? get weight => throw _privateConstructorUsedError;
   String? get photoUrl => throw _privateConstructorUsedError;
 
-  /// Create a copy of PetEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $PetEntityCopyWith<PetEntity> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -39,17 +36,16 @@ abstract class $PetEntityCopyWith<$Res> {
   factory $PetEntityCopyWith(PetEntity value, $Res Function(PetEntity) then) =
       _$PetEntityCopyWithImpl<$Res, PetEntity>;
   @useResult
-  $Res call({
-    String id,
-    String ownerId,
-    String name,
-    String? breed,
-    PetSpecies species,
-    PetGender? gender,
-    DateTime? birthDate,
-    double? weight,
-    String? photoUrl,
-  });
+  $Res call(
+      {String id,
+      String ownerId,
+      String name,
+      String? breed,
+      PetSpecies species,
+      PetGender? gender,
+      DateTime? birthDate,
+      double? weight,
+      String? photoUrl});
 }
 
 /// @nodoc
@@ -62,8 +58,6 @@ class _$PetEntityCopyWithImpl<$Res, $Val extends PetEntity>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of PetEntity
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -77,47 +71,44 @@ class _$PetEntityCopyWithImpl<$Res, $Val extends PetEntity>
     Object? weight = freezed,
     Object? photoUrl = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            id: null == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as String,
-            ownerId: null == ownerId
-                ? _value.ownerId
-                : ownerId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            name: null == name
-                ? _value.name
-                : name // ignore: cast_nullable_to_non_nullable
-                      as String,
-            breed: freezed == breed
-                ? _value.breed
-                : breed // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            species: null == species
-                ? _value.species
-                : species // ignore: cast_nullable_to_non_nullable
-                      as PetSpecies,
-            gender: freezed == gender
-                ? _value.gender
-                : gender // ignore: cast_nullable_to_non_nullable
-                      as PetGender?,
-            birthDate: freezed == birthDate
-                ? _value.birthDate
-                : birthDate // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
-            weight: freezed == weight
-                ? _value.weight
-                : weight // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            photoUrl: freezed == photoUrl
-                ? _value.photoUrl
-                : photoUrl // ignore: cast_nullable_to_non_nullable
-                      as String?,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      ownerId: null == ownerId
+          ? _value.ownerId
+          : ownerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      breed: freezed == breed
+          ? _value.breed
+          : breed // ignore: cast_nullable_to_non_nullable
+              as String?,
+      species: null == species
+          ? _value.species
+          : species // ignore: cast_nullable_to_non_nullable
+              as PetSpecies,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as PetGender?,
+      birthDate: freezed == birthDate
+          ? _value.birthDate
+          : birthDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      weight: freezed == weight
+          ? _value.weight
+          : weight // ignore: cast_nullable_to_non_nullable
+              as double?,
+      photoUrl: freezed == photoUrl
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
   }
 }
 
@@ -125,22 +116,20 @@ class _$PetEntityCopyWithImpl<$Res, $Val extends PetEntity>
 abstract class _$$PetEntityImplCopyWith<$Res>
     implements $PetEntityCopyWith<$Res> {
   factory _$$PetEntityImplCopyWith(
-    _$PetEntityImpl value,
-    $Res Function(_$PetEntityImpl) then,
-  ) = __$$PetEntityImplCopyWithImpl<$Res>;
+          _$PetEntityImpl value, $Res Function(_$PetEntityImpl) then) =
+      __$$PetEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String id,
-    String ownerId,
-    String name,
-    String? breed,
-    PetSpecies species,
-    PetGender? gender,
-    DateTime? birthDate,
-    double? weight,
-    String? photoUrl,
-  });
+  $Res call(
+      {String id,
+      String ownerId,
+      String name,
+      String? breed,
+      PetSpecies species,
+      PetGender? gender,
+      DateTime? birthDate,
+      double? weight,
+      String? photoUrl});
 }
 
 /// @nodoc
@@ -148,12 +137,9 @@ class __$$PetEntityImplCopyWithImpl<$Res>
     extends _$PetEntityCopyWithImpl<$Res, _$PetEntityImpl>
     implements _$$PetEntityImplCopyWith<$Res> {
   __$$PetEntityImplCopyWithImpl(
-    _$PetEntityImpl _value,
-    $Res Function(_$PetEntityImpl) _then,
-  ) : super(_value, _then);
+      _$PetEntityImpl _value, $Res Function(_$PetEntityImpl) _then)
+      : super(_value, _then);
 
-  /// Create a copy of PetEntity
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -167,63 +153,60 @@ class __$$PetEntityImplCopyWithImpl<$Res>
     Object? weight = freezed,
     Object? photoUrl = freezed,
   }) {
-    return _then(
-      _$PetEntityImpl(
-        id: null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as String,
-        ownerId: null == ownerId
-            ? _value.ownerId
-            : ownerId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        name: null == name
-            ? _value.name
-            : name // ignore: cast_nullable_to_non_nullable
-                  as String,
-        breed: freezed == breed
-            ? _value.breed
-            : breed // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        species: null == species
-            ? _value.species
-            : species // ignore: cast_nullable_to_non_nullable
-                  as PetSpecies,
-        gender: freezed == gender
-            ? _value.gender
-            : gender // ignore: cast_nullable_to_non_nullable
-                  as PetGender?,
-        birthDate: freezed == birthDate
-            ? _value.birthDate
-            : birthDate // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
-        weight: freezed == weight
-            ? _value.weight
-            : weight // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        photoUrl: freezed == photoUrl
-            ? _value.photoUrl
-            : photoUrl // ignore: cast_nullable_to_non_nullable
-                  as String?,
-      ),
-    );
+    return _then(_$PetEntityImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      ownerId: null == ownerId
+          ? _value.ownerId
+          : ownerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      breed: freezed == breed
+          ? _value.breed
+          : breed // ignore: cast_nullable_to_non_nullable
+              as String?,
+      species: null == species
+          ? _value.species
+          : species // ignore: cast_nullable_to_non_nullable
+              as PetSpecies,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as PetGender?,
+      birthDate: freezed == birthDate
+          ? _value.birthDate
+          : birthDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      weight: freezed == weight
+          ? _value.weight
+          : weight // ignore: cast_nullable_to_non_nullable
+              as double?,
+      photoUrl: freezed == photoUrl
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$PetEntityImpl implements _PetEntity {
-  const _$PetEntityImpl({
-    required this.id,
-    required this.ownerId,
-    required this.name,
-    this.breed,
-    required this.species,
-    this.gender,
-    this.birthDate,
-    this.weight,
-    this.photoUrl,
-  });
+  const _$PetEntityImpl(
+      {required this.id,
+      required this.ownerId,
+      required this.name,
+      this.breed,
+      required this.species,
+      this.gender,
+      this.birthDate,
+      this.weight,
+      this.photoUrl});
 
   @override
   final String id;
@@ -268,22 +251,10 @@ class _$PetEntityImpl implements _PetEntity {
   }
 
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    ownerId,
-    name,
-    breed,
-    species,
-    gender,
-    birthDate,
-    weight,
-    photoUrl,
-  );
+  int get hashCode => Object.hash(runtimeType, id, ownerId, name, breed,
+      species, gender, birthDate, weight, photoUrl);
 
-  /// Create a copy of PetEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$PetEntityImplCopyWith<_$PetEntityImpl> get copyWith =>
@@ -291,17 +262,16 @@ class _$PetEntityImpl implements _PetEntity {
 }
 
 abstract class _PetEntity implements PetEntity {
-  const factory _PetEntity({
-    required final String id,
-    required final String ownerId,
-    required final String name,
-    final String? breed,
-    required final PetSpecies species,
-    final PetGender? gender,
-    final DateTime? birthDate,
-    final double? weight,
-    final String? photoUrl,
-  }) = _$PetEntityImpl;
+  const factory _PetEntity(
+      {required final String id,
+      required final String ownerId,
+      required final String name,
+      final String? breed,
+      required final PetSpecies species,
+      final PetGender? gender,
+      final DateTime? birthDate,
+      final double? weight,
+      final String? photoUrl}) = _$PetEntityImpl;
 
   @override
   String get id;
@@ -321,11 +291,8 @@ abstract class _PetEntity implements PetEntity {
   double? get weight;
   @override
   String? get photoUrl;
-
-  /// Create a copy of PetEntity
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$PetEntityImplCopyWith<_$PetEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
