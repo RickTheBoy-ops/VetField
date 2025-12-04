@@ -9,29 +9,29 @@ part of 'pet_model.dart';
 _$PetModelImpl _$$PetModelImplFromJson(Map<String, dynamic> json) =>
     _$PetModelImpl(
       id: json['id'] as String,
-      ownerId: json['owner_id'] as String,
+      ownerId: json['ownerId'] as String,
       name: json['name'] as String,
       breed: json['breed'] as String?,
       species: $enumDecode(_$PetSpeciesEnumMap, json['species']),
       gender: $enumDecodeNullable(_$PetGenderEnumMap, json['gender']),
-      birthDate: json['birth_date'] == null
+      birthDate: json['birthDate'] == null
           ? null
-          : DateTime.parse(json['birth_date'] as String),
+          : DateTime.parse(json['birthDate'] as String),
       weight: (json['weight'] as num?)?.toDouble(),
-      photoUrl: json['photo_url'] as String?,
+      photoUrl: json['photoUrl'] as String?,
     );
 
 Map<String, dynamic> _$$PetModelImplToJson(_$PetModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'owner_id': instance.ownerId,
+      'ownerId': instance.ownerId,
       'name': instance.name,
       'breed': instance.breed,
       'species': _$PetSpeciesEnumMap[instance.species]!,
       'gender': _$PetGenderEnumMap[instance.gender],
-      'birth_date': instance.birthDate?.toIso8601String(),
+      'birthDate': instance.birthDate?.toIso8601String(),
       'weight': instance.weight,
-      'photo_url': instance.photoUrl,
+      'photoUrl': instance.photoUrl,
     };
 
 const _$PetSpeciesEnumMap = {

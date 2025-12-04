@@ -68,17 +68,23 @@ class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
   Future<List<AppointmentModel>> getVetAppointments(String vetId) async {
     final response = await supabaseClient
         .from('appointments')
-        .select('*, profiles:owner_id(name), pets:pet_id(name)')
+        .select('*, profiles:owner_id(name), pets:pet_id(name, photo_url, species, breed)')
         .eq('vet_id', vetId)
         .order('date_time');
 
     return (response as List).map((json) {
       final ownerName = json['profiles'] != null ? json['profiles']['name'] : 'Desconhecido';
       final petName = json['pets'] != null ? json['pets']['name'] : json['pet_name'];
+      final petPhotoUrl = json['pets'] != null ? json['pets']['photo_url'] : null;
+      final petSpecies = json['pets'] != null ? json['pets']['species'] : null;
+      final petBreed = json['pets'] != null ? json['pets']['breed'] : null;
       final Map<String, dynamic> data = Map.from(json);
       data['owner_name'] = ownerName;
       data['pet_name'] = petName;
-      
+      data['pet_photo_url'] = petPhotoUrl;
+      data['pet_species'] = petSpecies;
+      data['pet_breed'] = petBreed;
+
       return AppointmentModel.fromJson(data);
     }).toList();
   }
@@ -87,16 +93,22 @@ class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
   Future<List<AppointmentModel>> getOwnerAppointments(String ownerId) async {
     final response = await supabaseClient
         .from('appointments')
-        .select('*, vets:vet_id(name, avatar_url, specialty), pets:pet_id(name)')
+        .select('*, vets:vet_id(name, avatar_url, specialty), pets:pet_id(name, photo_url, species, breed)')
         .eq('owner_id', ownerId)
         .order('date_time');
 
     return (response as List).map((json) {
       final vetName = json['vets'] != null ? json['vets']['name'] : 'Veterinário';
       final petName = json['pets'] != null ? json['pets']['name'] : json['pet_name'];
+      final petPhotoUrl = json['pets'] != null ? json['pets']['photo_url'] : null;
+      final petSpecies = json['pets'] != null ? json['pets']['species'] : null;
+      final petBreed = json['pets'] != null ? json['pets']['breed'] : null;
       final Map<String, dynamic> data = Map.from(json);
       data['vet_name'] = vetName;
       data['pet_name'] = petName;
+      data['pet_photo_url'] = petPhotoUrl;
+      data['pet_species'] = petSpecies;
+      data['pet_breed'] = petBreed;
       return AppointmentModel.fromJson(data);
     }).toList();
   }

@@ -56,12 +56,12 @@ class NotificationService {
   void _onNotificationOpenedApp(RemoteMessage message) {
     // Ação quando usuário clica na notificação
     // Você pode navegar para uma tela específica aqui
-    print('Notification clicked: ${message.data}');
+    debugPrint('Notification clicked: ${message.data}');
   }
 
   void _onNotificationTap(NotificationResponse response) {
     // Ação ao clicar em notificação local
-    print('Local notification tapped: ${response.payload}');
+    debugPrint('Local notification tapped: ${response.payload}');
   }
 
   Future<void> _showLocalNotification({
@@ -96,5 +96,5 @@ class NotificationService {
 // Handler para notificações em background
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print('Handling background message: ${message.messageId}');
+  debugPrint('Handling background message: ${message.messageId}');
 }

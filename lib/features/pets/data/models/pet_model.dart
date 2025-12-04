@@ -9,14 +9,14 @@ class PetModel with _$PetModel {
   const PetModel._();
   const factory PetModel({
     required String id,
-    @JsonKey(name: 'owner_id') required String ownerId,
+    required String ownerId,
     required String name,
     String? breed,
     required PetSpecies species,
     PetGender? gender,
-    @JsonKey(name: 'birth_date') DateTime? birthDate,
+    DateTime? birthDate,
     double? weight,
-    @JsonKey(name: 'photo_url') String? photoUrl,
+    String? photoUrl,
   }) = _PetModel;
 
   factory PetModel.fromJson(Map<String, dynamic> json) =>
@@ -37,14 +37,14 @@ class PetModel with _$PetModel {
 
 extension PetModelX on PetModel {
   PetEntity toEntity() => PetEntity(
-    id: this.id,
-    ownerId: this.ownerId,
-    name: this.name,
-    breed: this.breed,
-    species: this.species,
-    gender: this.gender,
-    birthDate: this.birthDate,
-    weight: this.weight,
-    photoUrl: this.photoUrl,
+    id: id,
+    ownerId: ownerId,
+    name: name,
+    breed: breed,
+    species: species,
+    gender: gender,
+    birthDate: birthDate,
+    weight: weight,
+    photoUrl: photoUrl,
   );
 }

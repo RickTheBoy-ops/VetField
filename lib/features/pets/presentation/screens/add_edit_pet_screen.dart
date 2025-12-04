@@ -65,6 +65,12 @@ class _AddEditPetScreenState extends ConsumerState<AddEditPetScreen> {
 
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
+    if (_birthDate != null && _birthDate!.isAfter(DateTime.now())) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Data de nascimento não pode ser futura')));
+      }
+      return;
+    }
     final client = ref.read(supabaseClientProvider);
     final user = client.auth.currentUser;
     if (user == null) return;
@@ -190,11 +196,19 @@ class _AddEditPetScreenState extends ConsumerState<AddEditPetScreen> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _weightController,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
                   labelText: 'Peso (kg)',
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                 ),
+                validator: (v) {
+                  if (v == null || v.isEmpty) return null;
+                  final parsed = double.tryParse(v.replaceAll(',', '.'));
+                  if (parsed == null) return 'Informe um peso válido';
+                  if (parsed < 0) return 'Peso não pode ser negativo';
+                  if (parsed > 200) return 'Peso máximo permitido é 200 kg';
+                  return null;
+                },
               ),
               const SizedBox(height: 16),
               Row(

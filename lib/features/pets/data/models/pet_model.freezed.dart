@@ -21,16 +21,13 @@ PetModel _$PetModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$PetModel {
   String get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'owner_id')
   String get ownerId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get breed => throw _privateConstructorUsedError;
   PetSpecies get species => throw _privateConstructorUsedError;
   PetGender? get gender => throw _privateConstructorUsedError;
-  @JsonKey(name: 'birth_date')
   DateTime? get birthDate => throw _privateConstructorUsedError;
   double? get weight => throw _privateConstructorUsedError;
-  @JsonKey(name: 'photo_url')
   String? get photoUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -46,14 +43,14 @@ abstract class $PetModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      @JsonKey(name: 'owner_id') String ownerId,
+      String ownerId,
       String name,
       String? breed,
       PetSpecies species,
       PetGender? gender,
-      @JsonKey(name: 'birth_date') DateTime? birthDate,
+      DateTime? birthDate,
       double? weight,
-      @JsonKey(name: 'photo_url') String? photoUrl});
+      String? photoUrl});
 }
 
 /// @nodoc
@@ -130,14 +127,14 @@ abstract class _$$PetModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
-      @JsonKey(name: 'owner_id') String ownerId,
+      String ownerId,
       String name,
       String? breed,
       PetSpecies species,
       PetGender? gender,
-      @JsonKey(name: 'birth_date') DateTime? birthDate,
+      DateTime? birthDate,
       double? weight,
-      @JsonKey(name: 'photo_url') String? photoUrl});
+      String? photoUrl});
 }
 
 /// @nodoc
@@ -207,14 +204,14 @@ class __$$PetModelImplCopyWithImpl<$Res>
 class _$PetModelImpl extends _PetModel {
   const _$PetModelImpl(
       {required this.id,
-      @JsonKey(name: 'owner_id') required this.ownerId,
+      required this.ownerId,
       required this.name,
       this.breed,
       required this.species,
       this.gender,
-      @JsonKey(name: 'birth_date') this.birthDate,
+      this.birthDate,
       this.weight,
-      @JsonKey(name: 'photo_url') this.photoUrl})
+      this.photoUrl})
       : super._();
 
   factory _$PetModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -223,7 +220,6 @@ class _$PetModelImpl extends _PetModel {
   @override
   final String id;
   @override
-  @JsonKey(name: 'owner_id')
   final String ownerId;
   @override
   final String name;
@@ -234,12 +230,10 @@ class _$PetModelImpl extends _PetModel {
   @override
   final PetGender? gender;
   @override
-  @JsonKey(name: 'birth_date')
   final DateTime? birthDate;
   @override
   final double? weight;
   @override
-  @JsonKey(name: 'photo_url')
   final String? photoUrl;
 
   @override
@@ -287,14 +281,14 @@ class _$PetModelImpl extends _PetModel {
 abstract class _PetModel extends PetModel {
   const factory _PetModel(
       {required final String id,
-      @JsonKey(name: 'owner_id') required final String ownerId,
+      required final String ownerId,
       required final String name,
       final String? breed,
       required final PetSpecies species,
       final PetGender? gender,
-      @JsonKey(name: 'birth_date') final DateTime? birthDate,
+      final DateTime? birthDate,
       final double? weight,
-      @JsonKey(name: 'photo_url') final String? photoUrl}) = _$PetModelImpl;
+      final String? photoUrl}) = _$PetModelImpl;
   const _PetModel._() : super._();
 
   factory _PetModel.fromJson(Map<String, dynamic> json) =
@@ -303,7 +297,6 @@ abstract class _PetModel extends PetModel {
   @override
   String get id;
   @override
-  @JsonKey(name: 'owner_id')
   String get ownerId;
   @override
   String get name;
@@ -314,12 +307,10 @@ abstract class _PetModel extends PetModel {
   @override
   PetGender? get gender;
   @override
-  @JsonKey(name: 'birth_date')
   DateTime? get birthDate;
   @override
   double? get weight;
   @override
-  @JsonKey(name: 'photo_url')
   String? get photoUrl;
   @override
   @JsonKey(ignore: true)

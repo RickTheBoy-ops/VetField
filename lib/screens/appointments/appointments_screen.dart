@@ -182,15 +182,32 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> with Si
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Text(
-                    service,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary,
+                Row(
+                  children: [
+                    Builder(builder: (context) {
+                      final photo = appointment?.petPhotoUrl;
+                      return CircleAvatar(
+                        radius: 20,
+                        foregroundImage: (photo != null && photo.isNotEmpty)
+                            ? NetworkImage(photo)
+                            : null,
+                        child: const Icon(Icons.pets, color: AppColors.textSecondary),
+                      );
+                    }),
+                    const SizedBox(width: 12),
+                    SizedBox(
+                      width: 180,
+                      child: Text(
+                        service,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -359,6 +376,32 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> with Si
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Row(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 22,
+                                      foregroundImage: (appointment.petPhotoUrl != null && appointment.petPhotoUrl!.isNotEmpty)
+                                          ? NetworkImage(appointment.petPhotoUrl!)
+                                          : null,
+                                      child: const Icon(Icons.pets),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text('Pet: ${appointment.petName}', style: const TextStyle(fontWeight: FontWeight.w600)),
+                                          if (appointment.petSpecies != null || appointment.petBreed != null)
+                                            Text(
+                                              [appointment.petSpecies, appointment.petBreed].where((e) => e != null && e.isNotEmpty).join(' • '),
+                                              style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
+                                            ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 12),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [

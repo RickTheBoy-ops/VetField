@@ -12,26 +12,10 @@ class MockPetsRemoteDataSource extends Mock implements PetsRemoteDataSource {}
 void main() {
   late PetRepositoryImpl repository;
   late MockPetsRemoteDataSource mockRemote;
-  late PetModel fallbackPetModel;
 
   setUp(() {
     mockRemote = MockPetsRemoteDataSource();
     repository = PetRepositoryImpl(mockRemote);
-    fallbackPetModel = PetModel(
-      id: 'fallback',
-      ownerId: 'user_fallback',
-      name: 'Fallback',
-      species: PetSpecies.dog,
-    );
-  });
-
-  setUpAll(() {
-    registerFallbackValue(PetModel(
-      id: 'fake',
-      ownerId: 'fake_owner',
-      name: 'Fake',
-      species: PetSpecies.dog,
-    ));
   });
 
   const ownerId = 'user_1';

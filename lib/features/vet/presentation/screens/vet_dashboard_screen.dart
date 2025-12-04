@@ -457,6 +457,11 @@ class _VetDashboardScreenState extends ConsumerState<VetDashboardScreen> {
                           backgroundColor: _getStatusColor(
                             apt.status,
                           ).withValues(alpha: 0.1),
+                          foregroundImage:
+                              apt.petPhotoUrl != null &&
+                                  apt.petPhotoUrl!.isNotEmpty
+                              ? NetworkImage(apt.petPhotoUrl!)
+                              : null,
                           child: Icon(
                             Icons.pets,
                             color: _getStatusColor(apt.status),

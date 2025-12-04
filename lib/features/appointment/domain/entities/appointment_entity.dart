@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 enum AppointmentStatus { pending, confirmed, completed, cancelled }
+
 enum AppointmentType { consultation, vaccine, exam, surgery }
 
 class AppointmentEntity extends Equatable {
@@ -14,10 +15,13 @@ class AppointmentEntity extends Equatable {
   final AppointmentType type;
   final String? notes;
   final double price;
-  
+
   // Campos de display (opcionais, preenchidos via join)
   final String? vetName;
   final String? ownerName;
+  final String? petPhotoUrl;
+  final String? petSpecies;
+  final String? petBreed;
 
   const AppointmentEntity({
     required this.id,
@@ -32,10 +36,27 @@ class AppointmentEntity extends Equatable {
     required this.price,
     this.vetName,
     this.ownerName,
+    this.petPhotoUrl,
+    this.petSpecies,
+    this.petBreed,
   });
 
   @override
   List<Object?> get props => [
-    id, ownerId, vetId, petId, petName, dateTime, status, type, notes, price, vetName, ownerName
+    id,
+    ownerId,
+    vetId,
+    petId,
+    petName,
+    dateTime,
+    status,
+    type,
+    notes,
+    price,
+    vetName,
+    ownerName,
+    petPhotoUrl,
+    petSpecies,
+    petBreed,
   ];
 }
