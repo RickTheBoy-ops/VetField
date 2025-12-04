@@ -31,8 +31,8 @@ void main() {
     test('should return User on successful login', () async {
       // Arrange
       when(() => mockRepository.login(
-            email: testEmail,
-            password: testPassword,
+            testEmail,
+            testPassword,
           )).thenAnswer((_) async => const Right(testUser));
 
       // Act
@@ -43,8 +43,8 @@ void main() {
       // Assert
       expect(result, const Right(testUser));
       verify(() => mockRepository.login(
-            email: testEmail,
-            password: testPassword,
+            testEmail,
+            testPassword,
           )).called(1);
     });
 
@@ -52,8 +52,8 @@ void main() {
       // Arrange
       const failure = ServerFailure('Invalid credentials');
       when(() => mockRepository.login(
-            email: testEmail,
-            password: 'wrongpassword',
+            testEmail,
+            'wrongpassword',
           )).thenAnswer((_) async => const Left(failure));
 
       // Act
@@ -64,16 +64,16 @@ void main() {
       // Assert
       expect(result, const Left(failure));
       verify(() => mockRepository.login(
-            email: testEmail,
-            password: 'wrongpassword',
+            testEmail,
+            'wrongpassword',
           )).called(1);
     });
 
     test('should return Failure when repository throws exception', () async {
       // Arrange
       when(() => mockRepository.login(
-            email: testEmail,
-            password: testPassword,
+            testEmail,
+            testPassword,
           )).thenThrow(Exception('Network error'));
 
       // Act & Assert

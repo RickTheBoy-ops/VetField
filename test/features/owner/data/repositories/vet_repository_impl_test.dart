@@ -3,26 +3,35 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:vetfield_flutter/core/error/failures.dart';
 import 'package:vetfield_flutter/features/owner/data/datasources/vet_remote_datasource.dart';
-import 'package:vetfield_flutter/features/owner/data/models/vet_model.dart';
+import 'package:vetfield_flutter/features/owner/data/datasources/owner_local_datasource.dart';
 import 'package:vetfield_flutter/features/owner/data/repositories/vet_repository_impl.dart';
 import 'package:vetfield_flutter/features/owner/domain/entities/vet_entity.dart';
 
 class MockVetRemoteDataSource extends Mock implements VetRemoteDataSource {}
+class MockOwnerLocalDataSource extends Mock implements OwnerLocalDataSource {}
 
 void main() {
   late VetRepositoryImpl repository;
   late MockVetRemoteDataSource mockRemoteDataSource;
+  late MockOwnerLocalDataSource mockLocalDataSource;
 
   setUp(() {
     mockRemoteDataSource = MockVetRemoteDataSource();
-    repository = VetRepositoryImpl(remoteDataSource: mockRemoteDataSource);
+    mockLocalDataSource = MockOwnerLocalDataSource();
+    repository = VetRepositoryImpl(
+      remoteDataSource: mockRemoteDataSource,
+      localDataSource: mockLocalDataSource,
+    );
+
+    // Mock local data source calls
+    when(() => mockLocalDataSource.cacheVets(any())).thenAnswer((_) async {});
   });
 
   const tLat = -23.55;
   const tLong = -46.63;
   const tRadius = 10.0;
 
-  final tVetModel = VetModel(
+  const tVetEntity = VetEntity(
     id: '1',
     name: 'Dr. Pet',
     specialty: 'General',
@@ -34,8 +43,6 @@ void main() {
     price: 100.0,
   );
 
-  final tVetEntity = tVetModel;
-  final tListVetModel = [tVetModel];
   final tListVetEntity = [tVetEntity];
 
   group('getNearbyVets', () {
@@ -44,7 +51,7 @@ void main() {
       () async {
         // Arrange
         when(() => mockRemoteDataSource.getNearbyVets(any(), any(), any()))
-            .thenAnswer((_) async => tListVetModel);
+            .thenAnswer((_) async => tListVetEntity);
 
         // Act
         final result = await repository.getNearbyVets(
@@ -55,6 +62,7 @@ void main() {
 
         // Assert
         verify(() => mockRemoteDataSource.getNearbyVets(tLat, tLong, tRadius));
+        verify(() => mockLocalDataSource.cacheVets(tListVetEntity));
         expect(result.isRight(), true);
         result.fold(
           (l) => fail('Should be Right'),

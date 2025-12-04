@@ -70,6 +70,7 @@ class HealthTimelineScreen extends ConsumerWidget {
       case HealthEventType.exam: return const Icon(Icons.science_outlined, color: Colors.orange);
       case HealthEventType.consultation: return const Icon(Icons.medical_services_outlined, color: Colors.blue);
       case HealthEventType.surgery: return const Icon(Icons.healing_outlined, color: Colors.red);
+      case HealthEventType.prescription: return const Icon(Icons.assignment_outlined, color: Colors.purple);
     }
   }
 
@@ -79,6 +80,7 @@ class HealthTimelineScreen extends ConsumerWidget {
       case HealthEventType.exam: return 'Exame';
       case HealthEventType.consultation: return 'Consulta';
       case HealthEventType.surgery: return 'Cirurgia';
+      case HealthEventType.prescription: return 'Receita';
     }
   }
 

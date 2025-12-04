@@ -12,6 +12,8 @@ import '../../domain/usecases/login_by_crmv_usecase.dart';
 import '../../domain/usecases/reset_password_usecase.dart';
 import '../../domain/usecases/update_profile_usecase.dart';
 
+import '../../data/datasources/auth_local_datasource.dart';
+
 part 'auth_provider.g.dart';
 
 // Data Sources
@@ -21,11 +23,20 @@ AuthRemoteDataSource authRemoteDataSource(Ref ref) {
   return AuthRemoteDataSourceImpl(supabaseClient);
 }
 
+@riverpod
+AuthLocalDataSource authLocalDataSource(Ref ref) {
+  return AuthLocalDataSourceImpl();
+}
+
 // Repositories
 @riverpod
 AuthRepository authRepository(Ref ref) {
   final remoteDataSource = ref.watch(authRemoteDataSourceProvider);
-  return AuthRepositoryImpl(remoteDataSource: remoteDataSource);
+  final localDataSource = ref.watch(authLocalDataSourceProvider);
+  return AuthRepositoryImpl(
+    remoteDataSource: remoteDataSource,
+    localDataSource: localDataSource,
+  );
 }
 
 // Use Cases

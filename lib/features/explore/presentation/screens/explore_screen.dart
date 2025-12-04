@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart' as isp;
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/news_article_entity.dart';
 import '../providers/explore_provider.dart';
-// import '../../../../screens/clinic_details/clinic_details_screen.dart'; // Commented out as path might be different or circular
 
 class ExploreScreen extends ConsumerStatefulWidget {
   const ExploreScreen({super.key});
@@ -16,7 +15,14 @@ class ExploreScreen extends ConsumerStatefulWidget {
 
 class _ExploreScreenState extends ConsumerState<ExploreScreen> {
   static const _pageSize = 10;
-  final PagingController<int, NewsArticleEntity> _pagingController = PagingController(firstPageKey: 0);
+  late final isp.PagingController<int, NewsArticleEntity> _pagingController = isp.PagingController<int, NewsArticleEntity>(
+    getNextPageKey: (state) => (state.keys?.last ?? 0) + 1,
+    fetchPage: (pageKey) => ref.read(exploreControllerProvider.notifier).getArticles(
+      page: pageKey,
+      limit: _pageSize,
+      category: _selectedCategory,
+    ),
+  );
   String _selectedCategory = 'Todos';
 
   final List<String> _categories = [
@@ -29,29 +35,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
 
   @override
   void initState() {
-    _pagingController.addPageRequestListener((pageKey) {
-      _fetchPage(pageKey);
-    });
     super.initState();
-  }
-
-  Future<void> _fetchPage(int pageKey) async {
-    try {
-      final newItems = await ref.read(exploreControllerProvider.notifier).getArticles(
-        page: pageKey,
-        limit: _pageSize,
-        category: _selectedCategory,
-      );
-      final isLastPage = newItems.length < _pageSize;
-      if (isLastPage) {
-        _pagingController.appendLastPage(newItems);
-      } else {
-        final nextPageKey = pageKey + 1;
-        _pagingController.appendPage(newItems, nextPageKey);
-      }
-    } catch (error) {
-      _pagingController.error = error;
-    }
   }
 
   @override
@@ -130,19 +114,23 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
           
           // News Feed
           Expanded(
-            child: PagedListView<int, NewsArticleEntity>(
-              pagingController: _pagingController,
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              builderDelegate: PagedChildBuilderDelegate<NewsArticleEntity>(
-                itemBuilder: (context, item, index) => Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: _buildNewsCard(item),
-                ),
-                firstPageErrorIndicatorBuilder: (context) => Center(
-                  child: Text('Erro ao carregar notícias: ${_pagingController.error}'),
-                ),
-                noItemsFoundIndicatorBuilder: (context) => const Center(
-                  child: Text('Nenhuma notícia encontrada.'),
+            child: isp.PagingListener(
+              controller: _pagingController,
+              builder: (context, state, fetchNextPage) => isp.PagedListView<int, NewsArticleEntity>(
+                state: state,
+                fetchNextPage: fetchNextPage,
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                builderDelegate: isp.PagedChildBuilderDelegate<NewsArticleEntity>(
+                  itemBuilder: (context, item, index) => Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: _buildNewsCard(item),
+                  ),
+                  firstPageErrorIndicatorBuilder: (context) => Center(
+                    child: Text('Erro ao carregar notícias: ${state.error}'),
+                  ),
+                  noItemsFoundIndicatorBuilder: (context) => const Center(
+                    child: Text('Nenhuma notícia encontrada.'),
+                  ),
                 ),
               ),
             ),

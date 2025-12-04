@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/providers/supabase_provider.dart';
 import '../../data/datasources/vet_remote_datasource.dart';
+import '../../data/datasources/owner_local_datasource.dart';
 import '../../data/repositories/vet_repository_impl.dart';
 import '../../domain/entities/vet_entity.dart';
 import '../../domain/repositories/vet_repository.dart';
@@ -17,9 +18,18 @@ VetRemoteDataSource vetRemoteDataSource(Ref ref) {
 }
 
 @riverpod
+OwnerLocalDataSource ownerLocalDataSource(Ref ref) {
+  return OwnerLocalDataSourceImpl();
+}
+
+@riverpod
 VetRepository vetRepository(Ref ref) {
   final remoteDataSource = ref.watch(vetRemoteDataSourceProvider);
-  return VetRepositoryImpl(remoteDataSource: remoteDataSource);
+  final localDataSource = ref.watch(ownerLocalDataSourceProvider);
+  return VetRepositoryImpl(
+    remoteDataSource: remoteDataSource,
+    localDataSource: localDataSource,
+  );
 }
 
 @riverpod

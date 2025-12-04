@@ -23,7 +23,24 @@ final authRemoteDataSourceProvider =
 );
 
 typedef AuthRemoteDataSourceRef = AutoDisposeProviderRef<AuthRemoteDataSource>;
-String _$authRepositoryHash() => r'05c6159f6976986da64509d15b55d499b8b724b4';
+String _$authLocalDataSourceHash() =>
+    r'f28d447c0de8bc28b70a84c9bea5a099791a93ba';
+
+/// See also [authLocalDataSource].
+@ProviderFor(authLocalDataSource)
+final authLocalDataSourceProvider =
+    AutoDisposeProvider<AuthLocalDataSource>.internal(
+  authLocalDataSource,
+  name: r'authLocalDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$authLocalDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef AuthLocalDataSourceRef = AutoDisposeProviderRef<AuthLocalDataSource>;
+String _$authRepositoryHash() => r'be4170c2159a42b9eb42f599da5b4f4a852e67cd';
 
 /// See also [authRepository].
 @ProviderFor(authRepository)

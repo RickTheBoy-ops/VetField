@@ -1,6 +1,5 @@
 import 'dart:convert';
-import 'package:hive/hive.dart';
-import '../../../../core/database/hive_boxes.dart';
+import '../../../../core/local/hive_boxes.dart';
 import '../../domain/entities/social_pet_entity.dart';
 
 /// Local datasource for social pets using Hive
@@ -25,7 +24,7 @@ class SocialLocalDataSourceImpl implements SocialLocalDataSource {
   @override
   Future<List<SocialPet>> getCachedPets() async {
     try {
-      final box = Hive.box(HiveBoxes.socialBox);
+      final box = HiveBoxes.getSocialPostsBox();
       return box.values
           .map((dynamic e) => SocialPet.fromJson(jsonDecode(e as String)))
           .toList();
@@ -37,7 +36,7 @@ class SocialLocalDataSourceImpl implements SocialLocalDataSource {
   @override
   Future<void> cachePets(List<SocialPet> pets) async {
     try {
-      final box = Hive.box(HiveBoxes.socialBox);
+      final box = HiveBoxes.getSocialPostsBox();
       final Map<String, String> petsMap = {
         for (var pet in pets) pet.id: jsonEncode(pet.toJson()),
       };
@@ -50,7 +49,7 @@ class SocialLocalDataSourceImpl implements SocialLocalDataSource {
   @override
   Future<void> cachePet(SocialPet pet) async {
     try {
-      final box = Hive.box(HiveBoxes.socialBox);
+      final box = HiveBoxes.getSocialPostsBox();
       await box.put(pet.id, jsonEncode(pet.toJson()));
     } catch (e) {
       throw Exception('Failed to cache pet: $e');
@@ -60,7 +59,7 @@ class SocialLocalDataSourceImpl implements SocialLocalDataSource {
   @override
   Future<void> deleteCachedPet(String petId) async {
     try {
-      final box = Hive.box(HiveBoxes.socialBox);
+      final box = HiveBoxes.getSocialPostsBox();
       await box.delete(petId);
     } catch (e) {
       throw Exception('Failed to delete cached pet: $e');
@@ -70,7 +69,7 @@ class SocialLocalDataSourceImpl implements SocialLocalDataSource {
   @override
   Future<void> clearCache() async {
     try {
-      final box = Hive.box(HiveBoxes.socialBox);
+      final box = HiveBoxes.getSocialPostsBox();
       await box.clear();
     } catch (e) {
       throw Exception('Failed to clear social pets cache: $e');

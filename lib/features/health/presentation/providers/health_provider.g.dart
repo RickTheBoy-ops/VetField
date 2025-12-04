@@ -24,7 +24,25 @@ final healthRemoteDataSourceProvider =
 
 typedef HealthRemoteDataSourceRef
     = AutoDisposeProviderRef<HealthRemoteDataSource>;
-String _$healthRepositoryHash() => r'91260a3a31a002d8c4784582337b400c21e9be31';
+String _$healthLocalDataSourceHash() =>
+    r'b8c53a6724a27d38da2e82daa0f3ed71b5f7e181';
+
+/// See also [healthLocalDataSource].
+@ProviderFor(healthLocalDataSource)
+final healthLocalDataSourceProvider =
+    AutoDisposeProvider<HealthLocalDataSource>.internal(
+  healthLocalDataSource,
+  name: r'healthLocalDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$healthLocalDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef HealthLocalDataSourceRef
+    = AutoDisposeProviderRef<HealthLocalDataSource>;
+String _$healthRepositoryHash() => r'a05b44cf489fdf1a193974e3581b7e696016ed8b';
 
 /// See also [healthRepository].
 @ProviderFor(healthRepository)

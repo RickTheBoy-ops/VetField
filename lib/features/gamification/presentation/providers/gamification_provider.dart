@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/providers/supabase_provider.dart';
 import '../../data/datasources/gamification_remote_datasource.dart';
+import '../../data/datasources/gamification_local_datasource.dart';
 import '../../data/repositories/gamification_repository_impl.dart';
 import '../../domain/repositories/gamification_repository.dart';
 import '../../domain/entities/gamification_entities.dart';
@@ -16,11 +17,20 @@ GamificationRemoteDataSource gamificationRemoteDataSource(Ref ref) {
   return GamificationRemoteDataSourceImpl(supabaseClient);
 }
 
+@riverpod
+GamificationLocalDataSource gamificationLocalDataSource(Ref ref) {
+  return GamificationLocalDataSourceImpl();
+}
+
 // Repositories
 @riverpod
 GamificationRepository gamificationRepository(Ref ref) {
   final remoteDataSource = ref.watch(gamificationRemoteDataSourceProvider);
-  return GamificationRepositoryImpl(remoteDataSource: remoteDataSource);
+  final localDataSource = ref.watch(gamificationLocalDataSourceProvider);
+  return GamificationRepositoryImpl(
+    remoteDataSource: remoteDataSource,
+    localDataSource: localDataSource,
+  );
 }
 
 // Current User Profile Provider

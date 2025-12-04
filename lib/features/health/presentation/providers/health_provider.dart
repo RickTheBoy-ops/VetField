@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/providers/supabase_provider.dart';
 import '../../data/datasources/health_remote_datasource.dart';
+import '../../data/datasources/health_local_datasource.dart';
 import '../../data/repositories/health_repository_impl.dart';
 import '../../domain/repositories/health_repository.dart';
 import '../../domain/entities/health_event_entity.dart';
@@ -17,9 +18,18 @@ HealthRemoteDataSource healthRemoteDataSource(Ref ref) {
 }
 
 @riverpod
+HealthLocalDataSource healthLocalDataSource(Ref ref) {
+  return HealthLocalDataSourceImpl();
+}
+
+@riverpod
 HealthRepository healthRepository(Ref ref) {
   final remote = ref.watch(healthRemoteDataSourceProvider);
-  return HealthRepositoryImpl(remote);
+  final local = ref.watch(healthLocalDataSourceProvider);
+  return HealthRepositoryImpl(
+    remoteDataSource: remote,
+    localDataSource: local,
+  );
 }
 
 @riverpod

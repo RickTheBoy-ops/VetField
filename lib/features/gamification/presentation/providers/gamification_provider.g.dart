@@ -24,8 +24,26 @@ final gamificationRemoteDataSourceProvider =
 
 typedef GamificationRemoteDataSourceRef
     = AutoDisposeProviderRef<GamificationRemoteDataSource>;
+String _$gamificationLocalDataSourceHash() =>
+    r'35e8a3da7a53fd7bd6b0434e0551cc8177f8f183';
+
+/// See also [gamificationLocalDataSource].
+@ProviderFor(gamificationLocalDataSource)
+final gamificationLocalDataSourceProvider =
+    AutoDisposeProvider<GamificationLocalDataSource>.internal(
+  gamificationLocalDataSource,
+  name: r'gamificationLocalDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$gamificationLocalDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef GamificationLocalDataSourceRef
+    = AutoDisposeProviderRef<GamificationLocalDataSource>;
 String _$gamificationRepositoryHash() =>
-    r'574a5ebadd78eab38689f3ddb09ae4cf05ccd11f';
+    r'e8776b29e591ad613538af8f03a5477ea3d53342';
 
 /// See also [gamificationRepository].
 @ProviderFor(gamificationRepository)

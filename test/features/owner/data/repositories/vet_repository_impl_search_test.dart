@@ -3,22 +3,29 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:vetfield_flutter/core/error/failures.dart';
 import 'package:vetfield_flutter/features/owner/data/datasources/vet_remote_datasource.dart';
-import 'package:vetfield_flutter/features/owner/data/models/vet_model.dart';
+import 'package:vetfield_flutter/features/owner/data/datasources/owner_local_datasource.dart';
+import 'package:vetfield_flutter/features/owner/domain/entities/vet_entity.dart';
 import 'package:vetfield_flutter/features/owner/data/repositories/vet_repository_impl.dart';
 
 class _MockVetRemoteDataSource extends Mock implements VetRemoteDataSource {}
+class _MockOwnerLocalDataSource extends Mock implements OwnerLocalDataSource {}
 
 void main() {
   late VetRepositoryImpl repository;
   late _MockVetRemoteDataSource remote;
+  late _MockOwnerLocalDataSource local;
 
   setUp(() {
     remote = _MockVetRemoteDataSource();
-    repository = VetRepositoryImpl(remoteDataSource: remote);
+    local = _MockOwnerLocalDataSource();
+    repository = VetRepositoryImpl(
+      remoteDataSource: remote,
+      localDataSource: local,
+    );
   });
 
   test('searchVets passes radius filter to remote', () async {
-    final vet = const VetModel(
+    final vet = const VetEntity(
       id: '1',
       name: 'Dr. Pet',
       specialty: 'Clínico',

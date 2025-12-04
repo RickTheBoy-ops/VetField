@@ -23,7 +23,24 @@ final vetRemoteDataSourceProvider =
 );
 
 typedef VetRemoteDataSourceRef = AutoDisposeProviderRef<VetRemoteDataSource>;
-String _$vetRepositoryHash() => r'b7ad31edd3ffb70012be5a4cba79fce51bef70c5';
+String _$ownerLocalDataSourceHash() =>
+    r'1c29c7fb6c281b7cb17a9f07d6aa51de28f6cd2c';
+
+/// See also [ownerLocalDataSource].
+@ProviderFor(ownerLocalDataSource)
+final ownerLocalDataSourceProvider =
+    AutoDisposeProvider<OwnerLocalDataSource>.internal(
+  ownerLocalDataSource,
+  name: r'ownerLocalDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$ownerLocalDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef OwnerLocalDataSourceRef = AutoDisposeProviderRef<OwnerLocalDataSource>;
+String _$vetRepositoryHash() => r'88222291f7e0681e952e8f1006c9c059502da724';
 
 /// See also [vetRepository].
 @ProviderFor(vetRepository)

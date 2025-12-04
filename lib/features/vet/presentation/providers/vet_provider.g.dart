@@ -6,7 +6,41 @@ part of 'vet_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$vetRepositoryHash() => r'5798210f06ec4bcea4a03718628605a9d68bfad5';
+String _$vetRemoteDataSourceHash() =>
+    r'0cd4a26c0ad20b9613bd24c8d5d7eaae830cf04e';
+
+/// See also [vetRemoteDataSource].
+@ProviderFor(vetRemoteDataSource)
+final vetRemoteDataSourceProvider =
+    AutoDisposeProvider<VetRemoteDataSource>.internal(
+  vetRemoteDataSource,
+  name: r'vetRemoteDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$vetRemoteDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef VetRemoteDataSourceRef = AutoDisposeProviderRef<VetRemoteDataSource>;
+String _$vetLocalDataSourceHash() =>
+    r'bae40269491a818e649a016c941e684bd477b0cf';
+
+/// See also [vetLocalDataSource].
+@ProviderFor(vetLocalDataSource)
+final vetLocalDataSourceProvider =
+    AutoDisposeProvider<VetLocalDataSource>.internal(
+  vetLocalDataSource,
+  name: r'vetLocalDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$vetLocalDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef VetLocalDataSourceRef = AutoDisposeProviderRef<VetLocalDataSource>;
+String _$vetRepositoryHash() => r'343c537554c1c4834a0aa63f293a6dda27e2768e';
 
 /// See also [vetRepository].
 @ProviderFor(vetRepository)

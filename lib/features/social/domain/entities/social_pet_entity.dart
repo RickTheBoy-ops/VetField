@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+// ignore_for_file: invalid_annotation_target
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 part 'social_pet_entity.freezed.dart';
@@ -19,6 +20,6 @@ class SocialPet with _$SocialPet {
     @JsonKey(includeFromJson: false, includeToJson: false) LatLng? location,
   }) = _SocialPet;
 
-  factory SocialPet.fromJson(Map<String, dynamic> json) => _$SocialPetFromJson(json);
+  factory SocialPet.fromJson(Map<String, dynamic> json) =>
+      _$SocialPetFromJson(json);
 }
-
