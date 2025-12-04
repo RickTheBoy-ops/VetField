@@ -404,7 +404,7 @@ class RewardsScreen extends ConsumerWidget {
         return 'Indicação';
       case PointActionType.profileCompleted:
         return 'Perfil Completo';
-      case PointActionType.first PetRegistered:
+      case PointActionType.firstPetRegistered:
         return 'Primeiro Pet';
       case PointActionType.healthRecordUpdated:
         return 'Registro de Saúde';

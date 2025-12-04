@@ -1,9 +1,5 @@
-import 'package:json_annotation/json_annotation.dart';
 import '../../domain/entities/campaign_entity.dart';
 
-part 'campaign_model.g.dart';
-
-@JsonSerializable(fieldRename: FieldRename.snake)
 class CampaignModel extends CampaignEntity {
   const CampaignModel({
     required super.id,

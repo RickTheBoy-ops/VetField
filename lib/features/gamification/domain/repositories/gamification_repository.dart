@@ -13,5 +13,5 @@ abstract class GamificationRepository {
     required PointActionType actionType,
     String? description,
   });
-  Future<Either<Failure, bool>> hasClaimed DailyLoginToday(String userId);
+  Future<Either<Failure, bool>> hasClaimedDailyLoginToday(String userId);
 }

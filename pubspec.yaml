@@ -71,6 +71,10 @@ dependencies:
   url_launcher: ^6.3.0
   http: ^1.2.0
 
+  # OCR & Camera
+  google_mlkit_text_recognition: ^0.13.0
+  camera: ^0.11.0+2
+
   # UI Components
   carousel_slider: ^5.0.0
   fl_chart: ^0.69.0

@@ -5,7 +5,7 @@ import '../../data/datasources/gamification_remote_datasource.dart';
 import '../../data/repositories/gamification_repository_impl.dart';
 import '../../domain/repositories/gamification_repository.dart';
 import '../../domain/entities/gamification_entities.dart';
-import '../../../auth/presentation/providers/auth_provider.dart';
+ 
 
 part 'gamification_provider.g.dart';
 
@@ -26,7 +26,7 @@ GamificationRepository gamificationRepository(Ref ref) {
 // Current User Profile Provider
 @riverpod
 Future<GamificationProfile> userGamificationProfile(Ref ref) async {
-  final user = ref.watch(currentUserProvider);
+  final user = ref.watch(supabaseClientProvider).auth.currentUser;
   if (user == null) {
     throw Exception('User not authenticated');
   }
@@ -43,7 +43,7 @@ Future<GamificationProfile> userGamificationProfile(Ref ref) async {
 // Transaction History Provider
 @riverpod
 Future<List<PointTransaction>> userTransactionHistory(Ref ref) async {
-  final user = ref.watch(currentUserProvider);
+  final user = ref.watch(supabaseClientProvider).auth.currentUser;
   if (user == null) {
     throw Exception('User not authenticated');
   }
@@ -77,7 +77,7 @@ class GamificationController extends _$GamificationController {
 
   // Award daily login points
   Future<void> checkAndAwardDailyLogin() async {
-    final user = ref.read(currentUserProvider);
+    final user = ref.read(supabaseClientProvider).auth.currentUser;
     if (user == null) return;
 
     final repository = ref.read(gamificationRepositoryProvider);
@@ -107,7 +107,7 @@ class GamificationController extends _$GamificationController {
 
   // Award points for completing appointment
   Future<void> awardAppointmentCompleted() async {
-    final user = ref.read(currentUserProvider);
+    final user = ref.read(supabaseClientProvider).auth.currentUser;
     if (user == null) return;
 
     final repository = ref.read(gamificationRepositoryProvider);
@@ -123,7 +123,7 @@ class GamificationController extends _$GamificationController {
 
   // Award points for registering vaccine
   Future<void> awardVaccineRegistered() async {
-    final user = ref.read(currentUserProvider);
+    final user = ref.read(supabaseClientProvider).auth.currentUser;
     if (user == null) return;
 
     final repository = ref.read(gamificationRepositoryProvider);
@@ -139,7 +139,7 @@ class GamificationController extends _$GamificationController {
 
   // Award points for referral
   Future<void> awardReferral() async {
-    final user = ref.read(currentUserProvider);
+    final user = ref.read(supabaseClientProvider).auth.currentUser;
     if (user == null) return;
 
     final repository = ref.read(gamificationRepositoryProvider);
