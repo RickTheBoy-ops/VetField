@@ -12,16 +12,17 @@ class AppointmentLocalDataSourceImpl implements AppointmentLocalDataSource {
 
   @override
   Future<List<AppointmentModel>> getCachedAppointments(String userId) async {
-    final box = await Hive.openBox<AppointmentModel>('${_boxName}_$userId');
-    return box.values.toList();
+    final box = await Hive.openBox('${_boxName}_$userId');
+    final values = box.values.cast<Map>().toList();
+    return values.map((e) => AppointmentModel.fromJson(Map<String, dynamic>.from(e))).toList();
   }
 
   @override
   Future<void> cacheAppointments(String userId, List<AppointmentModel> appointments) async {
-    final box = await Hive.openBox<AppointmentModel>('${_boxName}_$userId');
+    final box = await Hive.openBox('${_boxName}_$userId');
     await box.clear();
     for (var appointment in appointments) {
-      await box.add(appointment);
+      await box.add(appointment.toJson());
     }
   }
 
