@@ -179,3 +179,22 @@ class AuthController extends _$AuthController {
     );
   }
 }
+
+// Current User Provider (for Auth Guards)
+@riverpod
+UserEntity? currentUser(Ref ref) {
+  final supabase = ref.watch(supabaseClientProvider);
+  final session = supabase.auth.currentSession;
+  
+  if (session == null) return null;
+  
+  // Return basic user info from session
+  return UserEntity(
+    id: session.user.id,
+    email: session.user.email ?? '',
+    name: session.user.userMetadata?['name'] ?? '',
+    type: session.user.userMetadata?['type'] == 'vet' 
+        ? UserType.vet 
+        : UserType.owner,
+  );
+}

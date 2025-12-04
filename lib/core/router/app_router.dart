@@ -15,13 +15,37 @@ import '../../screens/appointments/appointments_screen.dart';
 import '../../features/pets/presentation/screens/my_pets_screen.dart';
 import '../../features/pets/presentation/screens/add_edit_pet_screen.dart';
 import '../../features/pets/domain/entities/pet_entity.dart';
+import '../../features/auth/presentation/providers/auth_provider.dart';
 
 part 'app_router.g.dart';
 
 @riverpod
 GoRouter goRouter(Ref ref) {
   return GoRouter(
-    initialLocation: '/login', // Começando pelo Login para testar a auth
+    initialLocation: '/login',
+    redirect: (context, state) {
+      // Get current user from auth provider
+      final user = ref.read(currentUserProvider);
+      final isAuthenticated = user != null;
+      
+      // Define auth routes
+      final isAuthRoute = state.matchedLocation == '/login' ||
+          state.matchedLocation == '/register' ||
+          state.matchedLocation == '/onboarding';
+
+      // Redirect unauthenticated users to login
+      if (!isAuthenticated && !isAuthRoute) {
+        return '/login';
+      }
+
+      // Redirect authenticated users away from auth screens
+      if (isAuthenticated && isAuthRoute) {
+        return '/home';
+      }
+
+      // No redirect needed
+      return null;
+    },
     routes: [
       GoRoute(
         path: '/onboarding',
