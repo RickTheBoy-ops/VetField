@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/error_boundary.dart';
 import '../../domain/entities/gamification_entities.dart';
 import '../providers/gamification_provider.dart';
 
@@ -133,7 +134,11 @@ class RewardsScreen extends ConsumerWidget {
                     loading: () => const Center(
                       child: CircularProgressIndicator(),
                     ),
-                    error: (_, __) => const Text('Erro ao carregar histórico'),
+                    error: (error, stack) => ErrorBoundary(
+                      error: error,
+                      onRetry: () => ref.refresh(userTransactionHistoryProvider),
+                      customMessage: 'Erro ao carregar histórico',
+                    ),
                     data: (transactions) {
                       if (transactions.isEmpty) {
                         return Center(

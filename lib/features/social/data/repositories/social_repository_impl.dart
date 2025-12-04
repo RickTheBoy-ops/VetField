@@ -2,12 +2,17 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/social_pet_entity.dart';
 import '../../domain/repositories/social_repository.dart';
+import '../datasources/social_local_datasource.dart';
 import '../datasources/social_remote_datasource.dart';
 
 class SocialRepositoryImpl implements SocialRepository {
   final SocialRemoteDataSource remoteDataSource;
+  final SocialLocalDataSource localDataSource;
 
-  SocialRepositoryImpl({required this.remoteDataSource});
+  SocialRepositoryImpl({
+    required this.remoteDataSource,
+    required this.localDataSource,
+  });
 
   @override
   Future<Either<Failure, List<SocialPet>>> getNearbyPets({
@@ -21,8 +26,15 @@ class SocialRepositoryImpl implements SocialRepository {
         longitude: longitude,
         radiusKm: radiusKm,
       );
+      await localDataSource.cachePets(pets);
       return Right(pets);
     } catch (e) {
+      try {
+        final cachedPets = await localDataSource.getCachedPets();
+        if (cachedPets.isNotEmpty) {
+          return Right(cachedPets);
+        }
+      } catch (_) {}
       return Left(ServerFailure(e.toString()));
     }
   }
@@ -50,3 +62,4 @@ class SocialRepositoryImpl implements SocialRepository {
     }
   }
 }
+

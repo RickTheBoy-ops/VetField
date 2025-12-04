@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'core/local/hive_boxes.dart';
 import 'core/router/app_router.dart';
 import 'core/services/notification_service.dart';
 import 'core/theme/app_theme.dart';
@@ -23,10 +23,8 @@ void main() async {
   // Configurar Stripe
   Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
 
-  // Inicializar Hive para cache offline
-  await Hive.initFlutter();
-  // Registrar adapters aqui quando necessário
-  // Hive.registerAdapter(AppointmentModelAdapter());
+  // Inicializar Hive para cache offline com todas as boxes
+  await HiveBoxes.init();
 
   // Inicializar Supabase
   await Supabase.initialize(

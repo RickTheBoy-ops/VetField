@@ -1,42 +1,24 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class SocialPet extends Equatable {
-  final String id;
-  final String name;
-  final String breed;
-  final String? photoUrl;
-  final double? distanceKm;
-  final bool isOnline;
-  final String ownerId;
-  final String? ownerName;
-  final String? checkInMessage;
-  final LatLng? location;
+part 'social_pet_entity.freezed.dart';
+part 'social_pet_entity.g.dart';
 
-  const SocialPet({
-    required this.id,
-    required this.name,
-    required this.breed,
-    this.photoUrl,
-    this.distanceKm,
-    required this.isOnline,
-    required this.ownerId,
-    this.ownerName,
-    this.checkInMessage,
-    this.location,
-  });
+@freezed
+class SocialPet with _$SocialPet {
+  const factory SocialPet({
+    required String id,
+    required String name,
+    required String breed,
+    String? photoUrl,
+    double? distanceKm,
+    required bool isOnline,
+    required String ownerId,
+    String? ownerName,
+    String? checkInMessage,
+    @JsonKey(includeFromJson: false, includeToJson: false) LatLng? location,
+  }) = _SocialPet;
 
-  @override
-  List<Object?> get props => [
-        id,
-        name,
-        breed,
-        photoUrl,
-        distanceKm,
-        isOnline,
-        ownerId,
-        ownerName,
-        checkInMessage,
-        location,
-      ];
+  factory SocialPet.fromJson(Map<String, dynamic> json) => _$SocialPetFromJson(json);
 }
+

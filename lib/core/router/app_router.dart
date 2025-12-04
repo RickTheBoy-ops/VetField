@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/appointment/presentation/screens/booking_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
@@ -23,23 +24,45 @@ part 'app_router.g.dart';
 GoRouter goRouter(Ref ref) {
   return GoRouter(
     initialLocation: '/login',
-    redirect: (context, state) {
+    redirect: (context, state) async {
       // Get current user from auth provider
       final user = ref.read(currentUserProvider);
       final isAuthenticated = user != null;
       
-      // Define auth routes
-      final isAuthRoute = state.matchedLocation == '/login' ||
-          state.matchedLocation == '/register' ||
-          state.matchedLocation == '/onboarding';
+      // Check first install from Hive
+      final prefs = Hive.box('user_preferences');
+      final isFirstInstall = prefs.get('first_install', defaultValue: true);
+      
+      // Define public routes (accessible without authentication)
+      final publicRoutes = ['/login', '/register', '/onboarding'];
+      final isPublicRoute = publicRoutes.contains(state.matchedLocation);
+      
+      // Define protected routes that require authentication
+      final protectedPrefixes = [
+        '/vet',
+        '/owner',
+        '/appointment',
+        '/health',
+        '/my-pets',
+        '/profile-edit',
+        '/book',
+      ];
+      final isProtectedRoute = protectedPrefixes.any(
+        (prefix) => state.matchedLocation.startsWith(prefix),
+      );
 
-      // Redirect unauthenticated users to login
-      if (!isAuthenticated && !isAuthRoute) {
+      // First install flow: redirect to onboarding
+      if (isFirstInstall && state.matchedLocation != '/onboarding') {
+        return '/onboarding';
+      }
+
+      // Redirect unauthenticated users to login when accessing protected routes
+      if (!isAuthenticated && isProtectedRoute) {
         return '/login';
       }
 
       // Redirect authenticated users away from auth screens
-      if (isAuthenticated && isAuthRoute) {
+      if (isAuthenticated && isPublicRoute && state.matchedLocation != '/onboarding') {
         return '/home';
       }
 

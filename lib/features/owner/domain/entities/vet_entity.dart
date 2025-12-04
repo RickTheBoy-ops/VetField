@@ -1,41 +1,23 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class VetEntity extends Equatable {
-  final String id;
-  final String name;
-  final String specialty;
-  final String address;
-  final double rating;
-  final double latitude;
-  final double longitude;
-  final String avatarUrl;
-  final double price;
-  final bool isAvailable;
+part 'vet_entity.freezed.dart';
+part 'vet_entity.g.dart';
 
-  const VetEntity({
-    required this.id,
-    required this.name,
-    required this.specialty,
-    required this.address,
-    required this.rating,
-    required this.latitude,
-    required this.longitude,
-    required this.avatarUrl,
-    required this.price,
-    this.isAvailable = true,
-  });
+@freezed
+class VetEntity with _$VetEntity {
+  const factory VetEntity({
+    required String id,
+    required String name,
+    required String specialty,
+    required String address,
+    required double rating,
+    required double latitude,
+    required double longitude,
+    required String avatarUrl,
+    required double price,
+    @Default(true) bool isAvailable,
+  }) = _VetEntity;
 
-  @override
-  List<Object?> get props => [
-        id,
-        name,
-        specialty,
-        address,
-        rating,
-        latitude,
-        longitude,
-        avatarUrl,
-        price,
-        isAvailable,
-      ];
+  factory VetEntity.fromJson(Map<String, dynamic> json) => _$VetEntityFromJson(json);
 }
+

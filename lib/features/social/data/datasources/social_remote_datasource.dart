@@ -1,8 +1,8 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../models/social_pet_model.dart';
+import '../../domain/entities/social_pet_entity.dart';
 
 abstract class SocialRemoteDataSource {
-  Future<List<SocialPetModel>> getNearbyPets({
+  Future<List<SocialPet>> getNearbyPets({
     required double latitude,
     required double longitude,
     double radiusKm = 2.0,
@@ -23,7 +23,7 @@ class SocialRemoteDataSourceImpl implements SocialRemoteDataSource {
   SocialRemoteDataSourceImpl(this.supabaseClient);
 
   @override
-  Future<List<SocialPetModel>> getNearbyPets({
+  Future<List<SocialPet>> getNearbyPets({
     required double latitude,
     required double longitude,
     double radiusKm = 2.0,
@@ -40,7 +40,7 @@ class SocialRemoteDataSourceImpl implements SocialRemoteDataSource {
       );
 
       return (response as List)
-          .map((json) => SocialPetModel.fromJson(json))
+          .map((json) => SocialPet.fromJson(json))
           .toList();
     } catch (e) {
       // Fallback: Return mock data for testing/demo
@@ -48,9 +48,9 @@ class SocialRemoteDataSourceImpl implements SocialRemoteDataSource {
     }
   }
 
-  List<SocialPetModel> _getMockPets(double lat, double lng) {
+  List<SocialPet> _getMockPets(double lat, double lng) {
     return [
-      SocialPetModel(
+      const SocialPet(
         id: 'mock-1',
         name: 'Rex',
         breed: 'Golden Retriever',
@@ -61,7 +61,7 @@ class SocialRemoteDataSourceImpl implements SocialRemoteDataSource {
         ownerName: 'João Silva',
         checkInMessage: 'Brincando no parque! 🐕',
       ),
-      const SocialPetModel(
+      const SocialPet(
         id: 'mock-2',
         name: 'Luna',
         breed: 'Labrador',
@@ -71,7 +71,7 @@ class SocialRemoteDataSourceImpl implements SocialRemoteDataSource {
         ownerName: 'Maria Santos',
         checkInMessage: 'Procurando amigos para brincar',
       ),
-      const SocialPetModel(
+      const SocialPet(
         id: 'mock-3',
         name: 'Thor',
         breed: 'Pastor Alemão',
@@ -106,3 +106,4 @@ class SocialRemoteDataSourceImpl implements SocialRemoteDataSource {
     }).eq('owner_id', userId);
   }
 }
+

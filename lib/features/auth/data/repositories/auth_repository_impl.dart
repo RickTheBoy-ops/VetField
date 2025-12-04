@@ -1,18 +1,25 @@
 import 'package:dartz/dartz.dart';
+import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
+import '../datasources/auth_local_datasource.dart';
 import '../datasources/auth_remote_datasource.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
+  final AuthLocalDataSource localDataSource;
 
-  AuthRepositoryImpl({required this.remoteDataSource});
+  AuthRepositoryImpl({
+    required this.remoteDataSource,
+    required this.localDataSource,
+  });
 
   @override
   Future<Either<Failure, UserEntity>> login(String email, String password) async {
     try {
       final user = await remoteDataSource.login(email, password);
+      await localDataSource.cacheUser(user);
       return Right(user);
     } catch (e) {
       return Left(AuthFailure(e.toString()));
@@ -23,6 +30,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, UserEntity>> loginByCpf(String cpf, String password) async {
     try {
       final user = await remoteDataSource.loginByCpf(cpf, password);
+      await localDataSource.cacheUser(user);
       return Right(user);
     } catch (e) {
       return Left(AuthFailure(e.toString()));
@@ -33,6 +41,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, UserEntity>> loginByCrmv(String crmv, String password) async {
     try {
       final user = await remoteDataSource.loginByCrmv(crmv, password);
+      await localDataSource.cacheUser(user);
       return Right(user);
     } catch (e) {
       return Left(AuthFailure(e.toString()));
@@ -57,6 +66,7 @@ class AuthRepositoryImpl implements AuthRepository {
         crmv: crmv,
         cpf: cpf,
       );
+      await localDataSource.cacheUser(user);
       return Right(user);
     } catch (e) {
       return Left(AuthFailure(e.toString()));
@@ -65,13 +75,35 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, UserEntity?>> getCurrentUser() async {
-    // TODO: Implementar persistência local ou check de sessão
-    return const Right(null);
+    try {
+      // Try local first
+      final localUser = await localDataSource.getLastUser();
+      return Right(localUser);
+    } on CacheException {
+      // If no local data, try remote
+      try {
+        final remoteUser = await remoteDataSource.getCurrentUser();
+        if (remoteUser != null) {
+          await localDataSource.cacheUser(remoteUser);
+        }
+        return Right(remoteUser);
+      } catch (e) {
+        return Left(AuthFailure(e.toString()));
+      }
+    } catch (e) {
+      return Left(AuthFailure(e.toString()));
+    }
   }
 
   @override
   Future<Either<Failure, void>> logout() async {
-    return const Right(null);
+    try {
+      await remoteDataSource.logout();
+      await localDataSource.clearCache();
+      return const Right(null);
+    } catch (e) {
+      return Left(AuthFailure(e.toString()));
+    }
   }
 
   @override
@@ -98,9 +130,11 @@ class AuthRepositoryImpl implements AuthRepository {
         crmv: crmv,
         cpf: cpf,
       );
+      await localDataSource.cacheUser(user);
       return Right(user);
     } catch (e) {
       return Left(AuthFailure(e.toString()));
     }
   }
 }
+

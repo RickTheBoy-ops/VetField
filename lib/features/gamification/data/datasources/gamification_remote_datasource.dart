@@ -1,11 +1,10 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../models/gamification_models.dart';
 import '../../domain/entities/gamification_entities.dart';
 
 abstract class GamificationRemoteDataSource {
-  Future<GamificationProfileModel> getProfile(String userId);
-  Future<List<PointTransactionModel>> getTransactionHistory(String userId);
-  Future<List<LeaderboardEntryModel>> getLeaderboard({int limit = 10});
+  Future<GamificationProfile> getProfile(String userId);
+  Future<List<PointTransaction>> getTransactionHistory(String userId);
+  Future<List<LeaderboardEntry>> getLeaderboard({int limit = 10});
   Future<int> getUserRanking(String userId);
   Future<void> addPoints({
     required String userId,
@@ -22,20 +21,18 @@ class GamificationRemoteDataSourceImpl implements GamificationRemoteDataSource {
   GamificationRemoteDataSourceImpl(this.supabaseClient);
 
   @override
-  Future<GamificationProfileModel> getProfile(String userId) async {
+  Future<GamificationProfile> getProfile(String userId) async {
     final response = await supabaseClient
         .from('gamification_profiles')
         .select()
         .eq('user_id', userId)
         .single();
 
-    return GamificationProfileModel.fromJson(response);
+    return GamificationProfile.fromJson(response);
   }
 
   @override
-  Future<List<PointTransactionModel>> getTransactionHistory(
-    String userId,
-  ) async {
+  Future<List<PointTransaction>> getTransactionHistory(String userId) async {
     final response = await supabaseClient
         .from('point_transactions')
         .select()
@@ -44,19 +41,19 @@ class GamificationRemoteDataSourceImpl implements GamificationRemoteDataSource {
         .limit(50);
 
     return (response as List)
-        .map((json) => PointTransactionModel.fromJson(json))
+        .map((json) => PointTransaction.fromJson(json))
         .toList();
   }
 
   @override
-  Future<List<LeaderboardEntryModel>> getLeaderboard({int limit = 10}) async {
+  Future<List<LeaderboardEntry>> getLeaderboard({int limit = 10}) async {
     final response = await supabaseClient.rpc(
       'get_leaderboard',
       params: {'limit_results': limit, 'offset_results': 0},
     );
 
     return (response as List)
-        .map((json) => LeaderboardEntryModel.fromJson(json))
+        .map((json) => LeaderboardEntry.fromJson(json))
         .toList();
   }
 
@@ -119,3 +116,4 @@ class GamificationRemoteDataSourceImpl implements GamificationRemoteDataSource {
     }
   }
 }
+

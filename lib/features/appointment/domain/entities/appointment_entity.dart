@@ -1,62 +1,32 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'appointment_entity.freezed.dart';
+part 'appointment_entity.g.dart';
 
 enum AppointmentStatus { pending, confirmed, completed, cancelled }
 
 enum AppointmentType { consultation, vaccine, exam, surgery }
 
-class AppointmentEntity extends Equatable {
-  final String id;
-  final String ownerId;
-  final String vetId;
-  final String? petId;
-  final String petName;
-  final DateTime dateTime;
-  final AppointmentStatus status;
-  final AppointmentType type;
-  final String? notes;
-  final double price;
+@freezed
+class AppointmentEntity with _$AppointmentEntity {
+  const factory AppointmentEntity({
+    required String id,
+    required String ownerId,
+    required String vetId,
+    String? petId,
+    required String petName,
+    required DateTime dateTime,
+    required AppointmentStatus status,
+    required AppointmentType type,
+    String? notes,
+    required double price,
+    String? vetName,
+    String? ownerName,
+    String? petPhotoUrl,
+    String? petSpecies,
+    String? petBreed,
+  }) = _AppointmentEntity;
 
-  // Campos de display (opcionais, preenchidos via join)
-  final String? vetName;
-  final String? ownerName;
-  final String? petPhotoUrl;
-  final String? petSpecies;
-  final String? petBreed;
-
-  const AppointmentEntity({
-    required this.id,
-    required this.ownerId,
-    required this.vetId,
-    this.petId,
-    required this.petName,
-    required this.dateTime,
-    required this.status,
-    required this.type,
-    this.notes,
-    required this.price,
-    this.vetName,
-    this.ownerName,
-    this.petPhotoUrl,
-    this.petSpecies,
-    this.petBreed,
-  });
-
-  @override
-  List<Object?> get props => [
-    id,
-    ownerId,
-    vetId,
-    petId,
-    petName,
-    dateTime,
-    status,
-    type,
-    notes,
-    price,
-    vetName,
-    ownerName,
-    petPhotoUrl,
-    petSpecies,
-    petBreed,
-  ];
+  factory AppointmentEntity.fromJson(Map<String, dynamic> json) => _$AppointmentEntityFromJson(json);
 }
+

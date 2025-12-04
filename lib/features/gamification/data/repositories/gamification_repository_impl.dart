@@ -2,19 +2,31 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/gamification_entities.dart';
 import '../../domain/repositories/gamification_repository.dart';
+import '../datasources/gamification_local_datasource.dart';
 import '../datasources/gamification_remote_datasource.dart';
 
 class GamificationRepositoryImpl implements GamificationRepository {
   final GamificationRemoteDataSource remoteDataSource;
+  final GamificationLocalDataSource localDataSource;
 
-  GamificationRepositoryImpl({required this.remoteDataSource});
+  GamificationRepositoryImpl({
+    required this.remoteDataSource,
+    required this.localDataSource,
+  });
 
   @override
   Future<Either<Failure, GamificationProfile>> getProfile(String userId) async {
     try {
       final profile = await remoteDataSource.getProfile(userId);
+      await localDataSource.cacheProfile(profile);
       return Right(profile);
     } catch (e) {
+      try {
+        final cachedProfile = await localDataSource.getCachedProfile();
+        if (cachedProfile != null) {
+          return Right(cachedProfile);
+        }
+      } catch (_) {}
       return Left(ServerFailure(e.toString()));
     }
   }
@@ -84,3 +96,4 @@ class GamificationRepositoryImpl implements GamificationRepository {
     }
   }
 }
+

@@ -1,4 +1,7 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'gamification_entities.freezed.dart';
+part 'gamification_entities.g.dart';
 
 enum PointActionType {
   dailyLogin,
@@ -11,22 +14,20 @@ enum PointActionType {
   reviewSubmitted,
 }
 
-class GamificationProfile extends Equatable {
-  final String userId;
-  final int currentPoints;
-  final int lifetimePoints;
-  final int level;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+@freezed
+class GamificationProfile with _$GamificationProfile {
+  const GamificationProfile._();
 
-  const GamificationProfile({
-    required this.userId,
-    required this.currentPoints,
-    required this.lifetimePoints,
-    required this.level,
-    required this.createdAt,
-    required this.updatedAt,
-  });
+  const factory GamificationProfile({
+    required String userId,
+    required int currentPoints,
+    required int lifetimePoints,
+    required int level,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+  }) = _GamificationProfile;
+
+  factory GamificationProfile.fromJson(Map<String, dynamic> json) => _$GamificationProfileFromJson(json);
 
   // Computed properties
   String get levelTitle {
@@ -58,72 +59,37 @@ class GamificationProfile extends Equatable {
     final progressSinceLevelStart = currentPoints - currentLevelThreshold;
     return progressSinceLevelStart / levelRange;
   }
-
-  @override
-  List<Object?> get props => [
-        userId,
-        currentPoints,
-        lifetimePoints,
-        level,
-        createdAt,
-        updatedAt,
-      ];
 }
 
-class PointTransaction extends Equatable {
-  final String id;
-  final String userId;
-  final int amount;
-  final PointActionType actionType;
-  final String? description;
-  final DateTime createdAt;
+@freezed
+class PointTransaction with _$PointTransaction {
+  const PointTransaction._();
 
-  const PointTransaction({
-    required this.id,
-    required this.userId,
-    required this.amount,
-    required this.actionType,
-    this.description,
-    required this.createdAt,
-  });
+  const factory PointTransaction({
+    required String id,
+    required String userId,
+    required int amount,
+    required PointActionType actionType,
+    String? description,
+    required DateTime createdAt,
+  }) = _PointTransaction;
+
+  factory PointTransaction.fromJson(Map<String, dynamic> json) => _$PointTransactionFromJson(json);
 
   bool get isPositive => amount > 0;
-
-  @override
-  List<Object?> get props => [
-        id,
-        userId,
-        amount,
-        actionType,
-        description,
-        createdAt,
-      ];
 }
 
-class LeaderboardEntry extends Equatable {
-  final String userId;
-  final String name;
-  final String? avatarUrl;
-  final int level;
-  final int lifetimePoints;
-  final int rank;
+@freezed
+class LeaderboardEntry with _$LeaderboardEntry {
+  const factory LeaderboardEntry({
+    required String userId,
+    required String name,
+    String? avatarUrl,
+    required int level,
+    required int lifetimePoints,
+    required int rank,
+  }) = _LeaderboardEntry;
 
-  const LeaderboardEntry({
-    required this.userId,
-    required this.name,
-    this.avatarUrl,
-    required this.level,
-    required this.lifetimePoints,
-    required this.rank,
-  });
-
-  @override
-  List<Object?> get props => [
-        userId,
-        name,
-        avatarUrl,
-        level,
-        lifetimePoints,
-        rank,
-      ];
+  factory LeaderboardEntry.fromJson(Map<String, dynamic> json) => _$LeaderboardEntryFromJson(json);
 }
+

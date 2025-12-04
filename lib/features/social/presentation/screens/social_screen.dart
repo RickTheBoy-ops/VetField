@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/error_boundary.dart';
 import '../providers/social_provider.dart';
 
 class SocialScreen extends ConsumerWidget {
@@ -31,24 +32,13 @@ class SocialScreen extends ConsumerWidget {
       ),
       body: controller.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.error_outline, size: 64, color: Colors.red),
-              const SizedBox(height: 16),
-              Text('Erro: $error'),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  if (isCheckedIn) {
-                    ref.read(socialControllerProvider.notifier).fetchNearby();
-                  }
-                },
-                child: const Text('Tentar Novamente'),
-              ),
-            ],
-          ),
+        error: (error, stack) => ErrorBoundary(
+          error: error,
+          onRetry: () {
+            if (isCheckedIn) {
+              ref.read(socialControllerProvider.notifier).fetchNearby();
+            }
+          },
         ),
         data: (pets) {
           if (!isCheckedIn) {

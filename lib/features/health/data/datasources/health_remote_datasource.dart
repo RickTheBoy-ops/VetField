@@ -1,10 +1,9 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../models/health_event_model.dart';
 import '../../domain/entities/health_event_entity.dart';
 
 abstract class HealthRemoteDataSource {
-  Future<List<HealthEventModel>> getEventsByOwner(String ownerId);
-  Future<HealthEventModel> addEvent({
+  Future<List<HealthEventEntity>> getEventsByOwner(String ownerId);
+  Future<HealthEventEntity> addEvent({
     required HealthEventType type,
     required DateTime date,
     String? details,
@@ -19,17 +18,17 @@ class HealthRemoteDataSourceImpl implements HealthRemoteDataSource {
   HealthRemoteDataSourceImpl(this.client);
 
   @override
-  Future<List<HealthEventModel>> getEventsByOwner(String ownerId) async {
+  Future<List<HealthEventEntity>> getEventsByOwner(String ownerId) async {
     final response = await client
         .from('health_events')
         .select()
         .eq('owner_id', ownerId)
         .order('date', ascending: false);
-    return (response as List).map((e) => HealthEventModel.fromJson(e as Map<String, dynamic>)).toList();
+    return (response as List).map((e) => HealthEventEntity.fromJson(e as Map<String, dynamic>)).toList();
   }
 
   @override
-  Future<HealthEventModel> addEvent({
+  Future<HealthEventEntity> addEvent({
     required HealthEventType type,
     required DateTime date,
     String? details,
@@ -50,6 +49,7 @@ class HealthRemoteDataSourceImpl implements HealthRemoteDataSource {
         })
         .select()
         .single();
-    return HealthEventModel.fromJson(response);
+    return HealthEventEntity.fromJson(response);
   }
 }
+

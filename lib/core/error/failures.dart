@@ -20,3 +20,12 @@ class CacheFailure extends Failure {
 class AuthFailure extends Failure {
   const AuthFailure(super.message);
 }
+
+class NetworkFailure extends Failure {
+  const NetworkFailure(super.message);
+}
+
+class ValidationFailure extends Failure {
+  const ValidationFailure(super.message);
+}
+

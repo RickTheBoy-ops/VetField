@@ -1,9 +1,8 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../models/appointment_model.dart';
 import '../../domain/entities/appointment_entity.dart';
 
 abstract class AppointmentRemoteDataSource {
-  Future<AppointmentModel> createAppointment({
+  Future<AppointmentEntity> createAppointment({
     required String vetId,
     String? petId,
     required String petName,
@@ -12,8 +11,8 @@ abstract class AppointmentRemoteDataSource {
     String? notes,
   });
 
-  Future<List<AppointmentModel>> getVetAppointments(String vetId);
-  Future<List<AppointmentModel>> getOwnerAppointments(String ownerId);
+  Future<List<AppointmentEntity>> getVetAppointments(String vetId);
+  Future<List<AppointmentEntity>> getOwnerAppointments(String ownerId);
   
   Future<void> updateAppointmentStatus(String id, AppointmentStatus status);
   Future<void> updateAppointmentDateTime(String id, DateTime newDateTime);
@@ -25,7 +24,7 @@ class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
   AppointmentRemoteDataSourceImpl(this.supabaseClient);
 
   @override
-  Future<AppointmentModel> createAppointment({
+  Future<AppointmentEntity> createAppointment({
     required String vetId,
     String? petId,
     required String petName,
@@ -61,11 +60,11 @@ class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
         .select()
         .single();
 
-    return AppointmentModel.fromJson(response);
+    return AppointmentEntity.fromJson(response);
   }
 
   @override
-  Future<List<AppointmentModel>> getVetAppointments(String vetId) async {
+  Future<List<AppointmentEntity>> getVetAppointments(String vetId) async {
     final response = await supabaseClient
         .from('appointments')
         .select('*, profiles:owner_id(name), pets:pet_id(name, photo_url, species, breed)')
@@ -85,12 +84,12 @@ class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
       data['pet_species'] = petSpecies;
       data['pet_breed'] = petBreed;
 
-      return AppointmentModel.fromJson(data);
+      return AppointmentEntity.fromJson(data);
     }).toList();
   }
 
   @override
-  Future<List<AppointmentModel>> getOwnerAppointments(String ownerId) async {
+  Future<List<AppointmentEntity>> getOwnerAppointments(String ownerId) async {
     final response = await supabaseClient
         .from('appointments')
         .select('*, vets:vet_id(name, avatar_url, specialty), pets:pet_id(name, photo_url, species, breed)')
@@ -109,7 +108,7 @@ class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
       data['pet_photo_url'] = petPhotoUrl;
       data['pet_species'] = petSpecies;
       data['pet_breed'] = petBreed;
-      return AppointmentModel.fromJson(data);
+      return AppointmentEntity.fromJson(data);
     }).toList();
   }
 
@@ -129,3 +128,4 @@ class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
         .eq('id', id);
   }
 }
+

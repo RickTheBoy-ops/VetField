@@ -1,28 +1,23 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-enum HealthEventType { vaccine, exam, consultation, surgery }
+part 'health_event_entity.freezed.dart';
+part 'health_event_entity.g.dart';
 
-class HealthEventEntity extends Equatable {
-  final String id;
-  final String ownerId;
-  final String? petId;
-  final HealthEventType type;
-  final DateTime date;
-  final String? details;
-  final String? vetId;
-  final String? attachmentUrl;
+enum HealthEventType { vaccine, exam, consultation, surgery, prescription }
 
-  const HealthEventEntity({
-    required this.id,
-    required this.ownerId,
-    this.petId,
-    required this.type,
-    required this.date,
-    this.details,
-    this.vetId,
-    this.attachmentUrl,
-  });
+@freezed
+class HealthEventEntity with _$HealthEventEntity {
+  const factory HealthEventEntity({
+    required String id,
+    required String ownerId,
+    String? petId,
+    required HealthEventType type,
+    required DateTime date,
+    String? details,
+    String? vetId,
+    String? attachmentUrl,
+  }) = _HealthEventEntity;
 
-  @override
-  List<Object?> get props => [id, ownerId, petId, type, date, details, vetId, attachmentUrl];
+  factory HealthEventEntity.fromJson(Map<String, dynamic> json) => _$HealthEventEntityFromJson(json);
 }
+

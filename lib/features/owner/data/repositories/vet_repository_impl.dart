@@ -2,12 +2,17 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/vet_entity.dart';
 import '../../domain/repositories/vet_repository.dart';
+import '../datasources/owner_local_datasource.dart';
 import '../datasources/vet_remote_datasource.dart';
 
 class VetRepositoryImpl implements VetRepository {
   final VetRemoteDataSource remoteDataSource;
+  final OwnerLocalDataSource localDataSource;
 
-  VetRepositoryImpl({required this.remoteDataSource});
+  VetRepositoryImpl({
+    required this.remoteDataSource,
+    required this.localDataSource,
+  });
 
   @override
   Future<Either<Failure, List<VetEntity>>> getNearbyVets({
@@ -17,8 +22,15 @@ class VetRepositoryImpl implements VetRepository {
   }) async {
     try {
       final vets = await remoteDataSource.getNearbyVets(latitude, longitude, radiusKm);
+      await localDataSource.cacheVets(vets);
       return Right(vets);
     } catch (e) {
+      try {
+        final cachedVets = await localDataSource.getCachedVets();
+        if (cachedVets.isNotEmpty) {
+          return Right(cachedVets);
+        }
+      } catch (_) {}
       return Left(ServerFailure(e.toString()));
     }
   }
@@ -62,3 +74,4 @@ class VetRepositoryImpl implements VetRepository {
     }
   }
 }
+

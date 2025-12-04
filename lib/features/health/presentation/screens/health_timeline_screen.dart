@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/error_boundary.dart';
 import '../../domain/entities/health_event_entity.dart';
 import '../providers/health_provider.dart';
 import '../../domain/usecases/add_health_event_usecase.dart';
@@ -41,17 +42,24 @@ class HealthTimelineScreen extends ConsumerWidget {
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Erro: $err')),
+        error: (err, stack) => ErrorBoundary(
+          error: err,
+          onRetry: () => ref.refresh(healthTimelineControllerProvider),
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final now = DateTime.now();
-          await ref.read(healthTimelineControllerProvider.notifier).addEvent(
-            AddHealthEventParams(type: HealthEventType.consultation, date: now),
-          );
-        },
-        backgroundColor: AppColors.primary,
-        child: const Icon(Icons.add, color: Colors.white),
+      floatingActionButton: Semantics(
+        label: 'Adicionar novo evento de saúde',
+        button: true,
+        child: FloatingActionButton(
+          onPressed: () async {
+            final now = DateTime.now();
+            await ref.read(healthTimelineControllerProvider.notifier).addEvent(
+              AddHealthEventParams(type: HealthEventType.consultation, date: now),
+            );
+          },
+          backgroundColor: AppColors.primary,
+          child: const Icon(Icons.add, color: Colors.white),
+        ),
       ),
     );
   }

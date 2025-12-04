@@ -1,10 +1,10 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../models/vet_model.dart';
+import '../../domain/entities/vet_entity.dart';
 
 abstract class VetRemoteDataSource {
-  Future<List<VetModel>> getNearbyVets(double lat, double lng, double radiusKm);
-  Future<List<VetModel>> searchVets({String? query, String? specialty, double? maxPrice, double? minRating, double? lat, double? lng, double? radiusKm});
-  Future<VetModel?> getSosNearestVet(double lat, double lng);
+  Future<List<VetEntity>> getNearbyVets(double lat, double lng, double radiusKm);
+  Future<List<VetEntity>> searchVets({String? query, String? specialty, double? maxPrice, double? minRating, double? lat, double? lng, double? radiusKm});
+  Future<VetEntity?> getSosNearestVet(double lat, double lng);
 }
 
 class VetRemoteDataSourceImpl implements VetRemoteDataSource {
@@ -13,7 +13,7 @@ class VetRemoteDataSourceImpl implements VetRemoteDataSource {
   VetRemoteDataSourceImpl(this.supabaseClient);
 
   @override
-  Future<List<VetModel>> getNearbyVets(double lat, double lng, double radiusKm) async {
+  Future<List<VetEntity>> getNearbyVets(double lat, double lng, double radiusKm) async {
     // Chamada RPC para função PostGIS no Supabase
     final List<dynamic> response = await supabaseClient.rpc(
       'nearby_vets',
@@ -24,11 +24,11 @@ class VetRemoteDataSourceImpl implements VetRemoteDataSource {
       },
     );
 
-    return response.map((json) => VetModel.fromJson(json)).toList();
+    return response.map((json) => VetEntity.fromJson(json)).toList();
   }
 
   @override
-  Future<List<VetModel>> searchVets({String? query, String? specialty, double? maxPrice, double? minRating, double? lat, double? lng, double? radiusKm}) async {
+  Future<List<VetEntity>> searchVets({String? query, String? specialty, double? maxPrice, double? minRating, double? lat, double? lng, double? radiusKm}) async {
     if (lat != null && lng != null && radiusKm != null) {
       final List<dynamic> nearby = await supabaseClient.rpc(
         'nearby_vets',
@@ -38,7 +38,7 @@ class VetRemoteDataSourceImpl implements VetRemoteDataSource {
           'radius_km': radiusKm,
         },
       );
-      var vets = nearby.map((json) => VetModel.fromJson(json as Map<String, dynamic>)).toList();
+      var vets = nearby.map((json) => VetEntity.fromJson(json as Map<String, dynamic>)).toList();
       if (query != null && query.isNotEmpty) {
         vets = vets.where((v) => v.name.toLowerCase().contains(query.toLowerCase())).toList();
       }
@@ -73,11 +73,11 @@ class VetRemoteDataSourceImpl implements VetRemoteDataSource {
     }
 
     final response = await queryBuilder;
-    return (response as List).map((json) => VetModel.fromJson(json)).toList();
+    return (response as List).map((json) => VetEntity.fromJson(json)).toList();
   }
 
   @override
-  Future<VetModel?> getSosNearestVet(double lat, double lng) async {
+  Future<VetEntity?> getSosNearestVet(double lat, double lng) async {
     final dynamic response = await supabaseClient.rpc(
       'sos_nearest_vet',
       params: {
@@ -87,11 +87,12 @@ class VetRemoteDataSourceImpl implements VetRemoteDataSource {
     );
     if (response == null) return null;
     if (response is List && response.isNotEmpty) {
-      return VetModel.fromJson(response.first as Map<String, dynamic>);
+      return VetEntity.fromJson(response.first as Map<String, dynamic>);
     }
     if (response is Map<String, dynamic>) {
-      return VetModel.fromJson(response);
+      return VetEntity.fromJson(response);
     }
     return null;
   }
 }
+

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/error_boundary.dart';
 import '../../domain/entities/pet_entity.dart';
 import '../providers/pets_provider.dart';
 import 'add_edit_pet_screen.dart';
@@ -19,22 +20,29 @@ class MyPetsScreen extends ConsumerWidget {
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => const AddEditPetScreen(),
-            ),
-          );
-          ref.invalidate(myPetsControllerProvider);
-        },
-        backgroundColor: AppColors.primary,
-        child: const Icon(Icons.add, color: Colors.white),
+      floatingActionButton: Semantics(
+        label: 'Adicionar novo pet',
+        button: true,
+        child: FloatingActionButton(
+          onPressed: () async {
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const AddEditPetScreen(),
+              ),
+            );
+            ref.invalidate(myPetsControllerProvider);
+          },
+          backgroundColor: AppColors.primary,
+          child: const Icon(Icons.add, color: Colors.white),
+        ),
       ),
       body: state.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text(e.toString())),
+        error: (e, stack) => ErrorBoundary(
+          error: e,
+          onRetry: () => ref.refresh(myPetsControllerProvider),
+        ),
         data: (pets) {
           if (pets.isEmpty) {
             return const Center(child: Text('Você ainda não cadastrou pets'));

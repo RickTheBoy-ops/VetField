@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/error_boundary.dart';
 import '../../../ads/presentation/providers/ads_provider.dart';
 import '../../../ads/domain/entities/campaign_entity.dart';
 import '../../../../core/providers/supabase_provider.dart';
@@ -29,15 +30,9 @@ class AdsManagerScreen extends ConsumerWidget {
       ),
       body: campaignsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.error_outline, size: 64, color: Colors.red),
-              const SizedBox(height: 16),
-              Text('Erro: $error'),
-            ],
-          ),
+        error: (error, stack) => ErrorBoundary(
+          error: error,
+          onRetry: () => ref.refresh(vetCampaignsProviderProvider(user.id)),
         ),
         data: (campaigns) {
           if (campaigns.isEmpty) {

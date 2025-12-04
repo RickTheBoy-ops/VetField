@@ -1,28 +1,19 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../appointment/domain/entities/appointment_entity.dart';
 
-/// Entity representing veterinarian dashboard statistics
-class VetStatistics extends Equatable {
-  final int todayAppointments;
-  final double weeklyRevenue;
-  final Map<AppointmentType, double> revenueByType;
-  final List<double> dailyRevenue; // Last 7 days
-  final List<double> monthlyRevenue; // Last 6 months
+part 'vet_statistics.freezed.dart';
+part 'vet_statistics.g.dart';
 
-  const VetStatistics({
-    required this.todayAppointments,
-    required this.weeklyRevenue,
-    required this.revenueByType,
-    required this.dailyRevenue,
-    required this.monthlyRevenue,
-  });
+@freezed
+class VetStatistics with _$VetStatistics {
+  const factory VetStatistics({
+    required int todayAppointments,
+    required double weeklyRevenue,
+    required Map<AppointmentType, double> revenueByType,
+    required List<double> dailyRevenue,
+    required List<double> monthlyRevenue,
+  }) = _VetStatistics;
 
-  @override
-  List<Object?> get props => [
-        todayAppointments,
-        weeklyRevenue,
-        revenueByType,
-        dailyRevenue,
-        monthlyRevenue,
-      ];
+  factory VetStatistics.fromJson(Map<String, dynamic> json) => _$VetStatisticsFromJson(json);
 }
+

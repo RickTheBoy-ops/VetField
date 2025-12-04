@@ -1,9 +1,9 @@
 import 'package:hive/hive.dart';
-import '../models/appointment_model.dart';
+import '../../domain/entities/appointment_entity.dart';
 
 abstract class AppointmentLocalDataSource {
-  Future<List<AppointmentModel>> getCachedAppointments(String userId);
-  Future<void> cacheAppointments(String userId, List<AppointmentModel> appointments);
+  Future<List<AppointmentEntity>> getCachedAppointments(String userId);
+  Future<void> cacheAppointments(String userId, List<AppointmentEntity> appointments);
   Future<void> clearCache();
 }
 
@@ -11,14 +11,14 @@ class AppointmentLocalDataSourceImpl implements AppointmentLocalDataSource {
   static const String _boxName = 'appointments';
 
   @override
-  Future<List<AppointmentModel>> getCachedAppointments(String userId) async {
+  Future<List<AppointmentEntity>> getCachedAppointments(String userId) async {
     final box = await Hive.openBox('${_boxName}_$userId');
     final values = box.values.cast<Map>().toList();
-    return values.map((e) => AppointmentModel.fromJson(Map<String, dynamic>.from(e))).toList();
+    return values.map((e) => AppointmentEntity.fromJson(Map<String, dynamic>.from(e))).toList();
   }
 
   @override
-  Future<void> cacheAppointments(String userId, List<AppointmentModel> appointments) async {
+  Future<void> cacheAppointments(String userId, List<AppointmentEntity> appointments) async {
     final box = await Hive.openBox('${_boxName}_$userId');
     await box.clear();
     for (var appointment in appointments) {

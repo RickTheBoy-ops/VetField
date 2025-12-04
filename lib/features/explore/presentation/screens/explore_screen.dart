@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import '../../core/theme/app_colors.dart';
-import '../clinic_details/clinic_details_screen.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../domain/entities/news_article_entity.dart';
+import '../providers/explore_provider.dart';
+// import '../../../../screens/clinic_details/clinic_details_screen.dart'; // Commented out as path might be different or circular
 
-class ExploreScreen extends StatefulWidget {
+class ExploreScreen extends ConsumerStatefulWidget {
   const ExploreScreen({super.key});
-  
+
   @override
-  State<ExploreScreen> createState() => _ExploreScreenState();
+  ConsumerState<ExploreScreen> createState() => _ExploreScreenState();
 }
 
-class _ExploreScreenState extends State<ExploreScreen> {
+class _ExploreScreenState extends ConsumerState<ExploreScreen> {
+  static const _pageSize = 10;
+  final PagingController<int, NewsArticleEntity> _pagingController = PagingController(firstPageKey: 0);
   String _selectedCategory = 'Todos';
-  
+
   final List<String> _categories = [
     'Todos',
     'Dicas',
@@ -20,45 +26,40 @@ class _ExploreScreenState extends State<ExploreScreen> {
     'Alimentação',
     'Comportamento',
   ];
-  
-  final List<NewsArticle> _articles = [
-    NewsArticle(
-      title: '5 Dicas para Cuidar do seu Pet no Verão',
-      category: 'Dicas',
-      image: 'https://images.unsplash.com/photo-1450778869180-41d0601e046e?q=80&w=400&auto=format&fit=crop',
-      date: '2 dias atrás',
-      readTime: '5 min',
-    ),
-    NewsArticle(
-      title: 'Vacinação: O que você precisa saber',
-      category: 'Saúde',
-      image: 'https://images.unsplash.com/photo-1581888227599-779811939961?q=80&w=400&auto=format&fit=crop',
-      date: '3 dias atrás',
-      readTime: '8 min',
-    ),
-    NewsArticle(
-      title: 'Alimentação Balanceada para Cães',
-      category: 'Alimentação',
-      image: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?q=80&w=400&auto=format&fit=crop',
-      date: '5 dias atrás',
-      readTime: '6 min',
-    ),
-    NewsArticle(
-      title: 'Como Entender o Comportamento do seu Gato',
-      category: 'Comportamento',
-      image: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=400&auto=format&fit=crop',
-      date: '1 semana atrás',
-      readTime: '7 min',
-    ),
-  ];
-  
-  List<NewsArticle> get _filteredArticles {
-    if (_selectedCategory == 'Todos') {
-      return _articles;
-    }
-    return _articles.where((article) => article.category == _selectedCategory).toList();
+
+  @override
+  void initState() {
+    _pagingController.addPageRequestListener((pageKey) {
+      _fetchPage(pageKey);
+    });
+    super.initState();
   }
-  
+
+  Future<void> _fetchPage(int pageKey) async {
+    try {
+      final newItems = await ref.read(exploreControllerProvider.notifier).getArticles(
+        page: pageKey,
+        limit: _pageSize,
+        category: _selectedCategory,
+      );
+      final isLastPage = newItems.length < _pageSize;
+      if (isLastPage) {
+        _pagingController.appendLastPage(newItems);
+      } else {
+        final nextPageKey = pageKey + 1;
+        _pagingController.appendPage(newItems, nextPageKey);
+      }
+    } catch (error) {
+      _pagingController.error = error;
+    }
+  }
+
+  @override
+  void dispose() {
+    _pagingController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,6 +105,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     onSelected: (selected) {
                       setState(() {
                         _selectedCategory = category;
+                        _pagingController.refresh();
                       });
                     },
                     backgroundColor: Colors.white,
@@ -128,15 +130,21 @@ class _ExploreScreenState extends State<ExploreScreen> {
           
           // News Feed
           Expanded(
-            child: ListView.builder(
+            child: PagedListView<int, NewsArticleEntity>(
+              pagingController: _pagingController,
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              itemCount: _filteredArticles.length,
-              itemBuilder: (context, index) {
-                return Padding(
+              builderDelegate: PagedChildBuilderDelegate<NewsArticleEntity>(
+                itemBuilder: (context, item, index) => Padding(
                   padding: const EdgeInsets.only(bottom: 20),
-                  child: _buildNewsCard(_filteredArticles[index]),
-                );
-              },
+                  child: _buildNewsCard(item),
+                ),
+                firstPageErrorIndicatorBuilder: (context) => Center(
+                  child: Text('Erro ao carregar notícias: ${_pagingController.error}'),
+                ),
+                noItemsFoundIndicatorBuilder: (context) => const Center(
+                  child: Text('Nenhuma notícia encontrada.'),
+                ),
+              ),
             ),
           ),
         ],
@@ -144,15 +152,15 @@ class _ExploreScreenState extends State<ExploreScreen> {
     );
   }
   
-  Widget _buildNewsCard(NewsArticle article) {
+  Widget _buildNewsCard(NewsArticleEntity article) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => const ClinicDetailsScreen(),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (_) => const ClinicDetailsScreen(),
+        //   ),
+        // );
       },
       child: Container(
         decoration: BoxDecoration(
@@ -167,7 +175,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
             ClipRRect(
               borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
               child: CachedNetworkImage(
-                imageUrl: article.image,
+                imageUrl: article.imageUrl,
                 width: double.infinity,
                 height: 200,
                 fit: BoxFit.cover,
@@ -175,6 +183,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   color: AppColors.border,
                   child: const Center(child: CircularProgressIndicator()),
                 ),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
             
@@ -222,7 +231,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       Icon(Icons.access_time, size: 16, color: AppColors.textSecondary),
                       const SizedBox(width: 4),
                       Text(
-                        '${article.readTime} • ${article.date}',
+                        '${article.readTime} • ${article.date.day}/${article.date.month}',
                         style: const TextStyle(
                           fontSize: 12,
                           color: AppColors.textSecondary,
@@ -238,20 +247,4 @@ class _ExploreScreenState extends State<ExploreScreen> {
       ),
     );
   }
-}
-
-class NewsArticle {
-  final String title;
-  final String category;
-  final String image;
-  final String date;
-  final String readTime;
-  
-  NewsArticle({
-    required this.title,
-    required this.category,
-    required this.image,
-    required this.date,
-    required this.readTime,
-  });
 }
