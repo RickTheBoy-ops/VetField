@@ -7,12 +7,12 @@ part of 'health_provider.dart';
 // **************************************************************************
 
 String _$healthRemoteDataSourceHash() =>
-    r'3ffd4f66b37e25021064b1bfb6c651ebb44a5c8b';
+    r'be6aa93eddd02a11a8e589836437de79dba6d3ce';
 
 /// See also [healthRemoteDataSource].
 @ProviderFor(healthRemoteDataSource)
 final healthRemoteDataSourceProvider =
-    AutoDisposeProvider<HealthRemoteDataSource>.internal(
+    Provider<HealthRemoteDataSource>.internal(
   healthRemoteDataSource,
   name: r'healthRemoteDataSourceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,15 +22,13 @@ final healthRemoteDataSourceProvider =
   allTransitiveDependencies: null,
 );
 
-typedef HealthRemoteDataSourceRef
-    = AutoDisposeProviderRef<HealthRemoteDataSource>;
+typedef HealthRemoteDataSourceRef = ProviderRef<HealthRemoteDataSource>;
 String _$healthLocalDataSourceHash() =>
-    r'b8c53a6724a27d38da2e82daa0f3ed71b5f7e181';
+    r'6dc24fbf79dd6d549506406a5bc1fc78098a6ee0';
 
 /// See also [healthLocalDataSource].
 @ProviderFor(healthLocalDataSource)
-final healthLocalDataSourceProvider =
-    AutoDisposeProvider<HealthLocalDataSource>.internal(
+final healthLocalDataSourceProvider = Provider<HealthLocalDataSource>.internal(
   healthLocalDataSource,
   name: r'healthLocalDataSourceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -40,13 +38,12 @@ final healthLocalDataSourceProvider =
   allTransitiveDependencies: null,
 );
 
-typedef HealthLocalDataSourceRef
-    = AutoDisposeProviderRef<HealthLocalDataSource>;
-String _$healthRepositoryHash() => r'a05b44cf489fdf1a193974e3581b7e696016ed8b';
+typedef HealthLocalDataSourceRef = ProviderRef<HealthLocalDataSource>;
+String _$healthRepositoryHash() => r'958b6f88cb31573860d84c2f153521c16f365360';
 
 /// See also [healthRepository].
 @ProviderFor(healthRepository)
-final healthRepositoryProvider = AutoDisposeProvider<HealthRepository>.internal(
+final healthRepositoryProvider = Provider<HealthRepository>.internal(
   healthRepository,
   name: r'healthRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -56,14 +53,14 @@ final healthRepositoryProvider = AutoDisposeProvider<HealthRepository>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef HealthRepositoryRef = AutoDisposeProviderRef<HealthRepository>;
+typedef HealthRepositoryRef = ProviderRef<HealthRepository>;
 String _$getHealthEventsUseCaseHash() =>
-    r'338d211146c3367e451c39c0db9992b17b85463a';
+    r'0c8e436cf329c39a51c83d9090a0f4c561befa77';
 
 /// See also [getHealthEventsUseCase].
 @ProviderFor(getHealthEventsUseCase)
 final getHealthEventsUseCaseProvider =
-    AutoDisposeProvider<GetHealthEventsUseCase>.internal(
+    Provider<GetHealthEventsUseCase>.internal(
   getHealthEventsUseCase,
   name: r'getHealthEventsUseCaseProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -73,15 +70,13 @@ final getHealthEventsUseCaseProvider =
   allTransitiveDependencies: null,
 );
 
-typedef GetHealthEventsUseCaseRef
-    = AutoDisposeProviderRef<GetHealthEventsUseCase>;
+typedef GetHealthEventsUseCaseRef = ProviderRef<GetHealthEventsUseCase>;
 String _$addHealthEventUseCaseHash() =>
-    r'503ffdf2152294c3d1cd5ce1fc8ba86a7b80732f';
+    r'b5153d3f6238d0dd1ce3b462f5b52fb5fdd55c92';
 
 /// See also [addHealthEventUseCase].
 @ProviderFor(addHealthEventUseCase)
-final addHealthEventUseCaseProvider =
-    AutoDisposeProvider<AddHealthEventUseCase>.internal(
+final addHealthEventUseCaseProvider = Provider<AddHealthEventUseCase>.internal(
   addHealthEventUseCase,
   name: r'addHealthEventUseCaseProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -91,14 +86,13 @@ final addHealthEventUseCaseProvider =
   allTransitiveDependencies: null,
 );
 
-typedef AddHealthEventUseCaseRef
-    = AutoDisposeProviderRef<AddHealthEventUseCase>;
+typedef AddHealthEventUseCaseRef = ProviderRef<AddHealthEventUseCase>;
 String _$healthTimelineControllerHash() =>
-    r'0a22b9787e4cf4cbb5adca20cc05f621ca21c78c';
+    r'492105053e70bde1e5e4bf73f435b7dd14ab8a8f';
 
 /// See also [HealthTimelineController].
 @ProviderFor(HealthTimelineController)
-final healthTimelineControllerProvider = AutoDisposeAsyncNotifierProvider<
+final healthTimelineControllerProvider = AsyncNotifierProvider<
     HealthTimelineController, List<HealthEventEntity>>.internal(
   HealthTimelineController.new,
   name: r'healthTimelineControllerProvider',
@@ -109,7 +103,6 @@ final healthTimelineControllerProvider = AutoDisposeAsyncNotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$HealthTimelineController
-    = AutoDisposeAsyncNotifier<List<HealthEventEntity>>;
+typedef _$HealthTimelineController = AsyncNotifier<List<HealthEventEntity>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

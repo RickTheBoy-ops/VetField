@@ -10,6 +10,8 @@ abstract class HealthRemoteDataSource {
     String? petId,
     String? attachmentUrl,
   });
+  Future<HealthEventEntity> updateEvent(HealthEventEntity event);
+  Future<void> deleteEvent(String id);
 }
 
 class HealthRemoteDataSourceImpl implements HealthRemoteDataSource {
@@ -24,7 +26,9 @@ class HealthRemoteDataSourceImpl implements HealthRemoteDataSource {
         .select()
         .eq('owner_id', ownerId)
         .order('date', ascending: false);
-    return (response as List).map((e) => HealthEventEntity.fromJson(e as Map<String, dynamic>)).toList();
+    return (response as List)
+        .map((e) => HealthEventEntity.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 
   @override
@@ -51,5 +55,26 @@ class HealthRemoteDataSourceImpl implements HealthRemoteDataSource {
         .single();
     return HealthEventEntity.fromJson(response);
   }
-}
 
+  @override
+  Future<HealthEventEntity> updateEvent(HealthEventEntity event) async {
+    final response = await client
+        .from('health_events')
+        .update({
+          'type': event.type.name,
+          'date': event.date.toIso8601String(),
+          'details': event.details,
+          'pet_id': event.petId,
+          'attachment_url': event.attachmentUrl,
+        })
+        .eq('id', event.id)
+        .select()
+        .single();
+    return HealthEventEntity.fromJson(response);
+  }
+
+  @override
+  Future<void> deleteEvent(String id) async {
+    await client.from('health_events').delete().eq('id', id);
+  }
+}

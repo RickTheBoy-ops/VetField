@@ -7,12 +7,11 @@ part of 'vet_provider.dart';
 // **************************************************************************
 
 String _$vetRemoteDataSourceHash() =>
-    r'0cd4a26c0ad20b9613bd24c8d5d7eaae830cf04e';
+    r'eedffa8b29c8aa49b8976c54b5bad73523a807eb';
 
 /// See also [vetRemoteDataSource].
 @ProviderFor(vetRemoteDataSource)
-final vetRemoteDataSourceProvider =
-    AutoDisposeProvider<VetRemoteDataSource>.internal(
+final vetRemoteDataSourceProvider = Provider<VetRemoteDataSource>.internal(
   vetRemoteDataSource,
   name: r'vetRemoteDataSourceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,14 +21,13 @@ final vetRemoteDataSourceProvider =
   allTransitiveDependencies: null,
 );
 
-typedef VetRemoteDataSourceRef = AutoDisposeProviderRef<VetRemoteDataSource>;
+typedef VetRemoteDataSourceRef = ProviderRef<VetRemoteDataSource>;
 String _$vetLocalDataSourceHash() =>
-    r'bae40269491a818e649a016c941e684bd477b0cf';
+    r'e558889cfb79f9f07fee78adc69fc8feda3fe947';
 
 /// See also [vetLocalDataSource].
 @ProviderFor(vetLocalDataSource)
-final vetLocalDataSourceProvider =
-    AutoDisposeProvider<VetLocalDataSource>.internal(
+final vetLocalDataSourceProvider = Provider<VetLocalDataSource>.internal(
   vetLocalDataSource,
   name: r'vetLocalDataSourceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -39,12 +37,12 @@ final vetLocalDataSourceProvider =
   allTransitiveDependencies: null,
 );
 
-typedef VetLocalDataSourceRef = AutoDisposeProviderRef<VetLocalDataSource>;
-String _$vetRepositoryHash() => r'343c537554c1c4834a0aa63f293a6dda27e2768e';
+typedef VetLocalDataSourceRef = ProviderRef<VetLocalDataSource>;
+String _$vetRepositoryHash() => r'19411a7dc7342c229f8be5502897e1d7c073e666';
 
 /// See also [vetRepository].
 @ProviderFor(vetRepository)
-final vetRepositoryProvider = AutoDisposeProvider<VetRepository>.internal(
+final vetRepositoryProvider = Provider<VetRepository>.internal(
   vetRepository,
   name: r'vetRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -54,14 +52,14 @@ final vetRepositoryProvider = AutoDisposeProvider<VetRepository>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef VetRepositoryRef = AutoDisposeProviderRef<VetRepository>;
+typedef VetRepositoryRef = ProviderRef<VetRepository>;
 String _$getVetStatisticsUseCaseHash() =>
-    r'3ddc7b8f381cb739ed7529abf61f03cd00262b27';
+    r'ba62bb9a543b6ac5991ef49389b2c53e67c48730';
 
 /// See also [getVetStatisticsUseCase].
 @ProviderFor(getVetStatisticsUseCase)
 final getVetStatisticsUseCaseProvider =
-    AutoDisposeProvider<GetVetStatisticsUseCase>.internal(
+    Provider<GetVetStatisticsUseCase>.internal(
   getVetStatisticsUseCase,
   name: r'getVetStatisticsUseCaseProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -71,8 +69,7 @@ final getVetStatisticsUseCaseProvider =
   allTransitiveDependencies: null,
 );
 
-typedef GetVetStatisticsUseCaseRef
-    = AutoDisposeProviderRef<GetVetStatisticsUseCase>;
+typedef GetVetStatisticsUseCaseRef = ProviderRef<GetVetStatisticsUseCase>;
 String _$vetStatisticsHash() => r'5e2cacf721a77f925f507ac20b12f2d4957c4a6c';
 
 /// Copied from Dart SDK

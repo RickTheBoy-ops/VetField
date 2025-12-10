@@ -7,19 +7,19 @@ import '../../domain/repositories/call_repository.dart';
 
 part 'call_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 CallRemoteDataSource callRemoteDataSource(Ref ref) {
   final client = ref.watch(supabaseClientProvider);
   return CallRemoteDataSourceImpl(client);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 CallRepository callRepository(Ref ref) {
   final remote = ref.watch(callRemoteDataSourceProvider);
   return CallRepositoryImpl(remote);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class CallController extends _$CallController {
   @override
   FutureOr<void> build() {}
@@ -38,9 +38,7 @@ class CallController extends _$CallController {
     return result.fold((l) => throw Exception(l.message), (url) => url);
   }
 
-  Future<void> complete({
-    required String appointmentId,
-  }) async {
+  Future<void> complete({required String appointmentId}) async {
     final repo = ref.read(callRepositoryProvider);
     final result = await repo.completeCall(appointmentId: appointmentId);
     result.fold((l) => throw Exception(l.message), (_) => null);

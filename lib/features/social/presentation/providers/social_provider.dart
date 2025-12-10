@@ -7,24 +7,23 @@ import '../../data/datasources/social_local_datasource.dart';
 import '../../data/repositories/social_repository_impl.dart';
 import '../../domain/repositories/social_repository.dart';
 import '../../domain/entities/social_pet_entity.dart';
- 
 
 part 'social_provider.g.dart';
 
 // Data Sources
-@riverpod
+@Riverpod(keepAlive: true)
 SocialRemoteDataSource socialRemoteDataSource(Ref ref) {
   final supabaseClient = ref.watch(supabaseClientProvider);
   return SocialRemoteDataSourceImpl(supabaseClient);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 SocialLocalDataSource socialLocalDataSource(Ref ref) {
   return SocialLocalDataSourceImpl();
 }
 
 // Repositories
-@riverpod
+@Riverpod(keepAlive: true)
 SocialRepository socialRepository(Ref ref) {
   final remoteDataSource = ref.watch(socialRemoteDataSourceProvider);
   final localDataSource = ref.watch(socialLocalDataSourceProvider);
@@ -35,7 +34,7 @@ SocialRepository socialRepository(Ref ref) {
 }
 
 // Social Controller
-@riverpod
+@Riverpod(keepAlive: true)
 class SocialController extends _$SocialController {
   Position? _currentPosition;
   bool _isCheckedIn = false;
@@ -49,7 +48,7 @@ class SocialController extends _$SocialController {
 
   Future<void> checkIn() async {
     state = const AsyncValue.loading();
-    
+
     try {
       // Get current location
       final position = await _getCurrentLocation();
@@ -63,9 +62,9 @@ class SocialController extends _$SocialController {
           latitude: position.latitude,
           longitude: position.longitude,
         );
-        
+
         _isCheckedIn = true;
-        
+
         // Fetch nearby pets
         await fetchNearby();
       }
@@ -76,12 +75,15 @@ class SocialController extends _$SocialController {
 
   Future<void> fetchNearby() async {
     if (_currentPosition == null) {
-      state = AsyncValue.error('Localização não disponível', StackTrace.current);
+      state = AsyncValue.error(
+        'Localização não disponível',
+        StackTrace.current,
+      );
       return;
     }
 
     state = const AsyncValue.loading();
-    
+
     try {
       final repository = ref.read(socialRepositoryProvider);
       final result = await repository.getNearbyPets(
@@ -91,7 +93,8 @@ class SocialController extends _$SocialController {
       );
 
       result.fold(
-        (failure) => state = AsyncValue.error(failure.message, StackTrace.current),
+        (failure) =>
+            state = AsyncValue.error(failure.message, StackTrace.current),
         (pets) => state = AsyncValue.data(pets),
       );
     } catch (e) {

@@ -1,41 +1,42 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'core/local/hive_boxes.dart';
 import 'core/router/app_router.dart';
-import 'core/services/notification_service.dart';
 import 'core/theme/app_theme.dart';
+import 'core/widgets/initialization_wrapper.dart';
 
-void main() async {
+void main() {
+  // Garante inicialização mínima dos bindings do Flutter
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Carregar variáveis de ambiente
-  await dotenv.load(fileName: '.env');
+  // Configurar ErrorWidget globalmente uma única vez
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    return Material(
+      child: Scaffold(
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.error_outline, color: Colors.red, size: 48),
+                const SizedBox(height: 16),
+                const Text(
+                  'Erro de Renderização',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                Text(details.exception.toString(), textAlign: TextAlign.center),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  };
 
-  // Inicializar Firebase
-  await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-
-  // Configurar Stripe
-  Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
-
-  // Inicializar Hive para cache offline com todas as boxes
-  await HiveBoxes.init();
-
-  // Inicializar Supabase
-  await Supabase.initialize(
-    url: dotenv.env['SUPABASE_URL']!,
-    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
-  );
-
-  // Inicializar NotificationService
-  await NotificationService().initialize();
-
-  runApp(const ProviderScope(child: VetFieldApp()));
+  // Inicia o app imediatamente com o InitializationWrapper
+  // Isso evita tela branca enquanto aguarda inicializações assíncronas
+  runApp(const InitializationWrapper(child: VetFieldApp()));
 }
 
 class VetFieldApp extends ConsumerWidget {

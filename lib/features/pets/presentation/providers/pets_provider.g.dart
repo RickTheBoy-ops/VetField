@@ -7,12 +7,11 @@ part of 'pets_provider.dart';
 // **************************************************************************
 
 String _$petsRemoteDataSourceHash() =>
-    r'05cfc1ee64b4032ac30e9c96485245421c097d84';
+    r'4ded9ba4e2a7eaa404ccb72c28da2af8e1508444';
 
 /// See also [petsRemoteDataSource].
 @ProviderFor(petsRemoteDataSource)
-final petsRemoteDataSourceProvider =
-    AutoDisposeProvider<PetsRemoteDataSource>.internal(
+final petsRemoteDataSourceProvider = Provider<PetsRemoteDataSource>.internal(
   petsRemoteDataSource,
   name: r'petsRemoteDataSourceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,12 +21,12 @@ final petsRemoteDataSourceProvider =
   allTransitiveDependencies: null,
 );
 
-typedef PetsRemoteDataSourceRef = AutoDisposeProviderRef<PetsRemoteDataSource>;
-String _$petRepositoryHash() => r'029a1fe2536b3e8d1926d9fe93ab968209311b22';
+typedef PetsRemoteDataSourceRef = ProviderRef<PetsRemoteDataSource>;
+String _$petRepositoryHash() => r'dc1210b1349b19a11ee1cc88fda36d428c4ff4da';
 
 /// See also [petRepository].
 @ProviderFor(petRepository)
-final petRepositoryProvider = AutoDisposeProvider<PetRepository>.internal(
+final petRepositoryProvider = Provider<PetRepository>.internal(
   petRepository,
   name: r'petRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -37,12 +36,12 @@ final petRepositoryProvider = AutoDisposeProvider<PetRepository>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef PetRepositoryRef = AutoDisposeProviderRef<PetRepository>;
-String _$getPetsUseCaseHash() => r'2d09082eab8993f71f7ec3550b22f3a7af33f46e';
+typedef PetRepositoryRef = ProviderRef<PetRepository>;
+String _$getPetsUseCaseHash() => r'ad90278d626094c0f9325b5d1deb3a150e2b4c14';
 
 /// See also [getPetsUseCase].
 @ProviderFor(getPetsUseCase)
-final getPetsUseCaseProvider = AutoDisposeProvider<GetPetsUseCase>.internal(
+final getPetsUseCaseProvider = Provider<GetPetsUseCase>.internal(
   getPetsUseCase,
   name: r'getPetsUseCaseProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -52,12 +51,12 @@ final getPetsUseCaseProvider = AutoDisposeProvider<GetPetsUseCase>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef GetPetsUseCaseRef = AutoDisposeProviderRef<GetPetsUseCase>;
-String _$addPetUseCaseHash() => r'a3a5b1d7f64fa81a2efc50d16970632eef4d08cb';
+typedef GetPetsUseCaseRef = ProviderRef<GetPetsUseCase>;
+String _$addPetUseCaseHash() => r'ecd9ba9dc6399cb915e06982a10b23a7bcef3e6b';
 
 /// See also [addPetUseCase].
 @ProviderFor(addPetUseCase)
-final addPetUseCaseProvider = AutoDisposeProvider<AddPetUseCase>.internal(
+final addPetUseCaseProvider = Provider<AddPetUseCase>.internal(
   addPetUseCase,
   name: r'addPetUseCaseProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -67,12 +66,12 @@ final addPetUseCaseProvider = AutoDisposeProvider<AddPetUseCase>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef AddPetUseCaseRef = AutoDisposeProviderRef<AddPetUseCase>;
-String _$updatePetUseCaseHash() => r'27fe06cc17b9b41c607781faef0296b465fb0643';
+typedef AddPetUseCaseRef = ProviderRef<AddPetUseCase>;
+String _$updatePetUseCaseHash() => r'1656632233d8819ddd4b9828a297ad3502e49a16';
 
 /// See also [updatePetUseCase].
 @ProviderFor(updatePetUseCase)
-final updatePetUseCaseProvider = AutoDisposeProvider<UpdatePetUseCase>.internal(
+final updatePetUseCaseProvider = Provider<UpdatePetUseCase>.internal(
   updatePetUseCase,
   name: r'updatePetUseCaseProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -82,12 +81,12 @@ final updatePetUseCaseProvider = AutoDisposeProvider<UpdatePetUseCase>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef UpdatePetUseCaseRef = AutoDisposeProviderRef<UpdatePetUseCase>;
-String _$deletePetUseCaseHash() => r'd077219cdd68950f674def21981abbdc1eddf818';
+typedef UpdatePetUseCaseRef = ProviderRef<UpdatePetUseCase>;
+String _$deletePetUseCaseHash() => r'a1bca338d47bf8e90c8f5406227365326879d393';
 
 /// See also [deletePetUseCase].
 @ProviderFor(deletePetUseCase)
-final deletePetUseCaseProvider = AutoDisposeProvider<DeletePetUseCase>.internal(
+final deletePetUseCaseProvider = Provider<DeletePetUseCase>.internal(
   deletePetUseCase,
   name: r'deletePetUseCaseProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -97,13 +96,13 @@ final deletePetUseCaseProvider = AutoDisposeProvider<DeletePetUseCase>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef DeletePetUseCaseRef = AutoDisposeProviderRef<DeletePetUseCase>;
-String _$myPetsControllerHash() => r'6de3178dad07ed959ab1605fdc988d90928a010e';
+typedef DeletePetUseCaseRef = ProviderRef<DeletePetUseCase>;
+String _$myPetsControllerHash() => r'6bb2e144435ca51a319075f6fdd55e2d1359bbf6';
 
 /// See also [MyPetsController].
 @ProviderFor(MyPetsController)
-final myPetsControllerProvider = AutoDisposeAsyncNotifierProvider<
-    MyPetsController, List<PetEntity>>.internal(
+final myPetsControllerProvider =
+    AsyncNotifierProvider<MyPetsController, List<PetEntity>>.internal(
   MyPetsController.new,
   name: r'myPetsControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -113,6 +112,6 @@ final myPetsControllerProvider = AutoDisposeAsyncNotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$MyPetsController = AutoDisposeAsyncNotifier<List<PetEntity>>;
+typedef _$MyPetsController = AsyncNotifier<List<PetEntity>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

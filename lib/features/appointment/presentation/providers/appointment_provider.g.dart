@@ -7,12 +7,12 @@ part of 'appointment_provider.dart';
 // **************************************************************************
 
 String _$appointmentRemoteDataSourceHash() =>
-    r'51769836cf5d7af07df56c50c7ae560f4f667501';
+    r'ce8bff5123b63e1bf4b7c1bc63b85bedb332c77e';
 
 /// See also [appointmentRemoteDataSource].
 @ProviderFor(appointmentRemoteDataSource)
 final appointmentRemoteDataSourceProvider =
-    AutoDisposeProvider<AppointmentRemoteDataSource>.internal(
+    Provider<AppointmentRemoteDataSource>.internal(
   appointmentRemoteDataSource,
   name: r'appointmentRemoteDataSourceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -23,14 +23,14 @@ final appointmentRemoteDataSourceProvider =
 );
 
 typedef AppointmentRemoteDataSourceRef
-    = AutoDisposeProviderRef<AppointmentRemoteDataSource>;
+    = ProviderRef<AppointmentRemoteDataSource>;
 String _$appointmentLocalDataSourceHash() =>
-    r'5fcb78a1162e27d70f7983554214a917741943ba';
+    r'f936cc8cebee0c6fa6d5b9a7cb20a43b2027386c';
 
 /// See also [appointmentLocalDataSource].
 @ProviderFor(appointmentLocalDataSource)
 final appointmentLocalDataSourceProvider =
-    AutoDisposeProvider<AppointmentLocalDataSource>.internal(
+    Provider<AppointmentLocalDataSource>.internal(
   appointmentLocalDataSource,
   name: r'appointmentLocalDataSourceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -40,15 +40,13 @@ final appointmentLocalDataSourceProvider =
   allTransitiveDependencies: null,
 );
 
-typedef AppointmentLocalDataSourceRef
-    = AutoDisposeProviderRef<AppointmentLocalDataSource>;
+typedef AppointmentLocalDataSourceRef = ProviderRef<AppointmentLocalDataSource>;
 String _$appointmentRepositoryHash() =>
-    r'ea784594adbea4863c291b7d2087eacbeb0575a1';
+    r'529b6f077ab13674b432973b3557eca769ac35dc';
 
 /// See also [appointmentRepository].
 @ProviderFor(appointmentRepository)
-final appointmentRepositoryProvider =
-    AutoDisposeProvider<AppointmentRepository>.internal(
+final appointmentRepositoryProvider = Provider<AppointmentRepository>.internal(
   appointmentRepository,
   name: r'appointmentRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -58,15 +56,14 @@ final appointmentRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
-typedef AppointmentRepositoryRef
-    = AutoDisposeProviderRef<AppointmentRepository>;
+typedef AppointmentRepositoryRef = ProviderRef<AppointmentRepository>;
 String _$createAppointmentUseCaseHash() =>
-    r'2b3f65025f71535dc766973483b155f8de4798e7';
+    r'5926c210a289ef026c3aeb7be62c10f18bea93e1';
 
 /// See also [createAppointmentUseCase].
 @ProviderFor(createAppointmentUseCase)
 final createAppointmentUseCaseProvider =
-    AutoDisposeProvider<CreateAppointmentUseCase>.internal(
+    Provider<CreateAppointmentUseCase>.internal(
   createAppointmentUseCase,
   name: r'createAppointmentUseCaseProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -76,15 +73,14 @@ final createAppointmentUseCaseProvider =
   allTransitiveDependencies: null,
 );
 
-typedef CreateAppointmentUseCaseRef
-    = AutoDisposeProviderRef<CreateAppointmentUseCase>;
+typedef CreateAppointmentUseCaseRef = ProviderRef<CreateAppointmentUseCase>;
 String _$updateAppointmentStatusUseCaseHash() =>
-    r'88ee21f548e141c6204e813dc6513cb2de2be546';
+    r'5fa7b66f2b05b532234d913fa5d2ac2068ba9fcd';
 
 /// See also [updateAppointmentStatusUseCase].
 @ProviderFor(updateAppointmentStatusUseCase)
 final updateAppointmentStatusUseCaseProvider =
-    AutoDisposeProvider<UpdateAppointmentStatusUseCase>.internal(
+    Provider<UpdateAppointmentStatusUseCase>.internal(
   updateAppointmentStatusUseCase,
   name: r'updateAppointmentStatusUseCaseProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -95,8 +91,8 @@ final updateAppointmentStatusUseCaseProvider =
 );
 
 typedef UpdateAppointmentStatusUseCaseRef
-    = AutoDisposeProviderRef<UpdateAppointmentStatusUseCase>;
-String _$vetAppointmentsHash() => r'8a652d44cd9aba086c2767cdce1134874415bdee';
+    = ProviderRef<UpdateAppointmentStatusUseCase>;
+String _$vetAppointmentsHash() => r'683b5fd0cb41d4d9b552bdfaab3f52b56e144db7';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -163,8 +159,7 @@ class VetAppointmentsFamily
 }
 
 /// See also [vetAppointments].
-class VetAppointmentsProvider
-    extends AutoDisposeFutureProvider<List<AppointmentEntity>> {
+class VetAppointmentsProvider extends FutureProvider<List<AppointmentEntity>> {
   /// See also [vetAppointments].
   VetAppointmentsProvider(
     String vetId,
@@ -217,7 +212,7 @@ class VetAppointmentsProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<AppointmentEntity>> createElement() {
+  FutureProviderElement<List<AppointmentEntity>> createElement() {
     return _VetAppointmentsProviderElement(this);
   }
 
@@ -235,14 +230,13 @@ class VetAppointmentsProvider
   }
 }
 
-mixin VetAppointmentsRef
-    on AutoDisposeFutureProviderRef<List<AppointmentEntity>> {
+mixin VetAppointmentsRef on FutureProviderRef<List<AppointmentEntity>> {
   /// The parameter `vetId` of this provider.
   String get vetId;
 }
 
 class _VetAppointmentsProviderElement
-    extends AutoDisposeFutureProviderElement<List<AppointmentEntity>>
+    extends FutureProviderElement<List<AppointmentEntity>>
     with VetAppointmentsRef {
   _VetAppointmentsProviderElement(super.provider);
 
@@ -250,7 +244,7 @@ class _VetAppointmentsProviderElement
   String get vetId => (origin as VetAppointmentsProvider).vetId;
 }
 
-String _$ownerAppointmentsHash() => r'37825a4c9264f18427afe95194b036d4aa88d13c';
+String _$ownerAppointmentsHash() => r'75a787557acb654a62f287db9ce906ad2d51b749';
 
 /// See also [ownerAppointments].
 @ProviderFor(ownerAppointments)
@@ -297,7 +291,7 @@ class OwnerAppointmentsFamily
 
 /// See also [ownerAppointments].
 class OwnerAppointmentsProvider
-    extends AutoDisposeFutureProvider<List<AppointmentEntity>> {
+    extends FutureProvider<List<AppointmentEntity>> {
   /// See also [ownerAppointments].
   OwnerAppointmentsProvider(
     String ownerId,
@@ -350,7 +344,7 @@ class OwnerAppointmentsProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<AppointmentEntity>> createElement() {
+  FutureProviderElement<List<AppointmentEntity>> createElement() {
     return _OwnerAppointmentsProviderElement(this);
   }
 
@@ -368,14 +362,13 @@ class OwnerAppointmentsProvider
   }
 }
 
-mixin OwnerAppointmentsRef
-    on AutoDisposeFutureProviderRef<List<AppointmentEntity>> {
+mixin OwnerAppointmentsRef on FutureProviderRef<List<AppointmentEntity>> {
   /// The parameter `ownerId` of this provider.
   String get ownerId;
 }
 
 class _OwnerAppointmentsProviderElement
-    extends AutoDisposeFutureProviderElement<List<AppointmentEntity>>
+    extends FutureProviderElement<List<AppointmentEntity>>
     with OwnerAppointmentsRef {
   _OwnerAppointmentsProviderElement(super.provider);
 
@@ -384,12 +377,12 @@ class _OwnerAppointmentsProviderElement
 }
 
 String _$appointmentControllerHash() =>
-    r'4acef6885c72350d498d662d037a0f0df2459cba';
+    r'535e820184c3fb06303a7cb5073e450096a0a76f';
 
 /// See also [AppointmentController].
 @ProviderFor(AppointmentController)
 final appointmentControllerProvider =
-    AutoDisposeAsyncNotifierProvider<AppointmentController, void>.internal(
+    AsyncNotifierProvider<AppointmentController, void>.internal(
   AppointmentController.new,
   name: r'appointmentControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -399,14 +392,14 @@ final appointmentControllerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$AppointmentController = AutoDisposeAsyncNotifier<void>;
+typedef _$AppointmentController = AsyncNotifier<void>;
 String _$ownerAppointmentsRealtimeHash() =>
-    r'3cdbc2b2b8b28fcdd2481063d5af6d92b2d985c3';
+    r'077d129dfdf4e3144ee4812c90e5176a42b97424';
 
 /// See also [OwnerAppointmentsRealtime].
 @ProviderFor(OwnerAppointmentsRealtime)
 final ownerAppointmentsRealtimeProvider =
-    AutoDisposeAsyncNotifierProvider<OwnerAppointmentsRealtime, void>.internal(
+    AsyncNotifierProvider<OwnerAppointmentsRealtime, void>.internal(
   OwnerAppointmentsRealtime.new,
   name: r'ownerAppointmentsRealtimeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -416,14 +409,14 @@ final ownerAppointmentsRealtimeProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$OwnerAppointmentsRealtime = AutoDisposeAsyncNotifier<void>;
+typedef _$OwnerAppointmentsRealtime = AsyncNotifier<void>;
 String _$vetAppointmentsRealtimeHash() =>
-    r'b6200ab2d0d86488454be64fbf622ab722f2c026';
+    r'a9240394dbcca55001ee46f70c01023dd2f57dde';
 
 /// See also [VetAppointmentsRealtime].
 @ProviderFor(VetAppointmentsRealtime)
 final vetAppointmentsRealtimeProvider =
-    AutoDisposeAsyncNotifierProvider<VetAppointmentsRealtime, void>.internal(
+    AsyncNotifierProvider<VetAppointmentsRealtime, void>.internal(
   VetAppointmentsRealtime.new,
   name: r'vetAppointmentsRealtimeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -433,6 +426,6 @@ final vetAppointmentsRealtimeProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$VetAppointmentsRealtime = AutoDisposeAsyncNotifier<void>;
+typedef _$VetAppointmentsRealtime = AsyncNotifier<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -8,25 +8,25 @@ import '../../domain/usecases/create_payment_intent_usecase.dart';
 
 part 'payment_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 PaymentRemoteDataSource paymentRemoteDataSource(Ref ref) {
   final supabaseClient = ref.watch(supabaseClientProvider);
   return PaymentRemoteDataSourceImpl(supabaseClient);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 PaymentRepository paymentRepository(Ref ref) {
   final remoteDataSource = ref.watch(paymentRemoteDataSourceProvider);
   return PaymentRepositoryImpl(remoteDataSource: remoteDataSource);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 CreatePaymentIntentUseCase createPaymentIntentUseCase(Ref ref) {
   final repository = ref.watch(paymentRepositoryProvider);
   return CreatePaymentIntentUseCase(repository);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class PaymentController extends _$PaymentController {
   @override
   FutureOr<String?> build() => null;
@@ -42,7 +42,8 @@ class PaymentController extends _$PaymentController {
     );
 
     result.fold(
-      (failure) => state = AsyncValue.error(failure.message, StackTrace.current),
+      (failure) =>
+          state = AsyncValue.error(failure.message, StackTrace.current),
       (clientSecret) => state = AsyncValue.data(clientSecret),
     );
   }

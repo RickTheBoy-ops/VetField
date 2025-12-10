@@ -7,12 +7,11 @@ part of 'call_provider.dart';
 // **************************************************************************
 
 String _$callRemoteDataSourceHash() =>
-    r'8671c6cb916334bb6b9eb15581f1f877d300d9f1';
+    r'2f1a415e14f91b98ba5d2d7127641bcfe2454b24';
 
 /// See also [callRemoteDataSource].
 @ProviderFor(callRemoteDataSource)
-final callRemoteDataSourceProvider =
-    AutoDisposeProvider<CallRemoteDataSource>.internal(
+final callRemoteDataSourceProvider = Provider<CallRemoteDataSource>.internal(
   callRemoteDataSource,
   name: r'callRemoteDataSourceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,12 +21,12 @@ final callRemoteDataSourceProvider =
   allTransitiveDependencies: null,
 );
 
-typedef CallRemoteDataSourceRef = AutoDisposeProviderRef<CallRemoteDataSource>;
-String _$callRepositoryHash() => r'f5acad14a6a6cb418a19b95b97ba193161e97f37';
+typedef CallRemoteDataSourceRef = ProviderRef<CallRemoteDataSource>;
+String _$callRepositoryHash() => r'8eee0b5cf04520fd9c5c34054a811a6b3a503c41';
 
 /// See also [callRepository].
 @ProviderFor(callRepository)
-final callRepositoryProvider = AutoDisposeProvider<CallRepository>.internal(
+final callRepositoryProvider = Provider<CallRepository>.internal(
   callRepository,
   name: r'callRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -37,13 +36,13 @@ final callRepositoryProvider = AutoDisposeProvider<CallRepository>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef CallRepositoryRef = AutoDisposeProviderRef<CallRepository>;
-String _$callControllerHash() => r'857d4b64def24f54980d2315b1139d6fafe56e03';
+typedef CallRepositoryRef = ProviderRef<CallRepository>;
+String _$callControllerHash() => r'cf96d445e2ec60ca025c39b150bcc32dc60c319c';
 
 /// See also [CallController].
 @ProviderFor(CallController)
 final callControllerProvider =
-    AutoDisposeAsyncNotifierProvider<CallController, void>.internal(
+    AsyncNotifierProvider<CallController, void>.internal(
   CallController.new,
   name: r'callControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -53,6 +52,6 @@ final callControllerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$CallController = AutoDisposeAsyncNotifier<void>;
+typedef _$CallController = AsyncNotifier<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

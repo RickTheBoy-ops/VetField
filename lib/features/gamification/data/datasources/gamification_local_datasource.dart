@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:hive/hive.dart';
-import '../../../../core/database/hive_boxes.dart';
+import '../../../../core/local/hive_boxes.dart';
 import '../../domain/entities/gamification_entities.dart';
 
 /// Local datasource for gamification progress using Hive

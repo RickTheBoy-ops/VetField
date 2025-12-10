@@ -62,4 +62,26 @@ class HealthRepositoryImpl implements HealthRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, HealthEventEntity>> updateEvent(HealthEventEntity event) async {
+    try {
+      final updated = await remoteDataSource.updateEvent(event);
+      await localDataSource.cacheHealthRecord(updated);
+      return Right(updated);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteEvent(String id) async {
+    try {
+      await remoteDataSource.deleteEvent(id);
+      await localDataSource.deleteCachedHealthRecord(id);
+      return const Right(null);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

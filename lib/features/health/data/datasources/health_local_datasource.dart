@@ -1,4 +1,4 @@
-import '../../../../core/database/hive_boxes.dart';
+import '../../../../core/local/hive_boxes.dart';
 import '../../domain/entities/health_event_entity.dart';
 import 'package:hive/hive.dart';
 

@@ -11,40 +11,37 @@ import '../../domain/usecases/add_health_event_usecase.dart';
 
 part 'health_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 HealthRemoteDataSource healthRemoteDataSource(Ref ref) {
   final client = ref.watch(supabaseClientProvider);
   return HealthRemoteDataSourceImpl(client);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 HealthLocalDataSource healthLocalDataSource(Ref ref) {
   return HealthLocalDataSourceImpl();
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 HealthRepository healthRepository(Ref ref) {
   final remote = ref.watch(healthRemoteDataSourceProvider);
   final local = ref.watch(healthLocalDataSourceProvider);
-  return HealthRepositoryImpl(
-    remoteDataSource: remote,
-    localDataSource: local,
-  );
+  return HealthRepositoryImpl(remoteDataSource: remote, localDataSource: local);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 GetHealthEventsUseCase getHealthEventsUseCase(Ref ref) {
   final repo = ref.watch(healthRepositoryProvider);
   return GetHealthEventsUseCase(repo);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 AddHealthEventUseCase addHealthEventUseCase(Ref ref) {
   final repo = ref.watch(healthRepositoryProvider);
   return AddHealthEventUseCase(repo);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class HealthTimelineController extends _$HealthTimelineController {
   @override
   FutureOr<List<HealthEventEntity>> build() async {

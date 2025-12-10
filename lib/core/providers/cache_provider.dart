@@ -4,7 +4,7 @@ part 'cache_provider.g.dart';
 
 /// Global cache provider for keeping data alive across widget rebuilds
 /// Use ref.keepAlive() in providers that should persist
-@riverpod
+@Riverpod(keepAlive: true)
 class CacheManager extends _$CacheManager {
   final Map<String, DateTime> _cacheTimestamps = {};
   final Duration _defaultTTL = const Duration(minutes: 5);
@@ -21,7 +21,7 @@ class CacheManager extends _$CacheManager {
 
     final expiryDuration = ttl ?? _defaultTTL;
     final isExpired = DateTime.now().difference(timestamp) > expiryDuration;
-    
+
     return !isExpired;
   }
 

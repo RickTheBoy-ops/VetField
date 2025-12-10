@@ -7,12 +7,12 @@ part 'settings_provider.g.dart';
 
 const _kThemeModeKey = 'theme_mode';
 
-@riverpod
+@Riverpod(keepAlive: true)
 FlutterSecureStorage secureStorage(Ref ref) {
   return const FlutterSecureStorage();
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class ThemeController extends _$ThemeController {
   @override
   FutureOr<ThemeMode> build() async {

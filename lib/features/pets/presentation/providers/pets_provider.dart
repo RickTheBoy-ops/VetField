@@ -12,43 +12,43 @@ import '../../domain/usecases/delete_pet_usecase.dart';
 
 part 'pets_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 PetsRemoteDataSource petsRemoteDataSource(Ref ref) {
   final client = ref.watch(supabaseClientProvider);
   return PetsRemoteDataSourceImpl(client);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 PetRepository petRepository(Ref ref) {
   final remote = ref.watch(petsRemoteDataSourceProvider);
   return PetRepositoryImpl(remote);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 GetPetsUseCase getPetsUseCase(Ref ref) {
   final repo = ref.watch(petRepositoryProvider);
   return GetPetsUseCase(repo);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 AddPetUseCase addPetUseCase(Ref ref) {
   final repo = ref.watch(petRepositoryProvider);
   return AddPetUseCase(repo);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 UpdatePetUseCase updatePetUseCase(Ref ref) {
   final repo = ref.watch(petRepositoryProvider);
   return UpdatePetUseCase(repo);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 DeletePetUseCase deletePetUseCase(Ref ref) {
   final repo = ref.watch(petRepositoryProvider);
   return DeletePetUseCase(repo);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class MyPetsController extends _$MyPetsController {
   @override
   FutureOr<List<PetEntity>> build() async {

@@ -7,12 +7,12 @@ part of 'payment_provider.dart';
 // **************************************************************************
 
 String _$paymentRemoteDataSourceHash() =>
-    r'34edfd049a0a5494ba9999e249581cc27f7747c2';
+    r'1d65e7b5032262053c66ecc68769e1fc75adf814';
 
 /// See also [paymentRemoteDataSource].
 @ProviderFor(paymentRemoteDataSource)
 final paymentRemoteDataSourceProvider =
-    AutoDisposeProvider<PaymentRemoteDataSource>.internal(
+    Provider<PaymentRemoteDataSource>.internal(
   paymentRemoteDataSource,
   name: r'paymentRemoteDataSourceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,14 +22,12 @@ final paymentRemoteDataSourceProvider =
   allTransitiveDependencies: null,
 );
 
-typedef PaymentRemoteDataSourceRef
-    = AutoDisposeProviderRef<PaymentRemoteDataSource>;
-String _$paymentRepositoryHash() => r'edf8c8721e1e8fc559056654f0e3b4f4399d2c45';
+typedef PaymentRemoteDataSourceRef = ProviderRef<PaymentRemoteDataSource>;
+String _$paymentRepositoryHash() => r'621d76836b158bda38c4ab8c1ddcb2be76191967';
 
 /// See also [paymentRepository].
 @ProviderFor(paymentRepository)
-final paymentRepositoryProvider =
-    AutoDisposeProvider<PaymentRepository>.internal(
+final paymentRepositoryProvider = Provider<PaymentRepository>.internal(
   paymentRepository,
   name: r'paymentRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -39,14 +37,14 @@ final paymentRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
-typedef PaymentRepositoryRef = AutoDisposeProviderRef<PaymentRepository>;
+typedef PaymentRepositoryRef = ProviderRef<PaymentRepository>;
 String _$createPaymentIntentUseCaseHash() =>
-    r'239a66d4fc11fc257cdd836ecf01d533e5b1c782';
+    r'2e2e0fec48df4413ac6828d0c2a229f1005a363c';
 
 /// See also [createPaymentIntentUseCase].
 @ProviderFor(createPaymentIntentUseCase)
 final createPaymentIntentUseCaseProvider =
-    AutoDisposeProvider<CreatePaymentIntentUseCase>.internal(
+    Provider<CreatePaymentIntentUseCase>.internal(
   createPaymentIntentUseCase,
   name: r'createPaymentIntentUseCaseProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -56,14 +54,13 @@ final createPaymentIntentUseCaseProvider =
   allTransitiveDependencies: null,
 );
 
-typedef CreatePaymentIntentUseCaseRef
-    = AutoDisposeProviderRef<CreatePaymentIntentUseCase>;
-String _$paymentControllerHash() => r'63ca0be060d59f56c8dafafa9b2df6d5da08ca24';
+typedef CreatePaymentIntentUseCaseRef = ProviderRef<CreatePaymentIntentUseCase>;
+String _$paymentControllerHash() => r'8a485bfc44d744203c49fffb670520d02b591584';
 
 /// See also [PaymentController].
 @ProviderFor(PaymentController)
 final paymentControllerProvider =
-    AutoDisposeAsyncNotifierProvider<PaymentController, String?>.internal(
+    AsyncNotifierProvider<PaymentController, String?>.internal(
   PaymentController.new,
   name: r'paymentControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -73,6 +70,6 @@ final paymentControllerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$PaymentController = AutoDisposeAsyncNotifier<String?>;
+typedef _$PaymentController = AsyncNotifier<String?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

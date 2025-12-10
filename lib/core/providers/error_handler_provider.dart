@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 part 'error_handler_provider.g.dart';
 
 /// Global error handler to capture and log async exceptions
-@riverpod
+@Riverpod(keepAlive: true)
 class ErrorHandler extends _$ErrorHandler {
   final List<String> _errors = [];
 
@@ -51,7 +51,9 @@ class ErrorObserver extends ProviderObserver {
       // Log to error handler
       // In practice, you'd get the errorHandlerProvider from container
       // ignore: avoid_print
-      print('Provider Error in ${provider.name ?? provider.runtimeType}: $error');
+      print(
+        'Provider Error in ${provider.name ?? provider.runtimeType}: $error',
+      );
     }
   }
 }

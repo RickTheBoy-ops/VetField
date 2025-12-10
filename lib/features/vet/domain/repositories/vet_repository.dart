@@ -9,4 +9,15 @@ abstract class VetRepository {
 
   /// Get upcoming appointments count
   Future<Either<Failure, int>> getUpcomingAppointmentsCount(String vetId);
+
+  /// Update vet service information (price, specialty, address, etc.)
+  Future<Either<Failure, void>> updateServiceInfo({
+    required String vetId,
+    String? specialty,
+    double? price,
+    String? address,
+    double? latitude,
+    double? longitude,
+    bool? isAvailable,
+  });
 }

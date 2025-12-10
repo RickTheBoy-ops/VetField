@@ -12,44 +12,44 @@ import '../../domain/entities/campaign_entity.dart';
 part 'ads_provider.g.dart';
 
 // Data Sources
-@riverpod
+@Riverpod(keepAlive: true)
 AdsRemoteDataSource adsRemoteDataSource(Ref ref) {
   final supabaseClient = ref.watch(supabaseClientProvider);
   return AdsRemoteDataSourceImpl(supabaseClient);
 }
 
 // Repositories
-@riverpod
+@Riverpod(keepAlive: true)
 AdsRepository adsRepository(Ref ref) {
   final remoteDataSource = ref.watch(adsRemoteDataSourceProvider);
   return AdsRepositoryImpl(remoteDataSource: remoteDataSource);
 }
 
 // Use Cases
-@riverpod
+@Riverpod(keepAlive: true)
 GetActiveCampaignsUseCase getActiveCampaignsUseCase(Ref ref) {
   final repository = ref.watch(adsRepositoryProvider);
   return GetActiveCampaignsUseCase(repository);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 TrackImpressionUseCase trackImpressionUseCase(Ref ref) {
   final repository = ref.watch(adsRepositoryProvider);
   return TrackImpressionUseCase(repository);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 TrackClickUseCase trackClickUseCase(Ref ref) {
   final repository = ref.watch(adsRepositoryProvider);
   return TrackClickUseCase(repository);
 }
 
 // Active Banners Provider (Home Screen)
-@riverpod
+@Riverpod(keepAlive: true)
 Future<List<CampaignEntity>> activeBannersProvider(Ref ref) async {
   final useCase = ref.watch(getActiveCampaignsUseCaseProvider);
   final result = await useCase(GetActiveCampaignsParams(limit: 5));
-  
+
   return result.fold(
     (failure) => throw Exception(failure.message),
     (campaigns) => campaigns,
@@ -57,11 +57,11 @@ Future<List<CampaignEntity>> activeBannersProvider(Ref ref) async {
 }
 
 // Vet Campaigns Provider (Ads Manager Screen)
-@riverpod
+@Riverpod(keepAlive: true)
 Future<List<CampaignEntity>> vetCampaignsProvider(Ref ref, String vetId) async {
   final useCase = ref.watch(getActiveCampaignsUseCaseProvider);
   final result = await useCase(GetActiveCampaignsParams(vetId: vetId));
-  
+
   return result.fold(
     (failure) => throw Exception(failure.message),
     (campaigns) => campaigns,
@@ -69,7 +69,7 @@ Future<List<CampaignEntity>> vetCampaignsProvider(Ref ref, String vetId) async {
 }
 
 // Ad Tracking Controller
-@riverpod
+@Riverpod(keepAlive: true)
 class AdTrackingController extends _$AdTrackingController {
   @override
   FutureOr<void> build() => null;

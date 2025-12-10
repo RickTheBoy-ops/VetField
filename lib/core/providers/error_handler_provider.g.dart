@@ -6,14 +6,14 @@ part of 'error_handler_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$errorHandlerHash() => r'5290f27d7c514037350c84748508b1676ba6d2c3';
+String _$errorHandlerHash() => r'0838c1dd983b0f10fa0054bf906376b443e6071a';
 
 /// Global error handler to capture and log async exceptions
 ///
 /// Copied from [ErrorHandler].
 @ProviderFor(ErrorHandler)
 final errorHandlerProvider =
-    AutoDisposeNotifierProvider<ErrorHandler, List<String>>.internal(
+    NotifierProvider<ErrorHandler, List<String>>.internal(
   ErrorHandler.new,
   name: r'errorHandlerProvider',
   debugGetCreateSourceHash:
@@ -22,6 +22,6 @@ final errorHandlerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$ErrorHandler = AutoDisposeNotifier<List<String>>;
+typedef _$ErrorHandler = Notifier<List<String>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

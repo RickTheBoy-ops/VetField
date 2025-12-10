@@ -17,19 +17,19 @@ import '../../data/datasources/auth_local_datasource.dart';
 part 'auth_provider.g.dart';
 
 // Data Sources
-@riverpod
+@Riverpod(keepAlive: true)
 AuthRemoteDataSource authRemoteDataSource(Ref ref) {
   final supabaseClient = ref.watch(supabaseClientProvider);
   return AuthRemoteDataSourceImpl(supabaseClient);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 AuthLocalDataSource authLocalDataSource(Ref ref) {
   return AuthLocalDataSourceImpl();
 }
 
 // Repositories
-@riverpod
+@Riverpod(keepAlive: true)
 AuthRepository authRepository(Ref ref) {
   final remoteDataSource = ref.watch(authRemoteDataSourceProvider);
   final localDataSource = ref.watch(authLocalDataSourceProvider);
@@ -40,44 +40,44 @@ AuthRepository authRepository(Ref ref) {
 }
 
 // Use Cases
-@riverpod
+@Riverpod(keepAlive: true)
 LoginUseCase loginUseCase(Ref ref) {
   final repository = ref.watch(authRepositoryProvider);
   return LoginUseCase(repository);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 RegisterUseCase registerUseCase(Ref ref) {
   final repository = ref.watch(authRepositoryProvider);
   return RegisterUseCase(repository);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 LoginByCpfUseCase loginByCpfUseCase(Ref ref) {
   final repository = ref.watch(authRepositoryProvider);
   return LoginByCpfUseCase(repository);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 LoginByCrmvUseCase loginByCrmvUseCase(Ref ref) {
   final repository = ref.watch(authRepositoryProvider);
   return LoginByCrmvUseCase(repository);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 ResetPasswordUseCase resetPasswordUseCase(Ref ref) {
   final repository = ref.watch(authRepositoryProvider);
   return ResetPasswordUseCase(repository);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 UpdateProfileUseCase updateProfileUseCase(Ref ref) {
   final repository = ref.watch(authRepositoryProvider);
   return UpdateProfileUseCase(repository);
 }
 
 // Auth State
-@riverpod
+@Riverpod(keepAlive: true)
 class AuthController extends _$AuthController {
   @override
   FutureOr<UserEntity?> build() {
@@ -192,20 +192,20 @@ class AuthController extends _$AuthController {
 }
 
 // Current User Provider (for Auth Guards)
-@riverpod
+@Riverpod(keepAlive: true)
 UserEntity? currentUser(Ref ref) {
   final supabase = ref.watch(supabaseClientProvider);
   final session = supabase.auth.currentSession;
-  
+
   if (session == null) return null;
-  
+
   // Return basic user info from session
   return UserEntity(
     id: session.user.id,
     email: session.user.email ?? '',
     name: session.user.userMetadata?['name'] ?? '',
-    type: session.user.userMetadata?['type'] == 'vet' 
-        ? UserType.vet 
+    type: session.user.userMetadata?['type'] == 'vet'
+        ? UserType.vet
         : UserType.owner,
   );
 }

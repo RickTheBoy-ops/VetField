@@ -11,18 +11,18 @@ import '../../domain/usecases/get_sos_nearest_vet_usecase.dart';
 
 part 'vet_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 VetRemoteDataSource vetRemoteDataSource(Ref ref) {
   final supabaseClient = ref.watch(supabaseClientProvider);
   return VetRemoteDataSourceImpl(supabaseClient);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 OwnerLocalDataSource ownerLocalDataSource(Ref ref) {
   return OwnerLocalDataSourceImpl();
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 VetRepository vetRepository(Ref ref) {
   final remoteDataSource = ref.watch(vetRemoteDataSourceProvider);
   final localDataSource = ref.watch(ownerLocalDataSourceProvider);
@@ -32,19 +32,19 @@ VetRepository vetRepository(Ref ref) {
   );
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 GetNearbyVetsUseCase getNearbyVetsUseCase(Ref ref) {
   final repository = ref.watch(vetRepositoryProvider);
   return GetNearbyVetsUseCase(repository);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 GetSosNearestVetUseCase getSosNearestVetUseCase(Ref ref) {
   final repository = ref.watch(vetRepositoryProvider);
   return GetSosNearestVetUseCase(repository);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class NearbyVetsController extends _$NearbyVetsController {
   @override
   FutureOr<List<VetEntity>> build() {
@@ -57,22 +57,21 @@ class NearbyVetsController extends _$NearbyVetsController {
     double radius = 10.0,
   }) async {
     state = const AsyncValue.loading();
-    
+
     final useCase = ref.read(getNearbyVetsUseCaseProvider);
-    final result = await useCase(GetNearbyVetsParams(
-      latitude: lat,
-      longitude: lng,
-      radiusKm: radius,
-    ));
+    final result = await useCase(
+      GetNearbyVetsParams(latitude: lat, longitude: lng, radiusKm: radius),
+    );
 
     result.fold(
-      (failure) => state = AsyncValue.error(failure.message, StackTrace.current),
+      (failure) =>
+          state = AsyncValue.error(failure.message, StackTrace.current),
       (vets) => state = AsyncValue.data(vets),
     );
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class SearchVetsController extends _$SearchVetsController {
   @override
   FutureOr<List<VetEntity>> build() {
@@ -100,13 +99,14 @@ class SearchVetsController extends _$SearchVetsController {
       radiusKm: radiusKm,
     );
     result.fold(
-      (failure) => state = AsyncValue.error(failure.message, StackTrace.current),
+      (failure) =>
+          state = AsyncValue.error(failure.message, StackTrace.current),
       (vets) => state = AsyncValue.data(vets),
     );
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class SosNearestVetController extends _$SosNearestVetController {
   @override
   FutureOr<VetEntity?> build() {
@@ -116,9 +116,12 @@ class SosNearestVetController extends _$SosNearestVetController {
   Future<void> fetch({required double lat, required double lng}) async {
     state = const AsyncValue.loading();
     final useCase = ref.read(getSosNearestVetUseCaseProvider);
-    final result = await useCase(GetSosNearestVetParams(latitude: lat, longitude: lng));
+    final result = await useCase(
+      GetSosNearestVetParams(latitude: lat, longitude: lng),
+    );
     result.fold(
-      (failure) => state = AsyncValue.error(failure.message, StackTrace.current),
+      (failure) =>
+          state = AsyncValue.error(failure.message, StackTrace.current),
       (vet) => state = AsyncValue.data(vet),
     );
   }

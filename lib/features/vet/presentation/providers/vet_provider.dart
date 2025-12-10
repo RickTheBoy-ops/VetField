@@ -11,30 +11,27 @@ import '../../domain/usecases/get_vet_statistics_usecase.dart';
 part 'vet_provider.g.dart';
 
 // Data Sources
-@riverpod
+@Riverpod(keepAlive: true)
 VetRemoteDataSource vetRemoteDataSource(Ref ref) {
   final client = ref.watch(supabaseClientProvider);
   return VetRemoteDataSourceImpl(client);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 VetLocalDataSource vetLocalDataSource(Ref ref) {
   return VetLocalDataSourceImpl();
 }
 
 // Repository
-@riverpod
+@Riverpod(keepAlive: true)
 VetRepository vetRepository(Ref ref) {
   final remote = ref.watch(vetRemoteDataSourceProvider);
   final local = ref.watch(vetLocalDataSourceProvider);
-  return VetRepositoryImpl(
-    remoteDataSource: remote,
-    localDataSource: local,
-  );
+  return VetRepositoryImpl(remoteDataSource: remote, localDataSource: local);
 }
 
 // Use Cases
-@riverpod
+@Riverpod(keepAlive: true)
 GetVetStatisticsUseCase getVetStatisticsUseCase(Ref ref) {
   final repository = ref.watch(vetRepositoryProvider);
   return GetVetStatisticsUseCase(repository);

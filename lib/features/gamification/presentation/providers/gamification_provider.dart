@@ -6,24 +6,23 @@ import '../../data/datasources/gamification_local_datasource.dart';
 import '../../data/repositories/gamification_repository_impl.dart';
 import '../../domain/repositories/gamification_repository.dart';
 import '../../domain/entities/gamification_entities.dart';
- 
 
 part 'gamification_provider.g.dart';
 
 // Data Sources
-@riverpod
+@Riverpod(keepAlive: true)
 GamificationRemoteDataSource gamificationRemoteDataSource(Ref ref) {
   final supabaseClient = ref.watch(supabaseClientProvider);
   return GamificationRemoteDataSourceImpl(supabaseClient);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 GamificationLocalDataSource gamificationLocalDataSource(Ref ref) {
   return GamificationLocalDataSourceImpl();
 }
 
 // Repositories
-@riverpod
+@Riverpod(keepAlive: true)
 GamificationRepository gamificationRepository(Ref ref) {
   final remoteDataSource = ref.watch(gamificationRemoteDataSourceProvider);
   final localDataSource = ref.watch(gamificationLocalDataSourceProvider);
@@ -34,7 +33,7 @@ GamificationRepository gamificationRepository(Ref ref) {
 }
 
 // Current User Profile Provider
-@riverpod
+@Riverpod(keepAlive: true)
 Future<GamificationProfile> userGamificationProfile(Ref ref) async {
   final user = ref.watch(supabaseClientProvider).auth.currentUser;
   if (user == null) {
@@ -51,7 +50,7 @@ Future<GamificationProfile> userGamificationProfile(Ref ref) async {
 }
 
 // Transaction History Provider
-@riverpod
+@Riverpod(keepAlive: true)
 Future<List<PointTransaction>> userTransactionHistory(Ref ref) async {
   final user = ref.watch(supabaseClientProvider).auth.currentUser;
   if (user == null) {
@@ -68,8 +67,11 @@ Future<List<PointTransaction>> userTransactionHistory(Ref ref) async {
 }
 
 // Leaderboard Provider
-@riverpod
-Future<List<LeaderboardEntry>> leaderboardProvider(Ref ref, {int limit = 10}) async {
+@Riverpod(keepAlive: true)
+Future<List<LeaderboardEntry>> leaderboardProvider(
+  Ref ref, {
+  int limit = 10,
+}) async {
   final repository = ref.watch(gamificationRepositoryProvider);
   final result = await repository.getLeaderboard(limit: limit);
 
@@ -80,7 +82,7 @@ Future<List<LeaderboardEntry>> leaderboardProvider(Ref ref, {int limit = 10}) as
 }
 
 // Gamification Service Controller
-@riverpod
+@Riverpod(keepAlive: true)
 class GamificationController extends _$GamificationController {
   @override
   FutureOr<void> build() => null;
@@ -91,11 +93,12 @@ class GamificationController extends _$GamificationController {
     if (user == null) return;
 
     final repository = ref.read(gamificationRepositoryProvider);
-    
+
     // Check if already claimed today
-    final hasClaimedResult =
-        await repository.hasClaimedDailyLoginToday(user.id);
-    
+    final hasClaimedResult = await repository.hasClaimedDailyLoginToday(
+      user.id,
+    );
+
     final hasClaimed = hasClaimedResult.fold(
       (failure) => true, // Assume claimed on error
       (claimed) => claimed,

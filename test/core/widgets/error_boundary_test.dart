@@ -5,52 +5,51 @@ import 'package:vetfield_flutter/core/widgets/error_boundary.dart';
 
 void main() {
   group('ErrorBoundary Widget', () {
-    testWidgets('should display error message for ServerFailure',
-        (WidgetTester tester) async {
+    testWidgets('should display error message for ServerFailure', (
+      WidgetTester tester,
+    ) async {
       // Arrange
       const error = ServerFailure('Server error occurred');
 
       // Act
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: ErrorBoundary(error: error),
-          ),
+          home: Scaffold(body: ErrorBoundary(error: error)),
         ),
       );
 
       // Assert
-      expect(find.text('Erro no servidor'), findsOneWidget);
+      expect(find.text('Server error occurred'), findsOneWidget);
       expect(
         find.text('Nossos servidores estão temporariamente indisponíveis'),
         findsOneWidget,
       );
     });
 
-    testWidgets('should display error message for NetworkFailure',
-        (WidgetTester tester) async {
+    testWidgets('should display error message for NetworkFailure', (
+      WidgetTester tester,
+    ) async {
       // Arrange
       const error = NetworkFailure('No internet connection');
 
       // Act
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: ErrorBoundary(error: error),
-          ),
+          home: Scaffold(body: ErrorBoundary(error: error)),
         ),
       );
 
       // Assert
-      expect(find.text('Sem conexão com a internet'), findsOneWidget);
+      expect(find.text('No internet connection'), findsOneWidget);
       expect(
         find.text('Verifique sua conexão e tente novamente'),
         findsOneWidget,
       );
     });
 
-    testWidgets('should display retry button when onRetry is provided',
-        (WidgetTester tester) async {
+    testWidgets('should display retry button when onRetry is provided', (
+      WidgetTester tester,
+    ) async {
       // Arrange
       const error = ServerFailure('Server error');
       var retryPressed = false;
@@ -71,7 +70,7 @@ void main() {
 
       // Assert
       expect(find.text('Tentar Novamente'), findsOneWidget);
-      
+
       // Act - tap retry button
       await tester.tap(find.text('Tentar Novamente'));
       await tester.pump();
@@ -80,17 +79,16 @@ void main() {
       expect(retryPressed, true);
     });
 
-    testWidgets('should not display retry button when onRetry is null',
-        (WidgetTester tester) async {
+    testWidgets('should not display retry button when onRetry is null', (
+      WidgetTester tester,
+    ) async {
       // Arrange
       const error = ServerFailure('Server error');
 
       // Act
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: ErrorBoundary(error: error),
-          ),
+          home: Scaffold(body: ErrorBoundary(error: error)),
         ),
       );
 
@@ -98,8 +96,9 @@ void main() {
       expect(find.text('Tentar Novamente'), findsNothing);
     });
 
-    testWidgets('should display custom message when provided',
-        (WidgetTester tester) async {
+    testWidgets('should display custom message when provided', (
+      WidgetTester tester,
+    ) async {
       // Arrange
       const error = ServerFailure('Server error');
       const customMessage = 'Custom error message';
@@ -108,10 +107,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: ErrorBoundary(
-              error: error,
-              customMessage: customMessage,
-            ),
+            body: ErrorBoundary(error: error, customMessage: customMessage),
           ),
         ),
       );
@@ -120,17 +116,16 @@ void main() {
       expect(find.text(customMessage), findsOneWidget);
     });
 
-    testWidgets('should display appropriate icon for NetworkFailure',
-        (WidgetTester tester) async {
+    testWidgets('should display appropriate icon for NetworkFailure', (
+      WidgetTester tester,
+    ) async {
       // Arrange
       const error = NetworkFailure('No connection');
 
       // Act
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: ErrorBoundary(error: error),
-          ),
+          home: Scaffold(body: ErrorBoundary(error: error)),
         ),
       );
 
@@ -138,17 +133,16 @@ void main() {
       expect(find.byIcon(Icons.wifi_off), findsOneWidget);
     });
 
-    testWidgets('should display appropriate icon for AuthFailure',
-        (WidgetTester tester) async {
+    testWidgets('should display appropriate icon for AuthFailure', (
+      WidgetTester tester,
+    ) async {
       // Arrange
       const error = AuthFailure('Authentication failed');
 
       // Act
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: ErrorBoundary(error: error),
-          ),
+          home: Scaffold(body: ErrorBoundary(error: error)),
         ),
       );
 

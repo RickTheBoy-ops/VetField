@@ -7,12 +7,12 @@ part of 'gamification_provider.dart';
 // **************************************************************************
 
 String _$gamificationRemoteDataSourceHash() =>
-    r'75ddc4ca3e43740bcd4b635c48bbb96a0e8b02b3';
+    r'6976945249beb698eaa72bfbc081e4cba3495180';
 
 /// See also [gamificationRemoteDataSource].
 @ProviderFor(gamificationRemoteDataSource)
 final gamificationRemoteDataSourceProvider =
-    AutoDisposeProvider<GamificationRemoteDataSource>.internal(
+    Provider<GamificationRemoteDataSource>.internal(
   gamificationRemoteDataSource,
   name: r'gamificationRemoteDataSourceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -23,14 +23,14 @@ final gamificationRemoteDataSourceProvider =
 );
 
 typedef GamificationRemoteDataSourceRef
-    = AutoDisposeProviderRef<GamificationRemoteDataSource>;
+    = ProviderRef<GamificationRemoteDataSource>;
 String _$gamificationLocalDataSourceHash() =>
-    r'35e8a3da7a53fd7bd6b0434e0551cc8177f8f183';
+    r'e8fd6244839b69a464d81051136858058228ea53';
 
 /// See also [gamificationLocalDataSource].
 @ProviderFor(gamificationLocalDataSource)
 final gamificationLocalDataSourceProvider =
-    AutoDisposeProvider<GamificationLocalDataSource>.internal(
+    Provider<GamificationLocalDataSource>.internal(
   gamificationLocalDataSource,
   name: r'gamificationLocalDataSourceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -41,14 +41,14 @@ final gamificationLocalDataSourceProvider =
 );
 
 typedef GamificationLocalDataSourceRef
-    = AutoDisposeProviderRef<GamificationLocalDataSource>;
+    = ProviderRef<GamificationLocalDataSource>;
 String _$gamificationRepositoryHash() =>
-    r'e8776b29e591ad613538af8f03a5477ea3d53342';
+    r'03600244f641aabae85c6841cba89ac756bf2cfa';
 
 /// See also [gamificationRepository].
 @ProviderFor(gamificationRepository)
 final gamificationRepositoryProvider =
-    AutoDisposeProvider<GamificationRepository>.internal(
+    Provider<GamificationRepository>.internal(
   gamificationRepository,
   name: r'gamificationRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -58,15 +58,14 @@ final gamificationRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
-typedef GamificationRepositoryRef
-    = AutoDisposeProviderRef<GamificationRepository>;
+typedef GamificationRepositoryRef = ProviderRef<GamificationRepository>;
 String _$userGamificationProfileHash() =>
-    r'7d836ea2808b39df1a304977f1dc3a6974f87018';
+    r'b800a936871a9506a08fe50afcefe33cbfd9a060';
 
 /// See also [userGamificationProfile].
 @ProviderFor(userGamificationProfile)
 final userGamificationProfileProvider =
-    AutoDisposeFutureProvider<GamificationProfile>.internal(
+    FutureProvider<GamificationProfile>.internal(
   userGamificationProfile,
   name: r'userGamificationProfileProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -76,15 +75,14 @@ final userGamificationProfileProvider =
   allTransitiveDependencies: null,
 );
 
-typedef UserGamificationProfileRef
-    = AutoDisposeFutureProviderRef<GamificationProfile>;
+typedef UserGamificationProfileRef = FutureProviderRef<GamificationProfile>;
 String _$userTransactionHistoryHash() =>
-    r'8e5a4eea850126e7627031844a1576f8d9cc0db9';
+    r'b8dffa013303b3375ee1ca269834a8af3e2ee6de';
 
 /// See also [userTransactionHistory].
 @ProviderFor(userTransactionHistory)
 final userTransactionHistoryProvider =
-    AutoDisposeFutureProvider<List<PointTransaction>>.internal(
+    FutureProvider<List<PointTransaction>>.internal(
   userTransactionHistory,
   name: r'userTransactionHistoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -94,10 +92,9 @@ final userTransactionHistoryProvider =
   allTransitiveDependencies: null,
 );
 
-typedef UserTransactionHistoryRef
-    = AutoDisposeFutureProviderRef<List<PointTransaction>>;
+typedef UserTransactionHistoryRef = FutureProviderRef<List<PointTransaction>>;
 String _$leaderboardProviderHash() =>
-    r'ecf127d6a692351f3b001799855b50ea72b9de90';
+    r'16a171fc37a00556e87dfa040fdbe56637ccac36';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -165,7 +162,7 @@ class LeaderboardProviderFamily
 
 /// See also [leaderboardProvider].
 class LeaderboardProviderProvider
-    extends AutoDisposeFutureProvider<List<LeaderboardEntry>> {
+    extends FutureProvider<List<LeaderboardEntry>> {
   /// See also [leaderboardProvider].
   LeaderboardProviderProvider({
     int limit = 10,
@@ -218,7 +215,7 @@ class LeaderboardProviderProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<LeaderboardEntry>> createElement() {
+  FutureProviderElement<List<LeaderboardEntry>> createElement() {
     return _LeaderboardProviderProviderElement(this);
   }
 
@@ -236,14 +233,13 @@ class LeaderboardProviderProvider
   }
 }
 
-mixin LeaderboardProviderRef
-    on AutoDisposeFutureProviderRef<List<LeaderboardEntry>> {
+mixin LeaderboardProviderRef on FutureProviderRef<List<LeaderboardEntry>> {
   /// The parameter `limit` of this provider.
   int get limit;
 }
 
 class _LeaderboardProviderProviderElement
-    extends AutoDisposeFutureProviderElement<List<LeaderboardEntry>>
+    extends FutureProviderElement<List<LeaderboardEntry>>
     with LeaderboardProviderRef {
   _LeaderboardProviderProviderElement(super.provider);
 
@@ -252,12 +248,12 @@ class _LeaderboardProviderProviderElement
 }
 
 String _$gamificationControllerHash() =>
-    r'43332363dad500719cbe8746bcc110ad41ed5293';
+    r'ff14f6379ae062a5010c8240f00afce2dcdec108';
 
 /// See also [GamificationController].
 @ProviderFor(GamificationController)
 final gamificationControllerProvider =
-    AutoDisposeAsyncNotifierProvider<GamificationController, void>.internal(
+    AsyncNotifierProvider<GamificationController, void>.internal(
   GamificationController.new,
   name: r'gamificationControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -267,6 +263,6 @@ final gamificationControllerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$GamificationController = AutoDisposeAsyncNotifier<void>;
+typedef _$GamificationController = AsyncNotifier<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -59,5 +59,31 @@ class VetRepositoryImpl implements VetRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> updateServiceInfo({
+    required String vetId,
+    String? specialty,
+    double? price,
+    String? address,
+    double? latitude,
+    double? longitude,
+    bool? isAvailable,
+  }) async {
+    try {
+      await remoteDataSource.updateServiceInfo(
+        vetId: vetId,
+        specialty: specialty,
+        price: price,
+        address: address,
+        latitude: latitude,
+        longitude: longitude,
+        isAvailable: isAvailable,
+      );
+      return const Right(null);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }
 

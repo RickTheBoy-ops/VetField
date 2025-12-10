@@ -1,7 +1,8 @@
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'provider_cleanup_observer.dart';
+import '../local/hive_boxes.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/appointment/presentation/screens/booking_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
@@ -20,23 +21,28 @@ import '../../features/auth/presentation/providers/auth_provider.dart';
 
 part 'app_router.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 GoRouter goRouter(Ref ref) {
   return GoRouter(
     initialLocation: '/login',
+    observers: [ProviderCleanupObserver(ref)],
     redirect: (context, state) async {
       // Get current user from auth provider
       final user = ref.read(currentUserProvider);
       final isAuthenticated = user != null;
-      
-      // Check first install from Hive
-      final prefs = Hive.box('user_preferences');
-      final isFirstInstall = prefs.get('first_install', defaultValue: true);
-      
+
+      bool isFirstInstall = true;
+      try {
+        final prefs = HiveBoxes.getUserPreferencesBox();
+        isFirstInstall = prefs.get('first_install', defaultValue: true);
+      } catch (e) {
+        isFirstInstall = true;
+      }
+
       // Define public routes (accessible without authentication)
       final publicRoutes = ['/login', '/register', '/onboarding'];
       final isPublicRoute = publicRoutes.contains(state.matchedLocation);
-      
+
       // Define protected routes that require authentication
       final protectedPrefixes = [
         '/vet',
@@ -62,7 +68,9 @@ GoRouter goRouter(Ref ref) {
       }
 
       // Redirect authenticated users away from auth screens
-      if (isAuthenticated && isPublicRoute && state.matchedLocation != '/onboarding') {
+      if (isAuthenticated &&
+          isPublicRoute &&
+          state.matchedLocation != '/onboarding') {
         return '/home';
       }
 
@@ -74,18 +82,12 @@ GoRouter goRouter(Ref ref) {
         path: '/onboarding',
         builder: (context, state) => const OnboardingScreen(),
       ),
-      GoRoute(
-        path: '/login',
-        builder: (context, state) => const LoginScreen(),
-      ),
+      GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
       GoRoute(
         path: '/register',
         builder: (context, state) => const RegisterScreen(),
       ),
-      GoRoute(
-        path: '/home',
-        builder: (context, state) => const HomeScreen(),
-      ),
+      GoRoute(path: '/home', builder: (context, state) => const HomeScreen()),
       GoRoute(
         path: '/profile-edit',
         builder: (context, state) => const ProfileEditScreen(),

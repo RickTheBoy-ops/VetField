@@ -7,12 +7,12 @@ part of 'social_provider.dart';
 // **************************************************************************
 
 String _$socialRemoteDataSourceHash() =>
-    r'c24cbb1bbf7beaad0eb2201c562d406d992c61ca';
+    r'00fe57c63ffc380a6d65ccb198f62bac9e1cc736';
 
 /// See also [socialRemoteDataSource].
 @ProviderFor(socialRemoteDataSource)
 final socialRemoteDataSourceProvider =
-    AutoDisposeProvider<SocialRemoteDataSource>.internal(
+    Provider<SocialRemoteDataSource>.internal(
   socialRemoteDataSource,
   name: r'socialRemoteDataSourceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,15 +22,13 @@ final socialRemoteDataSourceProvider =
   allTransitiveDependencies: null,
 );
 
-typedef SocialRemoteDataSourceRef
-    = AutoDisposeProviderRef<SocialRemoteDataSource>;
+typedef SocialRemoteDataSourceRef = ProviderRef<SocialRemoteDataSource>;
 String _$socialLocalDataSourceHash() =>
-    r'aa6dc9a14cbe78db5b631b37ca96c8d753cf4ded';
+    r'e3f6d62ae8c1b7093268fd6c84437e8243f781b0';
 
 /// See also [socialLocalDataSource].
 @ProviderFor(socialLocalDataSource)
-final socialLocalDataSourceProvider =
-    AutoDisposeProvider<SocialLocalDataSource>.internal(
+final socialLocalDataSourceProvider = Provider<SocialLocalDataSource>.internal(
   socialLocalDataSource,
   name: r'socialLocalDataSourceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -40,13 +38,12 @@ final socialLocalDataSourceProvider =
   allTransitiveDependencies: null,
 );
 
-typedef SocialLocalDataSourceRef
-    = AutoDisposeProviderRef<SocialLocalDataSource>;
-String _$socialRepositoryHash() => r'35305ccc1266736b6f3def09f93f36182d437210';
+typedef SocialLocalDataSourceRef = ProviderRef<SocialLocalDataSource>;
+String _$socialRepositoryHash() => r'8cfca8087972c2b273af352537468ec9a3eaef2f';
 
 /// See also [socialRepository].
 @ProviderFor(socialRepository)
-final socialRepositoryProvider = AutoDisposeProvider<SocialRepository>.internal(
+final socialRepositoryProvider = Provider<SocialRepository>.internal(
   socialRepository,
   name: r'socialRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -56,13 +53,13 @@ final socialRepositoryProvider = AutoDisposeProvider<SocialRepository>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef SocialRepositoryRef = AutoDisposeProviderRef<SocialRepository>;
-String _$socialControllerHash() => r'5bb871faf10051a58f0da08c5238584160924ed5';
+typedef SocialRepositoryRef = ProviderRef<SocialRepository>;
+String _$socialControllerHash() => r'd8ae37b3ef802f3baed6cc66edb1da64cb0b9263';
 
 /// See also [SocialController].
 @ProviderFor(SocialController)
-final socialControllerProvider = AutoDisposeAsyncNotifierProvider<
-    SocialController, List<SocialPet>>.internal(
+final socialControllerProvider =
+    AsyncNotifierProvider<SocialController, List<SocialPet>>.internal(
   SocialController.new,
   name: r'socialControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -72,6 +69,6 @@ final socialControllerProvider = AutoDisposeAsyncNotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$SocialController = AutoDisposeAsyncNotifier<List<SocialPet>>;
+typedef _$SocialController = AsyncNotifier<List<SocialPet>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

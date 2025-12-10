@@ -11,4 +11,8 @@ abstract class HealthRepository {
     String? petId,
     String? attachmentUrl,
   });
+
+  Future<Either<Failure, HealthEventEntity>> updateEvent(HealthEventEntity event);
+  
+  Future<Either<Failure, void>> deleteEvent(String id);
 }

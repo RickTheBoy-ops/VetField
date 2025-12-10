@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:hive_flutter/hive_flutter.dart';
-import '../../../../core/database/hive_boxes.dart';
+import '../../../../core/local/hive_boxes.dart';
 import '../../../../core/error/exceptions.dart';
 import '../models/user_model.dart';
 
