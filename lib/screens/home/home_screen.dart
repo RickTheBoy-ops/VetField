@@ -224,7 +224,8 @@ class _HomeScreenState extends State<HomeScreen> {
               return Column(
                 children: [
                   Material(
-                    color: Colors.transparent,
+                    color: AppColors.cardBackground,
+                    borderRadius: BorderRadius.circular(20),
                     child: InkWell(
                       onTap: () {
                         setState(() {
@@ -242,7 +243,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 64,
                         height: 64,
                         decoration: BoxDecoration(
-                          color: AppColors.cardBackground,
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(color: AppColors.border, width: 1),
                         ),

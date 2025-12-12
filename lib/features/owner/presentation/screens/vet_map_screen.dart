@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
@@ -154,6 +155,14 @@ class _VetMapScreenState extends ConsumerState<VetMapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Fallback for Desktop platforms (Maps not supported)
+    if (!kIsWeb &&
+        (defaultTargetPlatform == TargetPlatform.windows ||
+            defaultTargetPlatform == TargetPlatform.linux ||
+            defaultTargetPlatform == TargetPlatform.macOS)) {
+      return _buildDesktopFallback();
+    }
+
     // Ouvir mudanças na lista de vets
     ref.listen(nearbyVetsControllerProvider, (previous, next) {
       next.whenData((vets) => _updateMarkers(vets));
@@ -508,5 +517,107 @@ class _VetMapScreenState extends ConsumerState<VetMapScreen> {
     final dx = a.latitude - b.latitude;
     final dy = a.longitude - b.longitude;
     return (dx * dx + dy * dy).abs();
+  }
+
+  Widget _buildDesktopFallback() {
+    final vetsAsync = ref.watch(nearbyVetsControllerProvider);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Explorar Veterinários'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: _getCurrentLocation,
+          ),
+        ],
+      ),
+      body: vetsAsync.when(
+        data: (vets) {
+          if (vets.isEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.location_off, size: 64, color: Colors.grey),
+                  const SizedBox(height: 16),
+                  const Text('Nenhum veterinário encontrado próximo.'),
+                  const SizedBox(height: 8),
+                  ElevatedButton(
+                    onPressed: _getCurrentLocation,
+                    child: const Text('Atualizar Localização'),
+                  ),
+                ],
+              ),
+            );
+          }
+          return ListView.separated(
+            padding: const EdgeInsets.all(16),
+            itemCount: vets.length,
+            separatorBuilder: (_, __) => const SizedBox(height: 16),
+            itemBuilder: (context, index) {
+              final vet = vets[index];
+              final dist = _currentPosition != null
+                  ? Geolocator.distanceBetween(
+                        _currentPosition!.latitude,
+                        _currentPosition!.longitude,
+                        vet.latitude,
+                        vet.longitude,
+                      ) /
+                      1000
+                  : 0.0;
+
+              return Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                child: ListTile(
+                  contentPadding: const EdgeInsets.all(12),
+                  leading: CircleAvatar(
+                    radius: 28,
+                    backgroundImage: NetworkImage(vet.avatarUrl),
+                    onBackgroundImageError: (_, __) => const Icon(Icons.person),
+                  ),
+                  title: Text(vet.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(vet.specialty),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          const Icon(Icons.star, size: 16, color: Colors.amber),
+                          Text(' ${vet.rating} • ${dist > 0 ? "${dist.toStringAsFixed(1)} km" : "- km"}'),
+                        ],
+                      ),
+                    ],
+                  ),
+                  trailing: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'R\$ ${vet.price}',
+                        style: const TextStyle(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    context.push(
+                      '/book/${vet.id}',
+                      extra: {'vetName': vet.name, 'price': vet.price},
+                    );
+                  },
+                ),
+              );
+            },
+          );
+        },
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (e, s) => Center(child: Text('Erro ao carregar: $e')),
+      ),
+    );
   }
 }
