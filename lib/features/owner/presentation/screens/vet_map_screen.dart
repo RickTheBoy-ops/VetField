@@ -36,6 +36,12 @@ class _VetMapScreenState extends ConsumerState<VetMapScreen> {
   double _radiusKm = 10.0;
   Timer? _debounce;
 
+  bool get _isMapSupported {
+    if (kIsWeb) return true;
+    return defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -78,16 +84,18 @@ class _VetMapScreenState extends ConsumerState<VetMapScreen> {
             radius: _radiusKm,
           );
 
-      // Mover câmera
-      final controller = await _controller.future;
-      controller.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target: LatLng(position.latitude, position.longitude),
-            zoom: 14,
+      // Mover câmera apenas se o mapa estiver suportado
+      if (_isMapSupported) {
+        final controller = await _controller.future;
+        controller.animateCamera(
+          CameraUpdate.newCameraPosition(
+            CameraPosition(
+              target: LatLng(position.latitude, position.longitude),
+              zoom: 14,
+            ),
           ),
-        ),
-      );
+        );
+      }
     } catch (e) {
       setState(() => _isLoadingLocation = false);
       debugPrint('Erro ao obter localização: $e');
@@ -156,10 +164,7 @@ class _VetMapScreenState extends ConsumerState<VetMapScreen> {
   @override
   Widget build(BuildContext context) {
     // Fallback for Desktop platforms (Maps not supported)
-    if (!kIsWeb &&
-        (defaultTargetPlatform == TargetPlatform.windows ||
-            defaultTargetPlatform == TargetPlatform.linux ||
-            defaultTargetPlatform == TargetPlatform.macOS)) {
+    if (!_isMapSupported) {
       return _buildDesktopFallback();
     }
 
@@ -172,13 +177,15 @@ class _VetMapScreenState extends ConsumerState<VetMapScreen> {
       next.when(
         data: (vet) async {
           if (vet != null) {
-            final controller = await _controller.future;
-            controller.animateCamera(
-              CameraUpdate.newLatLngZoom(
-                LatLng(vet.latitude, vet.longitude),
-                15,
-              ),
-            );
+            if (_isMapSupported) {
+              final controller = await _controller.future;
+              controller.animateCamera(
+                CameraUpdate.newLatLngZoom(
+                  LatLng(vet.latitude, vet.longitude),
+                  15,
+                ),
+              );
+            }
             if (!mounted) return;
             if (context.mounted) {
               context.push(
