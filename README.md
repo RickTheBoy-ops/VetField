@@ -1,57 +1,77 @@
 # VetField 🐾
 
-**VetField** é um aplicativo moderno em Flutter desenvolvido para conectar tutores de pets a profissionais veterinários. Ele simplifica o processo de encontrar veterinários, agendar consultas e gerenciar o histórico de saúde dos seus animais de estimação.
+**VetField** é um ecossistema digital completo que revoluciona o cuidado veterinário, conectando tutores a profissionais de saúde animal através de uma plataforma segura, intuitiva e reativa.
 
-## 📱 Funcionalidades Completas
+> **Status:** 🚀 Em desenvolvimento ativo (v1.0.0+1)
 
-### 🔍 Busca e Exploração
-- **Busca Avançada:** Encontre veterinários e clínicas por nome, especialidade, localização, faixa de preço e avaliação mínima.
-- **Filtros Inteligentes:** Refine sua busca com filtros de raio de distância (km), disponibilidade e tipo de atendimento.
-- **Mapa Interativo:** Visualize profissionais próximos no Google Maps com marcadores personalizados e agrupamento.
-- **Tela Explorar:** Descubra artigos, dicas de saúde e novidades do mundo pet.
+## ✨ Destaques da Arquitetura
+Este projeto segue os princípios da **Clean Architecture**, garantindo escalabilidade e testabilidade.
+- **Camadas Separadas:** Domain (Regras de Negócio), Data (Repositórios e Datasources) e Presentation (UI e Providers).
+- **Injeção de Dependência:** Gerenciada nativamente pelo **Riverpod 2.0**.
+- **Reatividade Extrema:** Uso de `StreamProvider` e `AsyncNotifier` para atualizações em tempo real (ex: status de autenticação e agendamentos).
+- **Segurança:** Dados sensíveis isolados e validação robusta no client-side e server-side.
 
-### 🏥 Clínicas e Veterinários
-- **Perfil Detalhado:** Visualize informações completas do veterinário ou clínica, incluindo biografia, especialidades e fotos.
-- **Detalhes da Clínica:** Página dedicada com informações sobre a infraestrutura, serviços oferecidos e equipe.
-- **Avaliações:** Sistema de rating e comentários para ajudar na escolha do melhor profissional.
-- **VetRide:** Integração direta com Uber para solicitar transporte até a clínica ou consultório.
+---
 
-### 📅 Agendamento e Consultas
-- **Reserva Fácil:** Selecione datas e horários disponíveis em tempo real.
-- **Meus Agendamentos:** Acompanhe consultas futuras, passadas e canceladas.
-- **Status da Consulta:** Atualizações em tempo real sobre o status do agendamento (confirmado, pendente, concluído).
+## 📱 Funcionalidades Detalhadas
 
-### 🐾 Saúde do Pet
-- **Linha do Tempo de Saúde:** Histórico visual completo de vacinas, exames, cirurgias e consultas do seu pet.
-- **Prontuário Digital:** Acesso fácil aos dados médicos do animal.
+### 🔐 Módulo de Autenticação & Segurança
+- **Login Híbrido:** Suporte para E-mail/Senha, CPF e CRMV (para profissionais).
+- **Biometria:** Acesso rápido via impressão digital ou FaceID (`local_auth`).
+- **Recuperação de Conta:** Fluxo completo de "Esqueci minha senha".
+- **Sessão Persistente:** Gerenciamento automático de tokens e refresh com Supabase Auth.
+- **Proteção de Rotas:** Redirecionamento inteligente baseado no estado de autenticação (Guardas de Rota com GoRouter).
 
-### 👨‍⚕️ Área do Veterinário
-- **Dashboard Profissional:** Visão geral dos agendamentos do dia e solicitações pendentes.
-- **Gestão de Agenda:** Calendário interativo para visualizar e gerenciar horários.
-- **Prescrições:** Emissão e visualização de receitas médicas digitais.
-- **Perfil Profissional:** Edição de dados, especialidades e preços.
+### 🏠 Home & Navegação (Tutor)
+- **Dashboard Interativo:** Acesso rápido a categorias, próximos agendamentos e veterinários recomendados.
+- **Navegação Fluida:** Barra de navegação inferior persistente com transições suaves.
+- **Feedbacks Visuais:** Snackbars, Shimmers e indicadores de carregamento para melhor UX.
 
-### 🔐 Autenticação e Perfil
-- **Login Seguro:** Autenticação via E-mail/Senha e Biometria.
-- **Gestão de Perfil:** Edição de dados pessoais, foto de perfil e preferências.
-- **Onboarding:** Telas introdutórias para novos usuários.
+### 📅 Gestão de Agendamentos
+- **Fluxo de Booking:** Seleção intuitiva de serviços (Consulta, Vacina, Exame, Cirurgia), datas e horários.
+- **Meus Tratamentos:**
+  - **Em Breve:** Lista de compromissos futuros com cartões detalhados.
+  - **Histórico:** Registro completo de atendimentos passados.
+- **Ações Rápidas:** Cancelamento e Remarcação de consultas com um toque.
+- **Resiliência:** Tratamento de erros de conexão e estados vazios amigáveis.
 
-## 🛠️ Tecnologias Utilizadas
+### 🗺️ Geolocalização & Busca
+- **Mapa Veterinário:** Visualização de clínicas e profissionais próximos usando Google Maps.
+- **Filtros Avançados:** Busca por especialidade, preço, avaliação e distância.
+- **Integração VetRide:** Solicite transporte (Uber/99) diretamente para o endereço da clínica.
 
-- **Framework:** [Flutter](https://flutter.dev/) (Dart)
-- **Gerenciamento de Estado:** [Riverpod](https://riverpod.dev/) (Code Generation & AsyncNotifier)
-- **Backend & Autenticação:** [Supabase](https://supabase.com/) (PostgreSQL, Auth, Realtime, Edge Functions)
-- **Navegação:** [GoRouter](https://pub.dev/packages/go_router)
-- **Mapas:** [Google Maps Flutter](https://pub.dev/packages/google_maps_flutter)
-- **Localização:** `geolocator` para serviços de GPS.
-- **Geração de Código:** `build_runner`, `freezed`, `json_serializable`, `riverpod_generator`
+### 🐾 Gestão de Pets
+- **Perfil do Animal:** Cadastro completo com foto, raça, espécie e dados vitais.
+- **Linha do Tempo de Saúde:** Histórico cronológico de vacinas e intervenções.
 
-## 🚀 Como Iniciar
+### 👨‍⚕️ Módulo Veterinário (Profissional)
+- **Dashboard de Gestão:** Visão geral do dia e solicitações pendentes.
+- **Agenda Dinâmica:** Controle total sobre horários disponíveis.
+- **Prontuário Digital:** Acesso e edição do histórico médico dos pacientes.
+
+---
+
+## 🛠️ Stack Tecnológico
+
+| Categoria | Tecnologias |
+|-----------|-------------|
+| **Linguagem** | Dart 3.0+ |
+| **Framework** | Flutter 3.10+ |
+| **Gerência de Estado** | **Riverpod** (Annotation & Code Gen) |
+| **Backend as a Service** | **Supabase** (PostgreSQL, Auth, Realtime) |
+| **Navegação** | **GoRouter** 14.0+ |
+| **Mapas** | Google Maps Flutter |
+| **Localização** | Geolocator |
+| **Persistência Local** | Hive (NoSQL rápido) |
+| **Testes** | Flutter Test, Mockito |
+
+---
+
+## 🚀 Como Executar o Projeto
 
 ### Pré-requisitos
-- Flutter SDK (Última versão estável)
-- Dart SDK
-- Conta e Projeto no Supabase
+- Flutter SDK (Stable)
+- Conta no Supabase
 
 ### Instalação
 
@@ -66,52 +86,31 @@
    flutter pub get
    ```
 
-3. **Configuração de Ambiente**
-   Crie um arquivo `.env` na raiz do projeto e adicione suas credenciais do Supabase:
+3. **Configuração de Ambiente (.env)**
+   Crie um arquivo `.env` na raiz:
    ```env
-   SUPABASE_URL=sua_url_supabase
-   SUPABASE_ANON_KEY=sua_chave_anonima_supabase
-   GOOGLE_MAPS_API_KEY=sua_chave_google_maps
+   SUPABASE_URL=sua_url
+   SUPABASE_ANON_KEY=sua_chave
+   GOOGLE_MAPS_API_KEY=sua_chave
    ```
 
-4. **Geração de Código**
-   Execute o build runner para gerar os arquivos necessários:
+4. **Gerar Códigos (Riverpod/Freezed)**
    ```bash
    dart run build_runner build --delete-conflicting-outputs
    ```
 
-5. **Executar o App**
+5. **Executar**
    ```bash
    flutter run
    ```
 
-## 📂 Estrutura do Projeto
-
-```
-lib/
-├── core/            # Utilitários, temas, rotas e providers compartilhados
-├── features/        # Arquitetura baseada em features
-│   ├── appointment/ # Agendamento, Booking
-│   ├── auth/        # Login, Registro, Perfil
-│   ├── call/        # Funcionalidades de chamada (em desenvolvimento)
-│   ├── health/      # Linha do tempo de saúde
-│   ├── owner/       # Mapa, Busca de Vets
-│   └── vet/         # Dashboard, Calendário, Prescrição
-├── screens/         # Telas gerais e de navegação
-│   ├── clinic_details/ # Detalhes da clínica
-│   ├── doctor/         # Detalhes do médico
-│   ├── explore/        # Tela de exploração
-│   ├── search/         # Tela de busca
-│   └── ...
-└── widgets/         # Componentes de UI compartilhados
-```
+---
 
 ## 🤝 Contribuição
+Pull Requests são bem-vindos. Para mudanças importantes, abra uma issue primeiro para discutir o que você gostaria de mudar.
 
-Contribuições são bem-vindas! Sinta-se à vontade para enviar um Pull Request.
+---
 
-1. Faça um Fork do projeto
-2. Crie sua branch de feature (`git checkout -b feature/MinhaFeatureIncrivel`)
-3. Comite suas mudanças (`git commit -m 'Adiciona alguma feature incrível'`)
-4. Dê um Push para a branch (`git push origin feature/MinhaFeatureIncrivel`)
-5. Abra um Pull Request
+<div align="center">
+  <sub>Desenvolvido com 💚 por RickTheBoy-ops & Arquitetura VetField</sub>
+</div>

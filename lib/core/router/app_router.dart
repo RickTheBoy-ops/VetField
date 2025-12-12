@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,19 +25,33 @@ part 'app_router.g.dart';
 
 @Riverpod(keepAlive: true)
 GoRouter goRouter(Ref ref) {
+  final authStream = ref.watch(currentUserProvider.stream);
+
   return GoRouter(
     initialLocation: '/login',
+    refreshListenable: GoRouterRefreshStream(authStream),
     observers: [ProviderCleanupObserver(ref)],
     redirect: (context, state) async {
       // Get current user from auth provider
-      final user = ref.read(currentUserProvider);
+      final authState = ref.read(currentUserProvider);
+      final user = authState.valueOrNull;
       final isAuthenticated = user != null;
+
+      print('Router Redirect Check:');
+      print('  Path: ${state.matchedLocation}');
+      print(
+        '  AuthState: ${authState.runtimeType} (isLoading: ${authState.isLoading}, hasValue: ${authState.hasValue})',
+      );
+      print('  User ID: ${user?.id}');
+      print('  IsAuthenticated: $isAuthenticated');
 
       bool isFirstInstall = true;
       try {
         final prefs = HiveBoxes.getUserPreferencesBox();
         isFirstInstall = prefs.get('first_install', defaultValue: true);
+        print('  FirstInstall: $isFirstInstall');
       } catch (e) {
+        print('  FirstInstall Error: $e');
         isFirstInstall = true;
       }
 
@@ -57,8 +73,10 @@ GoRouter goRouter(Ref ref) {
         (prefix) => state.matchedLocation.startsWith(prefix),
       );
 
-      // First install flow: redirect to onboarding
-      if (isFirstInstall && state.matchedLocation != '/onboarding') {
+      // First install flow: redirect to onboarding (ONLY if not authenticated)
+      if (isFirstInstall &&
+          !isAuthenticated &&
+          state.matchedLocation != '/onboarding') {
         return '/onboarding';
       }
 
@@ -140,4 +158,23 @@ GoRouter goRouter(Ref ref) {
       ),
     ],
   );
+}
+
+/// A [Listenable] that notifies when a [Stream] emits a value.
+class GoRouterRefreshStream extends ChangeNotifier {
+  GoRouterRefreshStream(Stream<dynamic> stream) {
+    notifyListeners();
+    _subscription = stream.asBroadcastStream().listen((dynamic _) {
+      print('GoRouterRefreshStream: Event received from stream');
+      notifyListeners();
+    });
+  }
+
+  late final StreamSubscription<dynamic> _subscription;
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
 }

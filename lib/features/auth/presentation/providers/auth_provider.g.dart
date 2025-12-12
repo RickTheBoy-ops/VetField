@@ -145,11 +145,11 @@ final updateProfileUseCaseProvider = Provider<UpdateProfileUseCase>.internal(
 );
 
 typedef UpdateProfileUseCaseRef = ProviderRef<UpdateProfileUseCase>;
-String _$currentUserHash() => r'dd26550e29a5aaa9cd11894163600bcc2cb40d69';
+String _$currentUserHash() => r'4a3673bdf3c237d10559856af52831ca56ceceec';
 
 /// See also [currentUser].
 @ProviderFor(currentUser)
-final currentUserProvider = Provider<UserEntity?>.internal(
+final currentUserProvider = StreamProvider<UserEntity?>.internal(
   currentUser,
   name: r'currentUserProvider',
   debugGetCreateSourceHash:
@@ -158,8 +158,8 @@ final currentUserProvider = Provider<UserEntity?>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef CurrentUserRef = ProviderRef<UserEntity?>;
-String _$authControllerHash() => r'd19c8cc01cb8f8fde6906fd077a732011184ef74';
+typedef CurrentUserRef = StreamProviderRef<UserEntity?>;
+String _$authControllerHash() => r'1b13d39ebfd57ebefd9a50a8c8bcba7bfdf354f3';
 
 /// See also [AuthController].
 @ProviderFor(AuthController)

@@ -62,11 +62,13 @@ class _InitializationWrapperState extends State<InitializationWrapper> {
       }
 
       // 3. Configurar Stripe
-      final stripeKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'];
-      if (stripeKey != null && stripeKey.isNotEmpty) {
-        Stripe.publishableKey = stripeKey;
-      } else {
-        debugPrint('Aviso: STRIPE_PUBLISHABLE_KEY não encontrada.');
+      if (dotenv.isInitialized) {
+        final stripeKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'];
+        if (stripeKey != null && stripeKey.isNotEmpty) {
+          Stripe.publishableKey = stripeKey;
+        } else {
+          debugPrint('Aviso: STRIPE_PUBLISHABLE_KEY não encontrada.');
+        }
       }
 
       // 4. Inicializar Hive
@@ -82,11 +84,23 @@ class _InitializationWrapperState extends State<InitializationWrapper> {
       }
 
       // 5. Inicializar Supabase
-      final supabaseUrl = dotenv.env['SUPABASE_URL'];
-      final supabaseAnonKey = dotenv.env['SUPABASE_ANON_KEY'];
+      // Se dotenv falhou, tentamos acessar via variáveis de ambiente do sistema (caso web/prod)
+      // ou falhamos gracefully
+      String? supabaseUrl;
+      String? supabaseAnonKey;
 
+      if (dotenv.isInitialized) {
+        supabaseUrl = dotenv.env['SUPABASE_URL'];
+        supabaseAnonKey = dotenv.env['SUPABASE_ANON_KEY'];
+      }
+
+      // Fallback para consts se necessário ou lançar erro
       if (supabaseUrl == null || supabaseAnonKey == null) {
-        throw Exception('Configurações do Supabase (URL/KEY) não encontradas.');
+        // Tentar pegar do System Environment (útil para CI/CD ou alguns setups)
+        // No Flutter Web/Mobile puro isso não é padrão, mas protege o acesso ao map env
+        throw Exception(
+          'Configurações do Supabase (URL/KEY) não encontradas. Verifique o arquivo .env',
+        );
       }
 
       await Supabase.initialize(url: supabaseUrl, anonKey: supabaseAnonKey);

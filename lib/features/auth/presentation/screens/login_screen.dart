@@ -4,6 +4,7 @@ import 'package:local_auth/local_auth.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/local/hive_boxes.dart';
 import '../providers/auth_provider.dart';
 import 'package:flutter/services.dart';
 
@@ -23,11 +24,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   bool _obscurePassword = true;
   int _loginTabIndex = 0;
   final _localAuth = LocalAuthentication();
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   static TextInputFormatter _digitsOnly(int max) =>
       LengthLimitingTextInputFormatter(max);
@@ -53,8 +49,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _login() {
+    debugPrint('Login button pressed. Tab index: $_loginTabIndex');
     if (_formKey.currentState!.validate()) {
+      debugPrint('Form is valid. Attempting login...');
       if (_loginTabIndex == 0) {
+        debugPrint(
+          'Email: ${_emailController.text}, Password length: ${_passwordController.text.length}',
+        );
         ref
             .read(authControllerProvider.notifier)
             .login(_emailController.text.trim(), _passwordController.text);
@@ -70,6 +71,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               _passwordController.text,
             );
       }
+    } else {
+      debugPrint('Form validation failed');
     }
   }
 
@@ -107,29 +110,34 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _goToRegister() {
-    context.push('/register');
+    context.go('/register');
   }
 
   @override
   Widget build(BuildContext context) {
-    // Ouvir mudanças de estado para navegação ou erro
+    // Listener para reagir ao estado do login (Sucesso ou Erro)
     ref.listen(authControllerProvider, (previous, next) {
-      next.when(
-        data: (user) {
-          if (user != null) {
-            context.go('/home');
-          }
-        },
-        error: (error, stack) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(error.toString()),
-              backgroundColor: AppColors.error,
-            ),
-          );
-        },
-        loading: () {},
-      );
+      if (next is AsyncData && next.value != null) {
+        // Atualizar first_install
+        HiveBoxes.getUserPreferencesBox().put('first_install', false);
+        // Login com sucesso
+        context.go('/home');
+      } else if (next is AsyncError) {
+        // Erro no login
+        debugPrint('Login Error: ${next.error}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(next.error.toString()),
+            backgroundColor: Colors.red,
+          ),
+        );
+      } else if (next is AsyncData && next.value != null) {
+        // Login com sucesso
+        debugPrint('Login Success! User: ${next.value!.id}');
+        HiveBoxes.getUserPreferencesBox().put('first_install', false);
+        // Forçar navegação direta
+        context.go('/home');
+      }
     });
 
     final authState = ref.watch(authControllerProvider);

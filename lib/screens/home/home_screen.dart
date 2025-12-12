@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../core/theme/app_colors.dart';
@@ -125,7 +126,9 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 IconButton(
                   onPressed: () {
-                    // TODO: Navegar para notificações
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Sem novas notificações')),
+                    );
                   },
                   icon: const Icon(LucideIcons.bell, size: 24),
                   color: AppColors.textPrimary,
@@ -201,7 +204,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Column(
       children: [
-        const SectionHeader(title: 'Categorias'),
+        SectionHeader(
+          title: 'Categorias',
+          onActionTap: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Ver todas as categorias')),
+            );
+          },
+        ),
         const SizedBox(height: 8),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -211,24 +221,37 @@ class _HomeScreenState extends State<HomeScreen> {
               final iconName = category['icon'] as String;
               final icon = iconMap[iconName] ?? Icons.circle_outlined;
 
-              return GestureDetector(
-                onTap: () {
-                  // TODO: Navegar para categoria
-                },
-                child: Column(
-                  children: [
-                    Container(
-                      width: 64,
-                      height: 64,
-                      decoration: BoxDecoration(
-                        color: AppColors.cardBackground,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: AppColors.border, width: 1),
+              return Column(
+                children: [
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          _currentNavIndex = 1; // Switch to Explore tab
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Filtrando por: ${category['name']}'),
+                            duration: const Duration(seconds: 1),
+                          ),
+                        );
+                      },
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        width: 64,
+                        height: 64,
+                        decoration: BoxDecoration(
+                          color: AppColors.cardBackground,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: AppColors.border, width: 1),
+                        ),
+                        child: Icon(icon, size: 24, color: AppColors.primary),
                       ),
-                      child: Icon(icon, size: 24, color: AppColors.primary),
                     ),
-                    const SizedBox(height: 8),
-                    SizedBox(
+                  ),
+                  const SizedBox(height: 8),
+                  SizedBox(
                       width: 80,
                       child: Text(
                         category['name'] as String,
@@ -377,7 +400,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         GestureDetector(
                           onTap: () {
-                            // TODO: Ver detalhes
+                            context.push('/appointments');
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(
@@ -416,7 +439,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildNearbyClinics() {
     return Column(
       children: [
-        const SectionHeader(title: 'Perto de Você'),
+        SectionHeader(
+          title: 'Perto de Você',
+          onActionTap: () {
+            setState(() {
+              _currentNavIndex = 1; // Switch to Explore tab
+            });
+          },
+        ),
         const SizedBox(height: 8),
         SizedBox(
           height: 230,
@@ -438,7 +468,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   reviews: clinic['reviews'] as int,
                   image: clinic['image'] as String,
                   onTap: () {
-                    // TODO: Navegar para detalhes da clínica
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Clínica: ${clinic['name']}')),
+                    );
                   },
                 ),
               );
@@ -457,7 +489,14 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         children: [
-          const SectionHeader(title: 'Melhores Veterinários'),
+          SectionHeader(
+            title: 'Melhores Veterinários',
+            onActionTap: () {
+              setState(() {
+                _currentNavIndex = 1; // Switch to Explore
+              });
+            },
+          ),
           const SizedBox(height: 8),
           ...MockData.topVets.map((vet) {
             final index = MockData.topVets.indexOf(vet);
@@ -473,7 +512,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 image: vet['image'] as String,
                 available: vet['available'] as String,
                 onTap: () {
-                  // TODO: Navegar para detalhes do veterinário
+                  context.push(
+                    '/book/${vet['id']}',
+                    extra: {
+                      'vetName': vet['name'],
+                      'price': 100.0 + (index * 20), // Mock price logic
+                    },
+                  );
                 },
               ),
             );
@@ -519,7 +564,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: IconButton(
                     onPressed: () {
-                      // TODO: Ação central (nova consulta)
+                      context.push('/appointments');
                     },
                     icon: const Icon(
                       Icons.medical_services,
@@ -545,10 +590,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return GestureDetector(
       onTap: () {
+        if (index == 2) {
+          context.push('/my-pets');
+          return;
+        }
+        if (index == 3) {
+          context.push('/profile-edit');
+          return;
+        }
         setState(() {
           _currentNavIndex = index;
         });
-        // TODO: Navegar para tela correspondente
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,

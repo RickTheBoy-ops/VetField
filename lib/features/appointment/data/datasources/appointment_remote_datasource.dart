@@ -92,12 +92,14 @@ class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
   Future<List<AppointmentEntity>> getOwnerAppointments(String ownerId) async {
     final response = await supabaseClient
         .from('appointments')
-        .select('*, vets:vet_id(name, avatar_url, specialty), pets:pet_id(name, photo_url, species, breed)')
+        // Tentativa de correção: usar 'profiles' em vez de 'vets', assumindo tabela única de perfis
+        .select('*, profiles:vet_id(name, avatar_url), pets:pet_id(name, photo_url, species, breed)')
         .eq('owner_id', ownerId)
         .order('date_time');
 
     return (response as List).map((json) {
-      final vetName = json['vets'] != null ? json['vets']['name'] : 'Veterinário';
+      // Ajuste no parsing para ler de 'profiles'
+      final vetName = json['profiles'] != null ? json['profiles']['name'] : 'Veterinário';
       final petName = json['pets'] != null ? json['pets']['name'] : json['pet_name'];
       final petPhotoUrl = json['pets'] != null ? json['pets']['photo_url'] : null;
       final petSpecies = json['pets'] != null ? json['pets']['species'] : null;

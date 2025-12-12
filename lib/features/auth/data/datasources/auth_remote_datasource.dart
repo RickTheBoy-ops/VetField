@@ -43,17 +43,21 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     }
 
     // Buscar dados adicionais do perfil na tabela 'profiles'
-    final profile = await supabaseClient
+    // Usar maybeSingle() em vez de single() para evitar crash se o perfil ainda não existir (race condition no registro)
+    final profileResponse = await supabaseClient
         .from('profiles')
         .select()
         .eq('id', response.user!.id)
-        .single();
+        .maybeSingle();
+    
+    // Se não tiver perfil, usar dados básicos do user metadata ou defaults
+    final profile = profileResponse ?? {};
 
     return UserModel(
       id: response.user!.id,
       email: response.user!.email ?? '',
-      name: profile['name'] ?? '',
-      type: _parseUserType(profile['type']),
+      name: profile['name'] ?? response.user!.userMetadata?['name'] ?? '',
+      type: _parseUserType(profile['type'] ?? response.user!.userMetadata?['type']),
       crmv: profile['crmv'],
       cpf: profile['cpf'],
       avatarUrl: profile['avatar_url'],

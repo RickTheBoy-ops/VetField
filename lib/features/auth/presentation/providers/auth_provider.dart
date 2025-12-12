@@ -1,3 +1,4 @@
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/providers/supabase_provider.dart';
@@ -85,16 +86,29 @@ class AuthController extends _$AuthController {
   }
 
   Future<void> login(String email, String password) async {
+    print('AuthController: Login started for $email');
     state = const AsyncValue.loading();
 
-    final useCase = ref.read(loginUseCaseProvider);
-    final result = await useCase(LoginParams(email: email, password: password));
+    try {
+      final useCase = ref.read(loginUseCaseProvider);
+      final result = await useCase(
+        LoginParams(email: email, password: password),
+      );
 
-    result.fold(
-      (failure) =>
-          state = AsyncValue.error(failure.message, StackTrace.current),
-      (user) => state = AsyncValue.data(user),
-    );
+      result.fold(
+        (failure) {
+          print('AuthController: Login failed - ${failure.message}');
+          state = AsyncValue.error(failure.message, StackTrace.current);
+        },
+        (user) {
+          print('AuthController: Login success - User: ${user.id}');
+          state = AsyncValue.data(user);
+        },
+      );
+    } catch (e, st) {
+      print('AuthController: Unexpected error - $e');
+      state = AsyncValue.error(e, st);
+    }
   }
 
   Future<void> loginWithCpf(String cpf, String password) async {
@@ -193,19 +207,35 @@ class AuthController extends _$AuthController {
 
 // Current User Provider (for Auth Guards)
 @Riverpod(keepAlive: true)
-UserEntity? currentUser(Ref ref) {
+Stream<UserEntity?> currentUser(Ref ref) async* {
   final supabase = ref.watch(supabaseClientProvider);
-  final session = supabase.auth.currentSession;
+  print('CurrentUserProvider: Initializing stream');
 
-  if (session == null) return null;
+  // Helper for mapping
+  UserEntity? mapSession(Session? session) {
+    if (session == null) return null;
+    return UserEntity(
+      id: session.user.id,
+      email: session.user.email ?? '',
+      name: session.user.userMetadata?['name'] ?? '',
+      type: session.user.userMetadata?['type'] == 'vet'
+          ? UserType.vet
+          : UserType.owner,
+    );
+  }
 
-  // Return basic user info from session
-  return UserEntity(
-    id: session.user.id,
-    email: session.user.email ?? '',
-    name: session.user.userMetadata?['name'] ?? '',
-    type: session.user.userMetadata?['type'] == 'vet'
-        ? UserType.vet
-        : UserType.owner,
+  // Yield current state immediately
+  final currentSession = supabase.auth.currentSession;
+  print(
+    'CurrentUserProvider: Initial session check: ${currentSession?.user.email}',
   );
+  yield mapSession(currentSession);
+
+  // Yield future states
+  await for (final event in supabase.auth.onAuthStateChange) {
+    print(
+      'CurrentUserProvider: Auth Event: ${event.event} User: ${event.session?.user.email}',
+    );
+    yield mapSession(event.session);
+  }
 }
