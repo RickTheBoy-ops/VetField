@@ -53,10 +53,12 @@ class HiveBoxes {
       if (petsBox != pets) await _safeOpenBox(petsBox);
       if (healthBox != healthRecords) await _safeOpenBox(healthBox);
       if (appointmentsBox != appointments) await _safeOpenBox(appointmentsBox);
-      if (gamificationBox != gamificationProgress)
+      if (gamificationBox != gamificationProgress) {
         await _safeOpenBox(gamificationBox);
-      if (prescriptionsBox != prescriptions)
+      }
+      if (prescriptionsBox != prescriptions) {
         await _safeOpenBox(prescriptionsBox);
+      }
 
       debugPrint('Hive initialized successfully with all boxes opened.');
     } catch (e, stack) {
